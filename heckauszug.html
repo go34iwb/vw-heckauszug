@@ -401,103 +401,137 @@
 
     <!-- ========== ISOMETRIE ========== -->
     <div class="view-card">
-        <div class="view-title">4. Isometrie (3D-Ansicht, semi-transparent)</div>
+        <div class="view-title">4. Isometrie (korrekte isometrische Projektion 30°)</div>
         <div class="svg-wrap">
             <svg width="1000" height="700" viewBox="0 0 1000 700" xmlns="http://www.w3.org/2000/svg" style="border:1px solid #ccc;">
                 <defs>
-                    <!-- Isometrische Projektion: x → (x-y)*cos30, z → z + (x+y)*sin30 -->
-                    <!-- Vereinfacht: 2:1 Dimetrie für technische Zeichnung -->
+                    <!-- Isometrische Projektion: rotate(-45) skewX(-30) scale(1, 0.577) -->
+                    <!-- Für technische Zeichnung oft: 2:1 Dimetrie (rotate(-45) scale(1, 0.5)) -->
                 </defs>
 
                 <rect x="0" y="0" width="1000" height="700" fill="#fafafa" stroke="#333" stroke-width="1"/>
 
-                <!-- Isometrische Helper-Funktionen via transform -->
-                <!-- Wir zeichnen 3 Module nebeneinander in 2.5D -->
+                <!-- Isometrischer Zeichnungsrahmen -->
+                <g transform="translate(500, 450) rotate(-45) scale(1, 0.57735)">
+                    <!-- Koordinaten: x nach rechts-vorne, y nach links-vorne, z nach oben -->
+                    <!-- 1 Unit = 1mm, aber wir skalieren für Anzeige -->
+                    
+                    <!-- Skalierung für Anzeige: 1mm = 0.5px -->
+                    <g transform="scale(0.5)">
+                        
+                        <!-- Modul 1 (Links) - Position x=-350, y=0 -->
+                        <g transform="translate(-350, 0)">
+                            <!-- Rahmen Boden -->
+                            <path d="M0,0 L310,0 L310,600 L0,600 Z" fill="none" stroke="#333" stroke-width="2"/>
+                            <!-- 4 Säulen (hochkant 20x40, 40 in Tiefe) -->
+                            <g fill="#555" stroke="#333" stroke-width="1">
+                                <!-- Vordere Säulen (y=0) -->
+                                <rect x="0" y="0" width="20" height="590"/> <!-- links vorne -->
+                                <rect x="290" y="0" width="20" height="590"/> <!-- rechts vorne -->
+                                <!-- Hintere Säulen (y=600, versetzt für Isometrie) -->
+                                <rect x="20" y="600" width="20" height="550"/> <!-- links hinten -->
+                                <rect x="310" y="600" width="20" height="550"/> <!-- rechts hinten -->
+                            </g>
+                            <!-- Längsträger (hochkant, 40mm vertikal, 20mm breit) -->
+                            <g fill="#333" stroke="#111" stroke-width="1">
+                                <!-- Unten vorne -->
+                                <rect x="20" y="0" width="270" height="20"/>
+                                <!-- Unten hinten -->
+                                <rect x="40" y="600" width="250" height="20"/>
+                                <!-- Oben vorne -->
+                                <rect x="20" y="0" width="270" height="20" transform="translate(0, -590)"/>
+                                <!-- Oben hinten -->
+                                <rect x="40" y="600" width="250" height="20" transform="translate(0, -590)"/>
+                            </g>
+                            <!-- Querträger (flach, 20mm hoch) - an den Säulen -->
+                            <g fill="#333" stroke="#111" stroke-width="1">
+                                <!-- Unten: vorne & hinten zwischen Säulen -->
+                                <rect x="20" y="0" width="270" height="20"/> <!-- schon da -->
+                                <rect x="40" y="600" width="250" height="20"/> <!-- schon da -->
+                                <!-- Oben: bei z=590 -->
+                                <rect x="20" y="0" width="270" height="20" transform="translate(0, -590)"/>
+                                <rect x="40" y="600" width="250" height="20" transform="translate(0, -590)"/>
+                            </g>
+                            
+                            <!-- U-Profil (70mm) - auf unterem Rahmen, innen -->
+                            <rect x="22" y="22" width="556" height="70" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1.5" fill-opacity="0.5"/>
+                            <text x="300" y="58" text-anchor="middle" class="label-overlay" font-size="10">U-Profil 70mm</text>
+                            
+                            <!-- Brett 15mm auf U-Profil -->
+                            <rect x="22" y="92" width="556" height="15" fill="#8d6e63" stroke="#5d4037" stroke-width="1.5"/>
+                            
+                            <!-- Auszüge (an vorderen Säulen) -->
+                            <rect x="22" y="107" width="19.5" height="483" rx="2" fill="#bdbdbd" stroke="#757575" stroke-width="1" fill-opacity="0.7"/>
+                            <rect x="558.5" y="107" width="19.5" height="483" rx="2" fill="#bdbdbd" stroke="#757575" stroke-width="1" fill-opacity="0.7"/>
+                            
+                            <!-- Euroboxen 2x 220mm -->
+                            <rect x="40" y="117" width="230" height="220" rx="3" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5" fill-opacity="0.5"/>
+                            <rect x="40" y="337" width="230" height="220" rx="3" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5" fill-opacity="0.5"/>
+                            
+                            <!-- Bierbank im Schacht -->
+                            <rect x="40" y="37" width="230" height="40" rx="2" fill="#d7ccc8" stroke="#8d6e63" stroke-width="1.5" stroke-dasharray="4,2" fill-opacity="0.5"/>
+                        </g>
 
-                <!-- Modul 1 (Links) -->
-                <g transform="translate(100, 100)">
-                    <!-- Rahmen -->
-                    <path d="M0,0 L310,0 L310,590 L0,590 Z" fill="none" stroke="#333" stroke-width="2"/>
-                    <!-- Säulen (4 Ecken) -->
-                    <g fill="#555" stroke="#333" stroke-width="1">
-                        <rect x="0" y="0" width="20" height="590"/> <!-- vorne links -->
-                        <rect x="290" y="0" width="20" height="590"/> <!-- vorne rechts -->
-                        <rect x="20" y="20" width="20" height="550"/> <!-- hinten links (versetzt) -->
-                        <rect x="310" y="20" width="20" height="550"/> <!-- hinten rechts -->
-                    </g>
-                    <!-- Längsträger -->
-                    <g fill="#333" stroke="#111" stroke-width="1">
-                        <rect x="20" y="20" width="270" height="20"/> <!-- unten vorne -->
-                        <rect x="40" y="40" width="250" height="20"/> <!-- unten hinten -->
-                        <rect x="20" y="550" width="270" height="20"/> <!-- oben vorne -->
-                        <rect x="40" y="570" width="250" height="20"/> <!-- oben hinten -->
-                    </g>
-                    <!-- U-Profil -->
-                    <rect x="22" y="22" width="556" height="70" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1.5" fill-opacity="0.5"/>
-                    <text x="300" y="58" text-anchor="middle" class="label-overlay" font-size="10">U-Profil</text>
-                    <!-- Brett -->
-                    <rect x="22" y="92" width="556" height="15" fill="#8d6e63" stroke="#5d4037" stroke-width="1.5"/>
-                    <!-- Auszüge -->
-                    <rect x="22" y="107" width="19.5" height="483" rx="2" fill="#bdbdbd" stroke="#757575" stroke-width="1" fill-opacity="0.7"/>
-                    <rect x="558.5" y="107" width="19.5" height="483" rx="2" fill="#bdbdbd" stroke="#757575" stroke-width="1" fill-opacity="0.7"/>
-                    <!-- Boxen -->
-                    <rect x="40" y="117" width="230" height="220" rx="3" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5" fill-opacity="0.5"/>
-                    <rect x="40" y="337" width="230" height="220" rx="3" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5" fill-opacity="0.5"/>
-                </g>
+                        <!-- Modul 2 (Mitte) - Position x=0, y=0 (zentriert) -->
+                        <g transform="translate(0, 0)">
+                            <path d="M0,0 L500,0 L500,600 L0,600 Z" fill="none" stroke="#333" stroke-width="2"/>
+                            <!-- Säulen -->
+                            <g fill="#555" stroke="#333" stroke-width="1">
+                                <rect x="0" y="0" width="20" height="590"/>
+                                <rect x="480" y="0" width="20" height="590"/>
+                                <rect x="20" y="600" width="20" height="550"/>
+                                <rect x="500" y="600" width="20" height="550"/>
+                            </g>
+                            <!-- Längsträger -->
+                            <g fill="#333" stroke="#111" stroke-width="1">
+                                <rect x="20" y="0" width="460" height="20"/>
+                                <rect x="40" y="600" width="440" height="20"/>
+                                <rect x="20" y="0" width="460" height="20" transform="translate(0, -590)"/>
+                                <rect x="40" y="600" width="440" height="20" transform="translate(0, -590)"/>
+                            </g>
+                            
+                            <!-- Brett dropped (kein U-Profil) - bei z=20 (35mm über Boden) -->
+                            <rect x="22" y="22" width="456" height="15" fill="#8d6e63" stroke="#5d4037" stroke-width="1.5" fill-opacity="0.7"/>
+                            <text x="250" y="34" text-anchor="middle" class="label-overlay" font-size="10" fill="white">Brett dropped</text>
+                            
+                            <!-- Auszüge (durchgehend, an Säulen) -->
+                            <rect x="22" y="37" width="19.5" height="553" rx="2" fill="#bdbdbd" stroke="#757575" stroke-width="1" fill-opacity="0.7"/>
+                            <rect x="458.5" y="37" width="19.5" height="553" rx="2" fill="#bdbdbd" stroke="#757575" stroke-width="1" fill-opacity="0.7"/>
+                            
+                            <!-- Kühlbox 490mm auf Brett -->
+                            <rect x="40" y="55" width="420" height="490" rx="3" fill="#ffe0b2" stroke="#e65100" stroke-width="1.5" fill-opacity="0.5"/>
+                            <text x="250" y="300" text-anchor="middle" class="label-overlay" font-size="10">Kühlbox 490mm</text>
+                        </g>
 
-                <!-- Modul 2 (Mitte) -->
-                <g transform="translate(450, 80)">
-                    <path d="M0,0 L500,0 L500,590 L0,590 Z" fill="none" stroke="#333" stroke-width="2"/>
-                    <!-- Säulen -->
-                    <g fill="#555" stroke="#333" stroke-width="1">
-                        <rect x="0" y="0" width="20" height="590"/>
-                        <rect x="480" y="0" width="20" height="590"/>
-                        <rect x="20" y="20" width="20" height="550"/>
-                        <rect x="500" y="20" width="20" height="550"/>
-                    </g>
-                    <!-- Längsträger -->
-                    <g fill="#333" stroke="#111" stroke-width="1">
-                        <rect x="20" y="20" width="460" height="20"/>
-                        <rect x="40" y="40" width="440" height="20"/>
-                        <rect x="20" y="550" width="460" height="20"/>
-                        <rect x="40" y="570" width="440" height="20"/>
-                    </g>
-                    <!-- Brett dropped (kein U-Profil) -->
-                    <rect x="22" y="22" width="456" height="15" fill="#8d6e63" stroke="#5d4037" stroke-width="1.5" fill-opacity="0.7"/>
-                    <text x="250" y="34" text-anchor="middle" class="label-overlay" font-size="10" fill="white">Brett dropped</text>
-                    <!-- Auszüge (durchgehend bis oben) -->
-                    <rect x="22" y="37" width="19.5" height="553" rx="2" fill="#bdbdbd" stroke="#757575" stroke-width="1" fill-opacity="0.7"/>
-                    <rect x="458.5" y="37" width="19.5" height="553" rx="2" fill="#bdbdbd" stroke="#757575" stroke-width="1" fill-opacity="0.7"/>
-                    <!-- Kühlbox -->
-                    <rect x="40" y="55" width="420" height="490" rx="3" fill="#ffe0b2" stroke="#e65100" stroke-width="1.5" fill-opacity="0.5"/>
-                    <text x="250" y="300" text-anchor="middle" class="label-overlay" font-size="10">Kühlbox 490mm</text>
-                </g>
+                        <!-- Modul 3 (Rechts) - Position x=350, y=0 -->
+                        <g transform="translate(350, 0)">
+                            <path d="M0,0 L310,0 L310,600 L0,600 Z" fill="none" stroke="#333" stroke-width="2"/>
+                            <g fill="#555" stroke="#333" stroke-width="1">
+                                <rect x="0" y="0" width="20" height="590"/>
+                                <rect x="290" y="0" width="20" height="590"/>
+                                <rect x="20" y="600" width="20" height="550"/>
+                                <rect x="310" y="600" width="20" height="550"/>
+                            </g>
+                            <g fill="#333" stroke="#111" stroke-width="1">
+                                <rect x="20" y="0" width="270" height="20"/>
+                                <rect x="40" y="600" width="250" height="20"/>
+                                <rect x="20" y="0" width="270" height="20" transform="translate(0, -590)"/>
+                                <rect x="40" y="600" width="250" height="20" transform="translate(0, -590)"/>
+                            </g>
+                            
+                            <rect x="22" y="22" width="556" height="70" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1.5" fill-opacity="0.5"/>
+                            <text x="300" y="58" text-anchor="middle" class="label-overlay" font-size="10">U-Profil 70mm</text>
+                            <rect x="22" y="92" width="556" height="15" fill="#8d6e63" stroke="#5d4037" stroke-width="1.5"/>
+                            <rect x="22" y="107" width="19.5" height="483" rx="2" fill="#bdbdbd" stroke="#757575" stroke-width="1" fill-opacity="0.7"/>
+                            <rect x="558.5" y="107" width="19.5" height="483" rx="2" fill="#bdbdbd" stroke="#757575" stroke-width="1" fill-opacity="0.7"/>
+                            <rect x="40" y="117" width="230" height="220" rx="3" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5" fill-opacity="0.5"/>
+                            <rect x="40" y="337" width="230" height="220" rx="3" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5" fill-opacity="0.5"/>
+                        </g>
 
-                <!-- Modul 3 (Rechts) -->
-                <g transform="translate(800, 100)">
-                    <path d="M0,0 L310,0 L310,590 L0,590 Z" fill="none" stroke="#333" stroke-width="2"/>
-                    <g fill="#555" stroke="#333" stroke-width="1">
-                        <rect x="0" y="0" width="20" height="590"/>
-                        <rect x="290" y="0" width="20" height="590"/>
-                        <rect x="20" y="20" width="20" height="550"/>
-                        <rect x="310" y="20" width="20" height="550"/>
-                    </g>
-                    <g fill="#333" stroke="#111" stroke-width="1">
-                        <rect x="20" y="20" width="270" height="20"/>
-                        <rect x="40" y="40" width="250" height="20"/>
-                        <rect x="20" y="550" width="270" height="20"/>
-                        <rect x="40" y="570" width="250" height="20"/>
-                    </g>
-                    <rect x="22" y="22" width="556" height="70" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1.5" fill-opacity="0.5"/>
-                    <text x="300" y="58" text-anchor="middle" class="label-overlay" font-size="10">U-Profil</text>
-                    <rect x="22" y="92" width="556" height="15" fill="#8d6e63" stroke="#5d4037" stroke-width="1.5"/>
-                    <rect x="22" y="107" width="19.5" height="483" rx="2" fill="#bdbdbd" stroke="#757575" stroke-width="1" fill-opacity="0.7"/>
-                    <rect x="558.5" y="107" width="19.5" height="483" rx="2" fill="#bdbdbd" stroke="#757575" stroke-width="1" fill-opacity="0.7"/>
-                    <rect x="40" y="117" width="230" height="220" rx="3" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5" fill-opacity="0.5"/>
-                    <rect x="40" y="337" width="230" height="220" rx="3" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5" fill-opacity="0.5"/>
-                </g>
+                    </g> <!-- scale(0.5) -->
+                </g> <!-- isometric transform -->
 
-                <!-- Legende -->
+                <!-- Legende (nicht transformiert) -->
                 <g transform="translate(20, 580)">
                     <rect x="0" y="0" width="20" height="20" fill="#333"/><text x="25" y="14" class="label-overlay" font-size="11">Profil 20×40</text>
                     <rect x="0" y="25" width="20" height="20" fill="#e8f5e9" stroke="#2e7d32"/><text x="25" y="39" class="label-overlay" font-size="11">U-Profil 70mm</text>
@@ -508,8 +542,8 @@
                 </g>
 
                 <!-- Titel -->
-                <text x="500" y="40" text-anchor="middle" class="label-overlay" font-size="16" fill="#2c3e50">Isometrische Ansicht — 3 Module (explodiert)</text>
-                <text x="500" y="60" text-anchor="middle" class="label-dim" font-size="11">Maßstab ca. 1:15 | Module leicht versetzt für bessere Sichtbarkeit</text>
+                <text x="500" y="40" text-anchor="middle" class="label-overlay" font-size="16" fill="#2c3e50">Isometrische Projektion (30°) — 3 Module</text>
+                <text x="500" y="60" text-anchor="middle" class="label-dim" font-size="11">Echte Isometrie: 120° Winkel, gleichmaßstäblich | Module nebeneinander</text>
             </svg>
         </div>
     </div>
