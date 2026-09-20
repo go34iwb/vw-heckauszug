@@ -152,213 +152,91 @@
     <script type="module">
         import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
         import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/controls/OrbitControls.js';
-        // Module stack definitions (simplified for visualization)
-        const MODULES = [
-            // Links
-            {
-                x: 0, width: 310, depth: 600,
-                layers: [
-                    { name: 'Auszug', z: 0, h: 590, color: 0xbdbdbd },
-                    { name: 'U-Profil auf Auszug', z: 20, h: 70, color: 0xe8f5e9 },
-                    { name: 'Bierbank IN U', z: 20, h: 40, color: 0xd7ccc8 },
-                    { name: 'Brett AUF U', z: 90, h: 15, color: 0x8d6e63 },
-                    { name: 'Eurobox 1', z: 105, h: 220, color: 0xbbdefb },
-                    { name: 'Eurobox 2', z: 325, h: 220, color: 0xbbdefb },
-                    { name: 'Deckel 15mm', z: 545, h: 15, color: 0x6d4c41 }
-                ]
-            },
-            // Mitte
-            {
-                x: 310, width: 500, depth: 600,
-                layers: [
-                    { name: 'Auszug', z: 0, h: 590, color: 0xbdbdbd },
-                    { name: 'Brett dropped', z: 20, h: 15, color: 0x8d6e63 },
-                    { name: 'Kühlbox', z: 35, h: 490, color: 0xffe0b2 }
-                ]
-            },
-            // Rechts
-            {
-                x: 810, width: 310, depth: 600,
-                layers: [
-                    { name: 'Auszug', z: 0, h: 590, color: 0xbdbdbd },
-                    { name: 'U-Profil auf Auszug', z: 20, h: 70, color: 0xe8f5e9 },
-                    { name: 'Bierbank IN U', z: 20, h: 40, color: 0xd7ccc8 },
-                    { name: 'Brett AUF U', z: 90, h: 15, color: 0x8d6e63 },
-                    { name: 'Eurobox 1', z: 105, h: 220, color: 0xbbdefb },
-                    { name: 'Eurobox 2', z: 325, h: 220, color: 0xbbdefb },
-                    { name: 'Deckel 15mm', z: 545, h: 15, color: 0x6d4c41 }
-                ]
-            }
-        ];
         let scene, camera, renderer, controls;
-        let animationId = null;
         function initThreeJS() {
             const container = document.getElementById('threejs-canvas');
             if (!container) { console.warn('Three.js container not found'); return; }
             scene = new THREE.Scene();
-            scene.background = new THREE.Color(0xf5f5f5);
+            scene.background = new THREE.Color(0xf0f0f0);
             const aspect = container.clientWidth / 600;
-            camera = new THREE.PerspectiveCamera(50, aspect, 1, 5000);
-            camera.position.set(600, 800, 1000);
+            camera = new THREE.PerspectiveCamera(45, aspect, 1, 2000);
+            camera.position.set(800, 800, 800);
             renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
             renderer.setSize(container.clientWidth, 600);
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
             renderer.shadowMap.enabled = true;
-            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
             container.appendChild(renderer.domElement);
-            // OrbitControls
             controls = new OrbitControls(camera, renderer.domElement);
             controls.enableDamping = true;
-            controls.dampingFactor = 0.05;
-            controls.screenSpacePanning = false;
-            controls.minDistance = 300;
-            controls.maxDistance = 2500;
-            controls.maxPolarAngle = Math.PI / 2 - 0.01;
-            controls.target.set(600, 300, 300);
-            // Lighting
-            const ambient = new THREE.AmbientLight(0xffffff, 0.6);
-            scene.add(ambient);
-            const dirLight = new THREE.DirectionalLight(0xffffff, 1);
-            dirLight.position.set(500, 1000, 500);
-            dirLight.castShadow = true;
-            dirLight.shadow.mapSize.width = 2048;
-            dirLight.shadow.mapSize.height = 2048;
-            dirLight.shadow.camera.near = 1;
-            dirLight.shadow.camera.far = 2000;
-            dirLight.shadow.camera.left = -800;
-            dirLight.shadow.camera.right = 800;
-            dirLight.shadow.camera.top = 800;
-            dirLight.shadow.camera.bottom = -800;
-            scene.add(dirLight);
-            const fillLight = new THREE.DirectionalLight(0xffffff, 0.3);
-            fillLight.position.set(-500, 300, -500);
-            scene.add(fillLight);
+            // Light
+            const hemi = new THREE.HemisphereLight(0xffffff, 0x444444, 1.2);
+            hemi.position.set(0, 500, 0);
+            scene.add(hemi);
+            const dir = new THREE.DirectionalLight(0xffffff, 1);
+            dir.position.set(-300, 500, -300);
+            dir.castShadow = true;
+            scene.add(dir);
             // Ground
             const groundGeo = new THREE.PlaneGeometry(2000, 2000);
-            const groundMat = new THREE.MeshStandardMaterial({ color: 0xeeeeee, roughness: 0.9, metalness: 0 });
+            const groundMat = new THREE.MeshStandardMaterial({ color: 0xcccccc, roughness: 0.8 });
             const ground = new THREE.Mesh(groundGeo, groundMat);
             ground.rotation.x = -Math.PI / 2;
-            ground.position.y = -1;
+            ground.position.y = -10;
             ground.receiveShadow = true;
             scene.add(ground);
-            // Build modules
-            const profileWidth = 40;
-            const profileDepth = 20;
-            MODULES.forEach(mod => {
+            // Heckauszug simplified model: three blocks
+            const moduleWidth = 310, moduleDepth = 600, moduleHeight = 590;
+            const profileThick = 20;
+            const colors = [0xe0e0e0, 0xd0d0d0, 0xe0e0e0]; // left, middle, right
+            for (let i = 0; i < 3; i++) {
                 const group = new THREE.Group();
-                group.position.x = mod.x + mod.width / 2;
-                group.position.z = mod.depth / 2;
+                group.position.x = i * (moduleWidth + profileThick*2) - (moduleWidth + profileThick*2);
                 scene.add(group);
-                const lngMat = new THREE.MeshStandardMaterial({ color: 0x333333, roughness: 0.3, metalness: 0.8 });
-                for (let i = 0; i < 2; i++) {
-                    const xOffset = i === 0 ? -mod.width / 2 + 10 : mod.width / 2 - 30;
-                    const lngGeo = new THREE.BoxGeometry(profileWidth, 590, profileDepth);
-                    const lng = new THREE.Mesh(lngGeo, lngMat);
-                    lng.position.set(xOffset, 295, -mod.depth / 2 + 10);
-                    lng.castShadow = true;
-                    lng.receiveShadow = true;
-                    group.add(lng);
-                }
-                for (let i = 0; i < 2; i++) {
-                    const xOffset = i === 0 ? -mod.width / 2 + 10 : mod.width / 2 - 30;
-                    const lngGeo = new THREE.BoxGeometry(profileWidth, 590, profileDepth);
-                    const lng = new THREE.Mesh(lngGeo, lngMat);
-                    lng.position.set(xOffset, 295, mod.depth / 2 - 10);
-                    lng.castShadow = true;
-                    lng.receiveShadow = true;
-                    group.add(lng);
-                }
-                const qtrMat = new THREE.MeshStandardMaterial({ color: 0x222222, roughness: 0.3, metalness: 0.8 });
-                const qtrGeo = new THREE.BoxGeometry(mod.width - 20, 20, mod.depth - 20);
-                const qtr1 = new THREE.Mesh(qtrGeo, qtrMat);
-                qtr1.position.set(0, 10, 0);
-                qtr1.castShadow = true;
-                qtr1.receiveShadow = true;
-                group.add(qtr1);
-                const qtr2 = new THREE.Mesh(qtrGeo, qtrMat);
-                qtr2.position.set(0, 580, 0);
-                qtr2.castShadow = true;
-                qtr2.receiveShadow = true;
-                group.add(qtr2);
-                if (mod.x === 310 || mod.x === 810) {
-                    const divGeo = new THREE.PlaneGeometry(2, 590);
-                    const divMat = new THREE.MeshBasicMaterial({ color: 0x333333, transparent: true, opacity: 0.3, side: THREE.DoubleSide });
-                    const div = new THREE.Mesh(divGeo, divMat);
-                    div.position.set(-mod.width / 2, 295, 0);
-                    div.rotation.y = Math.PI / 2;
-                    group.add(div);
-                }
-                const sliderMat = new THREE.MeshStandardMaterial({ color: 0xbdbdbd, roughness: 0.4, metalness: 0.7 });
-                const sliderGeo = new THREE.BoxGeometry(19.5, 590, 50);
-                const sliderPositions = [
-                    { x: -mod.width / 2 + 10, z: -mod.depth / 2 + 25 },
-                    { x: mod.width / 2 - 29.5, z: -mod.depth / 2 + 25 },
-                    { x: -mod.width / 2 + 10, z: mod.depth / 2 - 25 },
-                    { x: mod.width / 2 - 29.5, z: mod.depth / 2 - 25 }
-                ];
-                sliderPositions.forEach(pos => {
-                    const slider = new THREE.Mesh(sliderGeo, sliderMat);
-                    slider.position.set(pos.x, 295, pos.z);
-                    slider.castShadow = true;
-                    slider.receiveShadow = true;
-                    group.add(slider);
-                });
-                mod.layers.forEach(layer => {
-                    if (layer.name === 'Auszug') return;
-                    let mesh;
-                    const layerMat = new THREE.MeshStandardMaterial({
-                        color: layer.color,
-                        emissive: layer.emissive,
-                        emissiveIntensity: 0.05,
-                        roughness: layer.name.includes('Bierbank') ? 0.8 : 0.5,
-                        metalness: layer.name.includes('Auszug') || layer.name.includes('U-Profil') ? 0.6 : 0.1,
-                        transparent: layer.name.includes('Bierbank'),
-                        opacity: layer.name.includes('Bierbank') ? 0.95 : 1
-                    });
-                    let geom;
-                    if (layer.name.includes('U-Profil')) {
-                        geom = new THREE.BoxGeometry(mod.width - 40, layer.h, mod.depth - 40);
-                        mesh = new THREE.Mesh(geom, layerMat);
-                        mesh.position.set(0, layer.z + layer.h / 2, 0);
-                    } else if (layer.name.includes('Bierbank')) {
-                        geom = new THREE.BoxGeometry(230, layer.h, mod.depth - 80);
-                        mesh = new THREE.Mesh(geom, layerMat);
-                        mesh.position.set(0, layer.z + layer.h / 2, 0);
-                    } else if (layer.name.includes('Brett')) {
-                        geom = new THREE.BoxGeometry(mod.width - 20, layer.h, mod.depth - 20);
-                        mesh = new THREE.Mesh(geom, layerMat);
-                        mesh.position.set(0, layer.z + layer.h / 2, 0);
-                    } else if (layer.name.includes('Eurobox')) {
-                        geom = new THREE.BoxGeometry(250, layer.h, mod.depth - 60);
-                        mesh = new THREE.Mesh(geom, layerMat);
-                        mesh.position.set(0, layer.z + layer.h / 2, 0);
-                    } else if (layer.name.includes('Kühlbox')) {
-                        geom = new THREE.BoxGeometry(mod.width - 60, layer.h, mod.depth - 60);
-                        mesh = new THREE.Mesh(geom, layerMat);
-                        mesh.position.set(0, layer.z + layer.h / 2, 0);
-                    } else {
-                        geom = new THREE.BoxGeometry(mod.width - 20, layer.h, mod.depth - 20);
-                        mesh = new THREE.Mesh(geom, layerMat);
-                        mesh.position.set(0, layer.z + layer.h / 2, 0);
-                    }
-                    if (mesh) {
-                        mesh.castShadow = true;
-                        mesh.receiveShadow = true;
-                        const edges = new THREE.EdgesGeometry(geom);
-                        const edgeMat = new THREE.LineBasicMaterial({ color: 0x000000, opacity: 0.15, transparent: true });
-                        const edgeMesh = new THREE.LineSegments(edges, edgeMat);
-                        edgeMesh.position.copy(mesh.position);
-                        group.add(edgeMesh);
-                        group.add(mesh);
-                    }
-                });
-            });
+                // outer profile (simplified as thin box)
+                const profileMat = new THREE.MeshStandardMaterial({ color: 0x888888 });
+                // left profile
+                const leftGeo = new THREE.BoxGeometry(profileThick, moduleHeight, moduleDepth);
+                const left = new THREE.Mesh(leftGeo, profileMat);
+                left.position.set(-moduleWidth/2 - profileThick/2, moduleHeight/2, 0);
+                group.add(left);
+                // right profile
+                const rightGeo = new THREE.BoxGeometry(profileThick, moduleHeight, moduleDepth);
+                const right = new THREE.Mesh(rightGeo, profileMat);
+                right.position.set(moduleWidth/2 + profileThick/2, moduleHeight/2, 0);
+                group.add(right);
+                // top rail
+                const topGeo = new THREE.BoxGeometry(moduleWidth, profileThick, moduleDepth);
+                const top = new THREE.Mesh(topGeo, profileMat);
+                top.position.set(0, moduleHeight/2 - profileThick/2, 0);
+                group.add(top);
+                // bottom rail
+                const bottomGeo = new THREE.BoxGeometry(moduleWidth, profileThick, moduleDepth);
+                const bottom = new THREE.Mesh(bottomGeo, profileMat);
+                bottom.position.set(0, -moduleHeight/2 + profileThick/2, 0);
+                group.add(bottom);
+                // front rail
+                const frontGeo = new THREE.BoxGeometry(moduleWidth, moduleHeight, profileThick);
+                const front = new THREE.Mesh(frontGeo, profileMat);
+                front.position.set(0, 0, -moduleDepth/2 + profileThick/2);
+                group.add(front);
+                // back rail
+                const backGeo = new THREE.BoxGeometry(moduleWidth, moduleHeight, profileThick);
+                const back = new THREE.Mesh(backGeo, profileMat);
+                back.position.set(0, 0, moduleDepth/2 - profileThick/2);
+                group.add(back);
+                // main fill
+                const fillMat = new THREE.MeshStandardMaterial({ color: colors[i] });
+                const fillGeo = new THREE.BoxGeometry(moduleWidth - 2*profileThick, moduleHeight - 2*profileThick, moduleDepth - 2*profileThick);
+                const fill = new THREE.Mesh(fillGeo, fillMat);
+                fill.position.set(0, 0, 0);
+                group.add(fill);
+            }
             // Axis helper
             const axes = new THREE.AxesHelper(300);
             scene.add(axes);
             // Grid
             const grid = new THREE.GridHelper(1500, 30, 0xcccccc, 0xeeeeee);
-            grid.position.y = -1;
+            grid.position.y = -10;
             scene.add(grid);
             // Resize
             window.addEventListener('resize', onResize);
@@ -376,39 +254,24 @@
             renderer.setSize(width, height);
         }
         function animate() {
-            animationId = requestAnimationFrame(animate);
+            requestAnimationFrame(animate);
             controls.update();
             renderer.render(scene, camera);
-        }
-        function cleanup() {
-            if (animationId) { cancelAnimationFrame(animationId); animationId = null; }
-            window.removeEventListener('resize', onResize);
-            if (renderer) {
-                renderer.dispose();
-                const container = document.getElementById('threejs-canvas');
-                if (container) {
-                    const domElement = renderer.domElement;
-                    if (domElement && domElement.parentNode) {
-                        domElement.parentNode.removeChild(domElement);
-                    }
-                }
-            }
-            if (scene) {
-                scene.traverse(obj => {
-                    if (obj.geometry) obj.geometry.dispose();
-                    if (obj.material) {
-                        if (Array.isArray(obj.material)) { obj.material.forEach(m => m.dispose()); }
-                        else { obj.material.dispose(); }
-                    }
-                });
-            }
         }
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', initThreeJS);
         } else {
             initThreeJS();
         }
-        window.addEventListener('beforeunload', cleanup);
+        window.addEventListener('beforeunload', () => {
+            if (renderer) {
+                renderer.dispose();
+                const container = document.getElementById('threejs-canvas');
+                if (container && renderer.domElement && renderer.domElement.parentNode) {
+                    container.removeChild(renderer.domElement);
+                }
+            }
+        });
     </script>
 </body>
 </html>
