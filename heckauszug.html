@@ -1,548 +1,370 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>VW T6 Heckauszug 3D Skizze</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { 
-      width: 100%; 
-      height: 100%; 
-      overflow: hidden; 
-      background: #0a0a0f; 
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      touch-action: none;
-    }
-    canvas { 
-      display: block; 
-      width: 100%; 
-      height: 100%; 
-    }
-    .ui-overlay {
-      position: absolute;
-      top: 12px;
-      left: 12px;
-      z-index: 100;
-      color: #c0d0e0;
-      font-size: 13px;
-      pointer-events: none;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.8);
-    }
-    .ui-overlay h1 { font-size: 15px; margin-bottom: 2px; color: #89a; }
-    .ui-overlay .label { font-size: 11px; color: #678; }
-    .controls {
-      position: absolute;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 12px;
-      z-index: 100;
-      pointer-events: auto;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    .btn {
-      background: rgba(25, 30, 40, 0.9);
-      border: 1px solid #3a4a5a;
-      color: #a0b0c0;
-      padding: 10px 18px;
-      border-radius: 5px;
-      font-size: 13px;
-      cursor: pointer;
-      backdrop-filter: blur(4px);
-      transition: all 0.15s;
-      user-select: none;
-      -webkit-tap-highlight-color: transparent;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-    }
-    .btn:active { background: rgba(40, 50, 70, 0.95); transform: translateY(1px); }
-    .btn.active { 
-      background: rgba(60, 100, 160, 0.8); 
-      border-color: #59f; 
-      color: #fff; 
-      box-shadow: 0 0 10px rgba(80, 140, 255, 0.4);
-    }
-    .title-badge {
-      position: absolute;
-      top: 12px;
-      right: 15px;
-      color: #59c;
-      font-weight: 600;
-      font-size: 14px;
-      pointer-events: none;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.8);
-    }
-    .hint {
-      position: absolute;
-      top: 38px;
-      left: 15px;
-      color: #567;
-      font-size: 11px;
-      pointer-events: none;
-    }
-    .error {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: rgba(80, 20, 20, 0.9);
-      color: #f88;
-      padding: 20px 30px;
-      border-radius: 8px;
-      text-align: center;
-      display: none;
-      z-index: 1000;
-      border: 1px solid #a44;
-      max-width: 80%;
-    }
-    .wireframe-toggle { font-size: 11px; color: #456; margin-top: 4px; }
-  </style>
+    <meta charset="UTF-8">
+    <title>VW T6 Heckauszug – Technische Dokumentation</title>
+    <style>
+        body { font-family: Arial, Helvetica, sans-serif; margin: 0; padding: 20px; background: #fafafa; }
+        h1, h2 { color: #2c3e50; }
+        .container { max-width: 1200px; margin: auto; }
+        .section { background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .note { position:fixed; top:10px; left:10px; background:rgba(0,0,0,0.6); color:#fff; padding:8px 12px; border-radius:4px; font-family:sans-serif; font-size:14px; z-index:1000; }
+        .description { background: #fff8e1; padding: 15px; margin: 20px 0; border-left: 4px solid #ffb300; border-radius: 4px; }
+        .drawings { display: flex; flex-direction: column; gap: 20px; align-items: center; margin-bottom: 30px; }
+        .drawing { background: #f8f8f8; padding: 15px; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); width: 260px; text-align: center; }
+        .drawing h2 { margin-top: 0; color: #2c3e50; }
+        .drawing svg { width: 100%; height: auto; display: block; margin: 10px 0; border: 1px solid #ccc; }
+        .threejs { width: 100%; max-width: 900px; height: 600px; margin: 20px auto; display: block; }
+    </style>
 </head>
 <body>
-  <canvas id="glcanvas"></canvas>
-  <div class="ui-overlay">
-    <h1>VW T6 Heckauszug</h1>
-    <div class="label">Maßstab: 1:20</div>
-    <div class="wireframe-toggle">Drahtgitter: Taste W</div>
-  </div>
-  <div class="title-badge">3D SKIZZE</div>
-  <div class="hint">➤ Ziehen: Drehen · Pinch/Rad: Zoom</div>
-  <div class="controls">
-    <button class="btn" id="toggle-measure" title="Maßlinien ein/aus">📏 Maßlinien</button>
-    <button class="btn" id="toggle-wireframe" title="Drahtgittermodus">🔲 Drahtgitter</button>
-    <button class="btn" id="reset-view" title="Ansicht zurücksetzen">↺ Reset</button>
-  </div>
-  <div class="error" id="error-box">
-    <strong>WebGL nicht unterstützt</strong><br>
-    Dieser Browser unterstützt keine 3D-Grafik.
-  </div>
-
-<script>
-(function() {
-  'use strict';
-
-  const canvas = document.getElementById('glcanvas');
-  const errorBox = document.getElementById('error-box');
-  let gl, program, positionBuffer, normalBuffer, colorBuffer, vertexCount;
-  let isWireframe = false;
-  
-  // Initialize WebGL
-  try {
-    gl = canvas.getContext('webgl2', { antialias: false }) || 
-         canvas.getContext('webgl', { antialias: false });
-    if (!gl) throw new Error('WebGL not supported');
-  } catch (e) {
-    errorBox.style.display = 'block';
-    return;
-  }
-
-  // Set canvas size
-  function resize() {
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    canvas.width = Math.floor(window.innerWidth * dpr);
-    canvas.height = Math.floor(window.innerHeight * dpr);
-    gl.viewport(0, 0, canvas.width, canvas.height);
-  }
-  resize();
-  window.addEventListener('resize', resize);
-
-  // Shaders
-  const vsSource = `
-    attribute vec3 aPosition;
-    attribute vec3 aNormal;
-    attribute vec3 aColor;
-    
-    uniform mat4 uProjection;
-    uniform mat4 uModelView;
-    
-    varying vec3 vNormal;
-    varying vec3 vColor;
-    varying vec3 vPosition;
-    
-    void main() {
-      vec4 mvPos = uModelView * vec4(aPosition, 1.0);
-      gl_Position = uProjection * mvPos;
-      vPosition = mvPos.xyz;
-      vNormal = normalize(mat3(uModelView) * aNormal);
-      vColor = aColor;
-    }
-  `;
-
-  const fsSource = `
-    precision mediump float;
-    
-    varying vec3 vNormal;
-    varying vec3 vColor;
-    varying vec3 vPosition;
-    
-    void main() {
-      vec3 lightDir = normalize(vec3(1.0, 1.0, 1.5));
-      float diff = max(dot(vNormal, lightDir), 0.25);
-      
-      vec3 ambient = vColor * 0.4;
-      vec3 diffuse = vColor * diff * 0.7;
-      
-      // Wireframe hint (simple rim lighting)
-      float rim = 1.0 - max(dot(vNormal, normalize(vPosition)), 0.0);
-      vec3 wireAccent = vColor * (0.3 + rim * 0.4);
-      
-      gl_FragColor = vec4(ambient + diffuse, 1.0);
-    }
-  `;
-
-  function createShader(gl, type, source) {
-    const shader = gl.createShader(type);
-    gl.shaderSource(shader, source);
-    gl.compileShader(shader);
-    if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-      console.error(gl.getShaderInfoLog(shader));
-      gl.deleteShader(shader);
-      return null;
-    }
-    return shader;
-  }
-
-  const vs = createShader(gl, gl.VERTEX_SHADER, vsSource);
-  const fs = createShader(gl, gl.FRAGMENT_SHADER, fsSource);
-  program = gl.createProgram();
-  gl.attachShader(program, vs);
-  gl.attachShader(program, fs);
-  gl.linkProgram(program);
-  
-  if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-    errorBox.style.display = 'block';
-    errorBox.innerHTML = 'Fehler beim Erstellen des Programms';
-    return;
-  }
-
-  // Locations
-  const aPos = gl.getAttribLocation(program, 'aPosition');
-  const aNorm = gl.getAttribLocation(program, 'aNormal');
-  const aCol = gl.getAttribLocation(program, 'aColor');
-  const uProj = gl.getUniformLocation(program, 'uProjection');
-  const uMv = gl.getUniformLocation(program, 'uModelView');
-
-  // Matrix functions
-  function mat4Identity() {
-    return new Float32Array([1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1]);
-  }
-
-  function mat4Perspective(fov, aspect, near, far) {
-    const f = 1.0 / Math.tan(fov * 0.5);
-    const nf = 1.0 / (near - far);
-    return new Float32Array([
-      f/aspect, 0,       0,                            0,
-      0,        f,       0,                            0,
-      0,        0,       (far+near)*nf,               -1,
-      0,        0,       (2*far*near)*nf,             0
-    ]);
-  }
-
-  function mat4Multiply(a, b) {
-    const out = new Float32Array(16);
-    for (let i = 0; i < 4; i++) {
-      for (let j = 0; j < 4; j++) {
-        out[j*4+i] = a[i]   * b[j*4]   +
-                     a[i+4] * b[j*4+1] +
-                     a[i+8] * b[j*4+2] +
-                     a[i+12]* b[j*4+3];
-      }
-    }
-    return out;
-  }
-
-  function mat4Translate(m, tx, ty, tz) {
-    const out = new Float32Array(m);
-    out[12] = m[0]*tx + m[4]*ty + m[8]*tz + m[12];
-    out[13] = m[1]*tx + m[5]*ty + m[9]*tz + m[13];
-    out[14] = m[2]*tx + m[6]*ty + m[10]*tz + m[14];
-    return out;
-  }
-
-  function mat4RotateX(m, rad) {
-    const s = Math.sin(rad), c = Math.cos(rad);
-    const out = new Float32Array(m);
-    out[4] = m[4]*c - m[8]*s;
-    out[5] = m[5]*c - m[9]*s;
-    out[6] = m[6]*c - m[10]*s;
-    out[8] = m[4]*s + m[8]*c;
-    out[9] = m[5]*s + m[9]*c;
-    out[10] = m[6]*s + m[10]*c;
-    return out;
-  }
-
-  function mat4RotateY(m, rad) {
-    const s = Math.sin(rad), c = Math.cos(rad);
-    const out = new Float32Array(m);
-    out[0] = m[0]*c + m[8]*s;
-    out[1] = m[1]*c + m[9]*s;
-    out[2] = m[2]*c + m[10]*s;
-    out[8] = m[8]*c - m[0]*s;
-    out[9] = m[9]*c - m[1]*s;
-    out[10] = m[10]*c - m[2]*s;
-    return out;
-  }
-
-  function mat4Scale(m, sx, sy, sz) {
-    const out = new Float32Array(m);
-    out[0] *= sx; out[1] *= sx; out[2] *= sx; out[3] *= sx;
-    out[4] *= sy; out[5] *= sy; out[6] *= sy; out[7] *= sy;
-    out[8] *= sz; out[9] *= sz; out[10] *= sz; out[11] *= sz;
-    return out;
-  }
-
-  // Generate VW T6 Heckauszug geometry
-  function createDrawbarGeometry() {
-    const positions = [], normals = [], colors = [];
-    
-    // Colors as [r,g,b]
-    const steel = [0.42, 0.44, 0.48];
-    const darkSteel = [0.28, 0.32, 0.38];
-    const highlight = [0.55, 0.58, 0.62];
-    const accent = [0.35, 0.45, 0.55];
-    
-    function addBox(x, y, z, w, h, d, col) {
-      const hw = w/2, hh = h/2, hd = d/2;
-      // Each face: 4 vertices, 2 triangles
-      const faces = [
-        // Right (x+)
-        { pos:[[hw,-hh,-hd],[hw,-hh,hd],[hw,hh,hd],[hw,hh,-hd]], norm:[1,0,0] },
-        // Left (x-)
-        { pos:[[-hw,-hh,hd],[-hw,-hh,-hd],[-hw,hh,-hd],[-hw,hh,hd]], norm:[-1,0,0] },
-        // Top (y+)
-        { pos:[[-hw,hh,-hd],[hw,hh,-hd],[hw,hh,hd],[-hw,hh,hd]], norm:[0,1,0] },
-        // Bottom (y-)
-        { pos:[[-hw,-hh,hd],[hw,-hh,hd],[hw,-hh,-hd],[-hw,-hh,-hd]], norm:[0,-1,0] },
-        // Front (z+)
-        { pos:[[-hw,-hh,hd],[-hw,hh,hd],[hw,hh,hd],[hw,-hh,hd]], norm:[0,0,1] },
-        // Back (z-)
-        { pos:[[hw,-hh,-hd],[hw,hh,-hd],[-hw,hh,-hd],[-hw,-hh,-hd]], norm:[0,0,-1] }
-      ];
-      
-      faces.forEach(f => {
-        const p = f.pos, n = f.norm;
-        // Triangle 1: 0,1,2
-        positions.push(...p[0], ...p[1], ...p[2]);
-        normals.push(...n, ...n, ...n);
-        colors.push(...col, ...col, ...col);
-        // Triangle 2: 0,2,3
-        positions.push(...p[0], ...p[2], ...p[3]);
-        normals.push(...n, ...n, ...n);
-        colors.push(...col, ...col, ...col);
-      });
-    }
-
-    function addCylinder(x, y, z, r, len, segs, col, axis) {
-      for (let i = 0; i < segs; i++) {
-        const a1 = (i / segs) * Math.PI * 2;
-        const a2 = ((i + 1) / segs) * Math.PI * 2;
-        let x1, y1, z1, x2, y2, z2, nx, ny, nz;
-        
-        if (axis === 'x') {
-          x1 = x; y1 = y + Math.cos(a1)*r; z1 = z + Math.sin(a1)*r;
-          x2 = x + len; y2 = y + Math.cos(a2)*r; z2 = z + Math.sin(a2)*r;
-          nx = Math.cos(a1); ny = 0; nz = Math.sin(a1);
-          addBox((x1+x2)/2 + x/2, (y1+y2)/2, (z1+z2)/2, 1, r*2, len, col);
-        } else if (axis === 'y') {
-          x1 = x + Math.cos(a1)*r; y1 = y; z1 = z + Math.sin(a1)*r;
-          x2 = x + Math.cos(a2)*r; y2 = y + len; z2 = z + Math.sin(a2)*r;
-          nx = Math.cos(a1); ny = 0; nz = Math.sin(a1);
-          addBox((x1+x2)/2, y/2 + len/2, (z1+z2)/2, len, r*2, 1, col);
-        } else {
-          x1 = x + Math.cos(a1)*r; y1 = y + Math.sin(a1)*r; z1 = z;
-          x2 = x + Math.cos(a2)*r; y2 = y + Math.sin(a2)*r; z2 = z + len;
-          nx = Math.cos(a1); ny = Math.sin(a1); nz = 0;
-          addBox((x1+x2)/2, (y1+y2)/2, z/2 + len/2, 1, r*2, len, col);
+    <h1>VW T6 Heckauszug – Technische Zeichnungen & 3D-Ansicht</h1>
+    <div class="note">Für beste Ergebnisse bitte über einen lokalen Webserver öffnen (z.B. python -m http.server)</div>
+    <div class="description">
+        <p>Der Heckauszug besteht aus drei Modulen: zwei Eurobox-Module links und rechts sowie ein Kühlbox-Modul in der Mitte. Die Konstruktion nutzt Aluminiumprofile 20x40 mm und Holzkomponenten für die Böden und Seitenwände.</p>
+    </div>
+    <div class="drawings">
+        <div class="drawing">
+            <h2>Frontansicht</h2>
+            <svg width="1200" height="590" viewBox="0 0 1200 590" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="590" fill="#f8f8f8" stroke="#ccc"/>
+  <rect x="0" y="0" width="20" height="590" fill="#bbb" stroke="#555"/>
+  <rect x="330" y="0" width="20" height="590" fill="#bbb" stroke="#555"/>
+  <rect x="830" y="0" width="20" height="590" fill="#bbb" stroke="#555"/>
+  <rect x="1180" y="0" width="20" height="590" fill="#bbb" stroke="#555"/>
+  <rect x="20" y="0" width="310" height="590" fill="#e0e0e0" stroke="#555"/>
+  <rect x="350" y="0" width="500" height="590" fill="#d0d0d0" stroke="#555"/>
+  <rect x="850" y="0" width="310" height="590" fill="#e0e0e0" stroke="#555"/>
+  <rect x="20" y="570" width="310" height="20" fill="#aaa" stroke="#555"/>
+  <rect x="20" y="500" width="310" height="70" fill="#999" stroke="#555"/>
+  <rect x="20" y="485" width="310" height="15" fill="#8d6e63" stroke="#555"/>
+  <rect x="20" y="0" width="310" height="20" fill="#aaa" stroke="#555"/>
+  <line x1="0" y1="610" x2="1240" y2="610" stroke="#555" stroke-width="2"/>
+  <line x1="0" y1="590" x2="0" y2="630" stroke="#555" stroke-width="2"/>
+  <line x1="1240" y1="590" x2="1240" y2="630" stroke="#555" stroke-width="2"/>
+  <text x="620.0" y="650" text-anchor="middle" font-size="16" fill="#000">1200 mm</text>
+  <line x1="-20" y1="0" x2="-20" y2="590" stroke="#555" stroke-width="2"/>
+  <line x1="-40" y1="0" x2="-20" y2="0" stroke="#555" stroke-width="2"/>
+  <line x1="-40" y1="590" x2="-20" y2="590" stroke="#555" stroke-width="2"/>
+  <text x="-60" y="295.0" text-anchor="middle" font-size="16" fill="#000" transform="rotate(-90 -60,295.0)">590 mm</text>
+</svg>
+        </div>
+        <div class="drawing">
+            <h2>Seitenansicht</h2>
+            <svg width="600" height="590" viewBox="0 0 600 590" xmlns="http://www.w3.org/2000/svg">
+  <rect width="600" height="590" fill="#f8f8f8" stroke="#ccc"/>
+  <rect x="20" y="20" width="560" height="550" fill="#e0e0e0" stroke="#555"/>
+  <rect x="40" y="100" width="80" height="400" fill="#bdbdbd" stroke="#555"/>
+  <rect x="480" y="100" width="80" height="400" fill="#bdbdbd" stroke="#555"/>
+  <rect x="150.0" y="100" width="300" height="400" fill="#ffe0b2" stroke="#555"/>
+  <text x="300.0" y="295.0" text-anchor="middle" font-size="18" fill="#333">Kühlbox</text>
+  <rect x="40" y="100" width="120" height="100" fill="#bbdefb" stroke="#555"/>
+  <rect x="40" y="220" width="120" height="100" fill="#bbdefb" stroke="#555"/>
+  <rect x="440" y="100" width="120" height="100" fill="#bbdefb" stroke="#555"/>
+  <rect x="440" y="220" width="120" height="100" fill="#bbdefb" stroke="#555"/>
+  <rect x="0" y="0" width="600" height="20" fill="#6d4c41" stroke="#555"/>
+  <line x1="0" y1="610" x2="600" y2="610" stroke="#555" stroke-width="2"/>
+  <line x1="0" y1="590" x2="0" y2="630" stroke="#555" stroke-width="2"/>
+  <line x1="600" y1="590" x2="600" y2="630" stroke="#555" stroke-width="2"/>
+  <text x="300.0" y="650" text-anchor="middle" font-size="16" fill="#000">600 mm</text>
+  <line x1="-20" y1="0" x2="-20" y2="590" stroke="#555" stroke-width="2"/>
+  <line x1="-40" y1="0" x2="-20" y2="0" stroke="#555" stroke-width="2"/>
+  <line x1="-40" y1="590" x2="-20" y2="590" stroke="#555" stroke-width="2"/>
+  <text x="-60" y="295.0" text-anchor="middle" font-size="16" fill="#000" transform="rotate(-90 -60,295.0)">590 mm</text>
+</svg>
+        </div>
+        <div class="drawing">
+            <h2>Draufsicht</h2>
+            <svg width="1200" height="600" viewBox="0 0 1200 600" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="600" fill="#f8f8f8" stroke="#ccc"/>
+  <rect x="0" y="0" width="20" height="600" fill="#bbb" stroke="#555"/>
+  <rect x="310" y="0" width="20" height="600" fill="#bbb" stroke="#555"/>
+  <rect x="810" y="0" width="20" height="600" fill="#bbb" stroke="#555"/>
+  <rect x="1180" y="0" width="20" height="600" fill="#bbb" stroke="#555"/>
+  <rect x="20" y="0" width="310" height="600" fill="#e0e0e0" stroke="#555"/>
+  <rect x="330" y="0" width="500" height="600" fill="#d0d0d0" stroke="#555"/>
+  <rect x="830" y="0" width="310" height="600" fill="#e0e0e0" stroke="#555"/>
+  <line x1="0" y1="620" x2="1200" y2="620" stroke="#555" stroke-width="2"/>
+  <line x1=0 y1="600" x2=0 y2="640" stroke="#555" stroke-width="2"/>
+  <line x1="1200" y1="600" x2="1200" y2="640" stroke="#555" stroke-width="2"/>
+  <text x="600.0" y="660" text-anchor="middle" font-size="16" fill="#000">1200 mm</text>
+  <line x1="-20" y1="0" x2="-20" y2="600" stroke="#555" stroke-width="2"/>
+  <line x1="-40" y1=0 x2="-20" y2=0 stroke="#555" stroke-width="2"/>
+  <line x1="-40" y1="600" x2="-20" y2="600" stroke="#555" stroke-width="2"/>
+  <text x="-60" y="300.0" text-anchor="middle" font-size="16" fill="#000" transform="rotate(-90 -60,300.0)">600 mm</text>
+</svg>
+        </div>
+        <div class="drawing">
+            <h2>Isometrie</h2>
+            <svg width="1800" height="1190" viewBox="0 0 1800 1190" xmlns="http://www.w3.org/2000/svg">
+  <polygon points="0,590 1200,590 1800,290.0 600,290.0" fill="#e0e0e0" stroke="#555"/>
+  <polygon points="0,590 0,1180 600,880.0 600,290.0" fill="#d0d0d0" stroke="#555"/>
+  <polygon points="1200,590 1200,1180 1800,880.0 1800,290.0" fill="#c0c0c0" stroke="#555"/>
+  <line x1="600.0" y1="610" x2="1200.0" y2="610" stroke="#555" stroke-width="2"/>
+  <line x1="600.0" y1="590" x2="600.0" y2="630" stroke="#555" stroke-width="2"/>
+  <line x1="1200.0" y1="590" x2="1200.0" y2="630" stroke="#555" stroke-width="2"/>
+  <text x="900.0" y="650" text-anchor="middle" font-size="16" fill="#000">1200 mm</text>
+  <line x1="1220" y1="300.0" x2="1220" y2="890.0" stroke="#555" stroke-width="2"/>
+  <line x1="1200" y1="300.0" x2="1240" y2="300.0" stroke="#555" stroke-width="2"/>
+  <line x1="1200" y1="890.0" x2="1240" y2="890.0" stroke="#555" stroke-width="2"/>
+  <text x="1260" y="595.0" text-anchor="middle" font-size="16" fill="#000" transform="rotate(90 1260,595.0)">600 mm</text>
+  <line x1="1820" y1="295.0" x2="1820" y2="885.0" stroke="#555" stroke-width="2"/>
+  <line x1="1800" y1="295.0" x2="1840" y2="295.0" stroke="#555" stroke-width="2"/>
+  <line x1="1800" y1="885.0" x2="1840" y2="885.0" stroke="#555" stroke-width="2"/>
+  <text x="1860" y="590.0" text-anchor="middle" font-size="16" fill="#000" transform="rotate(90 1860,590.0)">590 mm</text>
+</svg>
+        </div>
+    </div>
+    <div class="section">
+        <h2>3D-Visualisierung (WebGL/OpenGL)</h2>
+        <div class="threejs-container">
+            <div id="threejs-canvas"></div>
+        </div>
+    </div>
+    <script type="module">
+        import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+        import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/controls/OrbitControls.js';
+        let scene, camera, renderer, controls;
+        function initThreeJS() {
+            const container = document.getElementById('threejs-canvas');
+            if (!container) { console.warn('Three.js container not found'); return; }
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0xf5f5f5);
+            const aspect = container.clientWidth / 600;
+            camera = new THREE.PerspectiveCamera(50, aspect, 1, 5000);
+            camera.position.set(600, 800, 1000);
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(container.clientWidth, 600);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+            container.appendChild(renderer.domElement);
+            controls = new OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            controls.screenSpacePanning = false;
+            controls.minDistance = 300;
+            controls.maxDistance = 2500;
+            controls.maxPolarAngle = Math.PI / 2 - 0.01;
+            controls.target.set(600, 300, 300);
+            const ambient = new THREE.AmbientLight(0xffffff, 0.6);
+            scene.add(ambient);
+            const dirLight = new THREE.DirectionalLight(0xffffff, 1);
+            dirLight.position.set(500, 1000, 500);
+            dirLight.castShadow = true;
+            dirLight.shadow.mapSize.width = 2048;
+            dirLight.shadow.mapSize.height = 2048;
+            dirLight.shadow.camera.near = 1;
+            dirLight.shadow.camera.far = 2000;
+            dirLight.shadow.camera.left = -800;
+            dirLight.shadow.camera.right = 800;
+            dirLight.shadow.camera.top = 800;
+            dirLight.shadow.camera.bottom = -800;
+            scene.add(dirLight);
+            const fillLight = new THREE.DirectionalLight(0xffffff, 0.3);
+            fillLight.position.set(-500, 300, -500);
+            scene.add(fillLight);
+            const groundGeo = new THREE.PlaneGeometry(2000, 2000);
+            const groundMat = new THREE.MeshStandardMaterial({ color: 0xeeeeee, roughness: 0.9, metalness: 0 });
+            const ground = new THREE.Mesh(groundGeo, groundMat);
+            ground.rotation.x = -Math.PI / 2;
+            ground.position.y = -1;
+            ground.receiveShadow = true;
+            scene.add(ground);
+            const profileWidth = 40, profileDepth = 20;
+            const MODULES = [
+                { x: 0, width: 310, depth: 600,
+                  layers: [
+                    { name: 'Auszug', z: 0, h: 590, color: 0xbdbdbd },
+                    { name: 'U-Profil auf Auszug', z: 20, h: 70, color: 0xe8f5e9 },
+                    { name: 'Bierbank IN U', z: 20, h: 40, color: 0xd7ccc8 },
+                    { name: 'Brett AUF U', z: 90, h: 15, color: 0x8d6e63 },
+                    { name: 'Eurobox 1', z: 105, h: 220, color: 0xbbdefb },
+                    { name: 'Eurobox 2', z: 325, h: 220, color: 0xbbdefb },
+                    { name: 'Deckel 15mm', z: 545, h: 15, color: 0x6d4c41 }
+                  ]},
+                { x: 310, width: 500, depth: 600,
+                  layers: [
+                    { name: 'Auszug', z: 0, h: 590, color: 0xbdbdbd },
+                    { name: 'Brett dropped', z: 20, h: 15, color: 0x8d6e63 },
+                    { name: 'Kühlbox', z: 35, h: 490, color: 0xffe0b2 }
+                  ]},
+                { x: 810, width: 310, depth: 600,
+                  layers: [
+                    { name: 'Auszug', z: 0, h: 590, color: 0xbdbdbd },
+                    { name: 'U-Profil auf Auszug', z: 20, h: 70, color: 0xe8f5e9 },
+                    { name: 'Bierbank IN U', z: 20, h: 40, color: 0xd7ccc8 },
+                    { name: 'Brett AUF U', z: 90, h: 15, color: 0x8d6e63 },
+                    { name: 'Eurobox 1', z: 105, h: 220, color: 0xbbdefb },
+                    { name: 'Eurobox 2', z: 325, h: 220, color: 0xbbdefb },
+                    { name: 'Deckel 15mm', z: 545, h: 15, color: 0x6d4c41 }
+                  ]}
+            ];
+            MODULES.forEach(mod => {
+                const group = new THREE.Group();
+                group.position.x = mod.x + mod.width / 2;
+                group.position.z = mod.depth / 2;
+                scene.add(group);
+                const lngMat = new THREE.MeshStandardMaterial({ color: 0x333333, roughness: 0.3, metalness: 0.8 });
+                for (let i = 0; i < 2; i++) {
+                    const xOffset = i === 0 ? -mod.width / 2 + 10 : mod.width / 2 - 30;
+                    const lngGeo = new THREE.BoxGeometry(profileWidth, 590, profileDepth);
+                    const lng = new THREE.Mesh(lngGeo, lngMat);
+                    lng.position.set(xOffset, 295, -mod.depth / 2 + 10);
+                    lng.castShadow = true;
+                    lng.receiveShadow = true;
+                    group.add(lng);
+                }
+                for (let i = 0; i < 2; i++) {
+                    const xOffset = i === 0 ? -mod.width / 2 + 10 : mod.width / 2 - 30;
+                    const lngGeo = new THREE.BoxGeometry(profileWidth, 590, profileDepth);
+                    const lng = new THREE.Mesh(lngGeo, lngMat);
+                    lng.position.set(xOffset, 295, mod.depth / 2 - 10);
+                    lng.castShadow = true;
+                    lng.receiveShadow = true;
+                    group.add(lng);
+                }
+                const qtrMat = new THREE.MeshStandardMaterial({ color: 0x222222, roughness: 0.3, metalness: 0.8 });
+                const qtrGeo = new THREE.BoxGeometry(mod.width - 20, 20, mod.depth - 20);
+                const qtr1 = new THREE.Mesh(qtrGeo, qtrMat);
+                qtr1.position.set(0, 10, 0);
+                qtr1.castShadow = true;
+                qtr1.receiveShadow = true;
+                group.add(qtr1);
+                const qtr2 = new THREE.Mesh(qtrGeo, qtrMat);
+                qtr2.position.set(0, 580, 0);
+                qtr2.castShadow = true;
+                qtr2.receiveShadow = true;
+                group.add(qtr2);
+                if (mod.x === 310 || mod.x === 810) {
+                    const divGeo = new THREE.PlaneGeometry(2, 590);
+                    const divMat = new THREE.MeshBasicMaterial({ color: 0x333333, transparent: true, opacity: 0.3, side: THREE.DoubleSide });
+                    const div = new THREE.Mesh(divGeo, divMat);
+                    div.position.set(-mod.width / 2, 295, 0);
+                    div.rotation.y = Math.PI / 2;
+                    group.add(div);
+                }
+                const sliderMat = new THREE.MeshStandardMaterial({ color: 0xbdbdbd, roughness: 0.4, metalness: 0.7 });
+                const sliderGeo = new THREE.BoxGeometry(19.5, 590, 50);
+                const sliderPositions = [
+                    { x: -mod.width / 2 + 10, z: -mod.depth / 2 + 25 },
+                    { x: mod.width / 2 - 29.5, z: -mod.depth / 2 + 25 },
+                    { x: -mod.width / 2 + 10, z: mod.depth / 2 - 25 },
+                    { x: mod.width / 2 - 29.5, z: mod.depth / 2 - 25 }
+                ];
+                sliderPositions.forEach(pos => {
+                    const slider = new THREE.Mesh(sliderGeo, sliderMat);
+                    slider.position.set(pos.x, 295, pos.z);
+                    slider.castShadow = true;
+                    slider.receiveShadow = true;
+                    group.add(slider);
+                });
+                mod.layers.forEach(layer => {
+                    if (layer.name === 'Auszug') return;
+                    let mesh;
+                    const layerMat = new THREE.MeshStandardMaterial({
+                        color: layer.color,
+                        emissive: layer.emissive,
+                        emissiveIntensity: 0.05,
+                        roughness: layer.name.includes('Bierbank') ? 0.8 : 0.5,
+                        metalness: layer.name.includes('Auszug') || layer.name.includes('U-Profil') ? 0.6 : 0.1,
+                        transparent: layer.name.includes('Bierbank'),
+                        opacity: layer.name.includes('Bierbank') ? 0.95 : 1
+                    });
+                    let geom;
+                    if (layer.name.includes('U-Profil')) {
+                        geom = new THREE.BoxGeometry(mod.width - 40, layer.h, mod.depth - 40);
+                        mesh = new THREE.Mesh(geom, layerMat);
+                        mesh.position.set(0, layer.z + layer.h / 2, 0);
+                    } else if (layer.name.includes('Bierbank')) {
+                        geom = new THREE.BoxGeometry(230, layer.h, mod.depth - 80);
+                        mesh = new THREE.Mesh(geom, layerMat);
+                        mesh.position.set(0, layer.z + layer.h / 2, 0);
+                    } else if (layer.name.includes('Brett')) {
+                        geom = new THREE.BoxGeometry(mod.width - 20, layer.h, mod.depth - 20);
+                        mesh = new THREE.Mesh(geom, layerMat);
+                        mesh.position.set(0, layer.z + layer.h / 2, 0);
+                    } else if (layer.name.includes('Eurobox')) {
+                        geom = new THREE.BoxGeometry(250, layer.h, mod.depth - 60);
+                        mesh = new THREE.Mesh(geom, layerMat);
+                        mesh.position.set(0, layer.z + layer.h / 2, 0);
+                    } else if (layer.name.includes('Kühlbox')) {
+                        geom = new THREE.BoxGeometry(mod.width - 60, layer.h, mod.depth - 60);
+                        mesh = new THREE.Mesh(geom, layerMat);
+                        mesh.position.set(0, layer.z + layer.h / 2, 0);
+                    } else {
+                        geom = new THREE.BoxGeometry(mod.width - 20, layer.h, mod.depth - 20);
+                        mesh = new THREE.Mesh(geom, layerMat);
+                        mesh.position.set(0, layer.z + layer.h / 2, 0);
+                    }
+                    if (mesh) {
+                        mesh.castShadow = true;
+                        mesh.receiveShadow = true;
+                        const edges = new THREE.EdgesGeometry(geom);
+                        const edgeMat = new THREE.LineBasicMaterial({ color: 0x000000, opacity: 0.15, transparent: true });
+                        const edgeMesh = new THREE.LineSegments(edges, edgeMat);
+                        edgeMesh.position.copy(mesh.position);
+                        group.add(edgeMesh);
+                        group.add(mesh);
+                    }
+                });
+            });
+            const axes = new THREE.AxesHelper(300);
+            scene.add(axes);
+            const grid = new THREE.GridHelper(1500, 30, 0xcccccc, 0xeeeeee);
+            grid.position.y = -1;
+            scene.add(grid);
+            window.addEventListener('resize', onResize);
+            animate();
         }
-      }
-    }
-
-    // VW T6 Heckauszug dimensions (scaled: 1 unit = 10mm)
-    // Main bar: 600mm × 80mm × 60mm → 60 × 8 × 6
-    addBox(0, 0, 0, 60, 8, 6, highlight);
-    
-    // Mounting plate: 200mm × 150mm × 15mm → 20 × 15 × 1.5
-    addBox(-25, -4, 0, 20, 1.5, 15, darkSteel);
-    addBox(5, -4, 0, 20, 1.5, 15, darkSteel);
-    
-    // Side reinforcement braces
-    addBox(-40, -6, 0, 5, 5, 6, steel);
-    addBox(20, -6, 0, 5, 5, 6, steel);
-    
-    // Ball head (Anhängerkupplungskugel) - 50mm diameter, 40mm long
-    addBox(35, 0, 0, 5, 5, 4, accent);
-    
-    // Lock mechanism housing
-    addBox(12, 2, 0, 6, 4, 5, highlight);
-    
-    // Safety chain anchors
-    addBox(-48, -2, 0, 4, 3, 4, steel);
-    addBox(48, -2, 0, 4, 3, 4, steel);
-    
-    // Vertical support post
-    addBox(-20, 0, 0, 3, 12, 3, steel);
-    addBox(10, 0, 0, 3, 12, 3, steel);
-    
-    return {
-      positions: new Float32Array(positions),
-      normals: new Float32Array(normals),
-      colors: new Float32Array(colors),
-      count: positions.length / 3
-    };
-  }
-
-  // Build geometry
-  const geo = createDrawbarGeometry();
-  positionBuffer = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-  gl.bufferData(gl.ARRAY_BUFFER, geo.positions, gl.STATIC_DRAW);
-
-  normalBuffer = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, normalBuffer);
-  gl.bufferData(gl.ARRAY_BUFFER, geo.normals, gl.STATIC_DRAW);
-
-  colorBuffer = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
-  gl.bufferData(gl.ARRAY_BUFFER, geo.colors, gl.STATIC_DRAW);
-
-  vertexCount = geo.count;
-
-  // State
-  let rotX = 0.4, rotY = 0.8, zoom = 1.2;
-  let isMeasuring = false;
-  
-  // Input handling
-  let touches = [], touchDist = 0, lastX = 0, lastY = 0;
-  
-  canvas.addEventListener('touchstart', e => {
-    e.preventDefault();
-    touches = Array.from(e.touches);
-    if (touches.length === 1) {
-      lastX = touches[0].clientX;
-      lastY = touches[0].clientY;
-    } else if (touches.length >= 2) {
-      touchDist = Math.hypot(
-        touches[0].clientX - touches[1].clientX,
-        touches[0].clientY - touches[1].clientY
-      );
-    }
-  }, { passive: false });
-
-  canvas.addEventListener('touchmove', e => {
-    e.preventDefault();
-    const curr = Array.from(e.touches);
-    
-    if (curr.length === 1 && touches.length === 1) {
-      const dx = curr[0].clientX - lastX;
-      const dy = curr[0].clientY - lastY;
-      rotY += dx * 0.008;
-      rotX += dy * 0.008;
-      lastX = curr[0].clientX;
-      lastY = curr[0].clientY;
-    } else if (curr.length >= 2 && touches.length >= 2) {
-      const dist = Math.hypot(
-        curr[0].clientX - curr[1].clientX,
-        curr[0].clientY - curr[1].clientY
-      );
-      zoom *= 1 + (dist - touchDist) * 0.005;
-      zoom = Math.max(0.5, Math.min(4, zoom));
-      touchDist = dist;
-    }
-    touches = curr;
-  }, { passive: false });
-
-  canvas.addEventListener('touchend', () => { touches = []; });
-
-  // Mouse fallback
-  let dragging = false, mx = 0, my = 0;
-  canvas.addEventListener('mousedown', e => { dragging = true; mx = e.clientX; my = e.clientY; });
-  canvas.addEventListener('mousemove', e => {
-    if (!dragging) return;
-    rotY += (e.clientX - mx) * 0.008;
-    rotX += (e.clientY - my) * 0.008;
-    mx = e.clientX; my = e.clientY;
-  });
-  canvas.addEventListener('mouseup', () => dragging = false);
-  canvas.addEventListener('wheel', e => {
-    e.preventDefault();
-    zoom *= e.deltaY > 0 ? 1.08 : 0.92;
-    zoom = Math.max(0.5, Math.min(4, zoom));
-  }, { passive: false });
-
-  // Keyboard controls
-  document.addEventListener('keydown', e => {
-    if (e.key === 'w' || e.key === 'W') {
-      isWireframe = !isWireframe;
-      document.getElementById('toggle-wireframe').classList.toggle('active', isWireframe);
-    }
-  });
-
-  // UI buttons
-  document.getElementById('toggle-measure').onclick = function() {
-    isMeasuring = !isMeasuring;
-    this.classList.toggle('active', isMeasuring);
-  };
-  document.getElementById('toggle-wireframe').onclick = function() {
-    isWireframe = !isWireframe;
-    this.classList.toggle('active', isWireframe);
-  };
-  document.getElementById('reset-view').onclick = () => {
-    rotX = 0.4; rotY = 0.8; zoom = 1.2;
-  };
-
-  // Render
-  function render() {
-    gl.clearColor(0.04, 0.04, 0.06, 1);
-    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-    gl.enable(gl.DEPTH_TEST);
-    gl.enable(gl.CULL_FACE);
-    
-    if (isWireframe) {
-      gl.polygonOffset(-1, -1);
-      gl.enable(gl.POLYGON_OFFSET_FILL);
-    } else {
-      gl.disable(gl.POLYGON_OFFSET_FILL);
-    }
-    
-    gl.useProgram(program);
-
-    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-    gl.vertexAttribPointer(aPos, 3, gl.FLOAT, false, 0, 0);
-    gl.enableVertexAttribArray(aPos);
-
-    gl.bindBuffer(gl.ARRAY_BUFFER, normalBuffer);
-    gl.vertexAttribPointer(aNorm, 3, gl.FLOAT, false, 0, 0);
-    gl.enableVertexAttribArray(aNorm);
-
-    gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
-    gl.vertexAttribPointer(aCol, 3, gl.FLOAT, false, 0, 0);
-    gl.enableVertexAttribArray(aCol);
-
-    const aspect = canvas.width / canvas.height;
-    const proj = mat4Perspective(45 * Math.PI / 180, aspect, 0.1, 1000);
-    
-    let mv = mat4Identity();
-    mv = mat4Translate(mv, 0, 0, -50 * zoom);
-    mv = mat4RotateX(mv, rotX);
-    mv = mat4RotateY(mv, rotY);
-
-    gl.uniformMatrix4fv(uProj, false, proj);
-    gl.uniformMatrix4fv(uMv, false, mv);
-
-    gl.drawArrays(gl.TRIANGLES, 0, vertexCount);
-
-    requestAnimationFrame(render);
-  }
-
-  render();
-})();
-</script>
-
-<div style="margin:20px;padding:20px;background:#f8f8f8;border:2px solid #333;font-size:18px;color:#222;">
-This is a big text box to confirm HTML editing works.
-You can put any description here.
-</div>
+        function onResize() {
+            if (!camera || !renderer) return;
+            const container = document.getElementById('threejs-canvas');
+            if (!container) return;
+            const width = container.clientWidth;
+            const height = 600;
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+            renderer.setSize(width, height);
+        }
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
+        }
+        function cleanup() {
+            if (animationId) { cancelAnimationFrame(animationId); animationId = null; }
+            window.removeEventListener('resize', onResize);
+            if (renderer) {
+                renderer.dispose();
+                const container = document.getElementById('threejs-canvas');
+                if (container) {
+                    const domElement = renderer.domElement;
+                    if (domElement && domElement.parentNode) {
+                        domElement.parentNode.removeChild(domElement);
+                    }
+                }
+            }
+            if (scene) {
+                scene.traverse(obj => {
+                    if (obj.geometry) obj.geometry.dispose();
+                    if (obj.material) {
+                        if (Array.isArray(obj.material)) { obj.material.forEach(m => m.dispose()); }
+                        else { obj.material.dispose(); }
+                    }
+                });
+            }
+        }
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initThreeJS);
+        } else {
+            initThreeJS();
+        }
+        window.addEventListener('beforeunload', cleanup);
+    </script>
+    <div style="margin:20px;padding:20px;background:#f8f8f8;border:2px solid #333;font-size:18px;color:#222;">
+        This is a big text box to confirm HTML editing works.
+        You can put any description here.
+    </div>
 </body>
 </html>
