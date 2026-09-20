@@ -17,6 +17,7 @@ Das Projekt enthält die HTML-Vorlage `heckauszug.html` mit technischen Zeichnun
 - CSS für Styling und Druck-Layout
 - SVG für technische Zeichnungen
 - Three.js (WebGL/OpenGL) für 3D-Visualisierung
+- Three.js (WebGL/OpenGL) für 3D-Visualisierung
 
 ## Voraussetzungen
 - Browser zur Vorschau
