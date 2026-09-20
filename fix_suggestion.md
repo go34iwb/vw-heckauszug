@@ -1,0 +1,3 @@
+Findings: The Three.js visualization uses ES modules imported from unpkg.com. When opening the HTML file directly via file:// scheme, browsers block fetching module scripts due to CORS restrictions, causing the Three.js library to fail to load silently or with errors not captured in our quick test.
+
+Suggested fix: Serve the project via a local web server (e.g., python -m http.server) or change the script type to non-module and use the global Three.js build from unpkg.com (e.g., https://unpkg.com/three/build/three.min.js) and adjust imports accordingly.
