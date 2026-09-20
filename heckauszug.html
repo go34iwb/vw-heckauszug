@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>VW T6 Heckauszug – Technische Dokumentation</title>
+    <style>
+        body {{ font-family: Arial, Helvetica, sans-serif; margin: 0; padding: 20px; background: #fafafa; }}
+        h1, h2 {{ color: #2c3e50; }}
+        .container {{ max-width: 1200px; margin: auto; }}
+        .section {{ background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }}
+        .note {{ position:fixed; top:10px; left:10px; background:rgba(0,0,0,0.6); color:#fff; padding:8px 12px; border-radius:4px; font-family:sans-serif; font-size:14px; z-index:1000; }}
+        .drawings {{ display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-bottom: 30px; }}
+        .drawing {{ background: #f8f8f8; padding: 15px; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); width: 260px; text-align: center; }}
+        .drawing h2 {{ margin-top: 0; color: #2c3e50; }}
+        .drawing svg {{ width: 100%; height: auto; display: block; margin: 10px 0; border: 1px solid #ccc; }}
+        .threejs {{ width: 100%; max-width: 900px; height: 600px; margin: 20px auto; display: block; }}
+    </style>
+</head>
+<body>
+    <div class="note">Für beste Ergebnisse bitte über einen lokalen Webserver öffnen (z.B. python -m http.server)</div>
+    <div class="container">
+        <h1>VW T6 Heckauszug – Technische Dokumentation</h1>
+        <div class="section">
+            <h2>Einleitung</h2>
+            <p># VW T6 Heckauszug - Technische Review<br><br>**Datum:** 13. September 2026<br>**Basis:** CONTEXT.md, DECISIONS.md, TODO.md<br>**Status:** Review der Planung (HTML-Zeichnung noch nicht erstellt)<br></p>
+        </div>
+        <div class="section">
+            <h2>Zusammenfassung der Prüfung</h2>
+            <p>Siehe REVIEW.md für detaillierte Prüfung der Maßketten, Auszug/Brett Konflikt, etc.</p>
+        </div>
+        <div class="section">
+            <h2>Technische Zeichnungen</h2>
+            <div class="drawings">
+                <div class="drawing">
+                    <h2>Frontansicht</h2>
+                    <svg width="1200" height="590" viewBox="0 0 1200 590" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="590" fill="#f8f8f8" stroke="#ccc"/>
+  <!-- profiles -->
+  <rect x="0" y="0" width="20" height="590" fill="#bbb" stroke="#555"/>
+  <rect x="330" y="0" width="20" height="590" fill="#bbb" stroke="#555"/>
+  <rect x="830" y="0" width="20" height="590" fill="#bbb" stroke="#555"/>
+  <rect x="1180" y="0" width="20" height="590" fill="#bbb" stroke="#555"/>
+  <!-- modules -->
+  <rect x="20" y="0" width="310" height="590" fill="#e0e0e0" stroke="#555"/>
+  <rect x="350" y="0" width="500" height="590" fill="#d0d0d0" stroke="#555"/>
+  <rect x="850" y="0" width="310" height="590" fill="#e0e0e0" stroke="#555"/>
+  <!-- layers (simplified) -->
+  <rect x="20" y="570" width="310" height="20" fill="#aaa" stroke="#555"/>
+  <rect x="20" y="500" width="310" height="70" fill="#999" stroke="#555"/>
+  <rect x="20" y="485" width="310" height="15" fill="#8d6e63" stroke="#555"/>
+  <rect x="20" y="0" width="310" height="20" fill="#aaa" stroke="#555"/>
+  <!-- dimensions -->
+  <line x1="0" y1="610" x2="1240" y2="610" stroke="#555" stroke-width="2"/>
+  <line x1="0" y1="590" x2="0" y2="630" stroke="#555" stroke-width="2"/>
+  <line x1="1240" y1="590" x2="1240" y2="630" stroke="#555" stroke-width="2"/>
+  <text x="620.0" y="650" text-anchor="middle" font-size="16" fill="#000">1200 mm</text>
+  <line x1="-20" y1="0" x2="-20" y2="590" stroke="#555" stroke-width="2"/>
+  <line x1="-40" y1="0" x2="-20" y2="0" stroke="#555" stroke-width="2"/>
+  <line x1="-40" y1="590" x2="-20" y2="590" stroke="#555" stroke-width="2"/>
+  <text x="-60" y="295.0" text-anchor="middle" font-size="16" fill="#000" transform="rotate(-90 -60,295.0)">590 mm</text>
+</svg>
+                </div>
+                <div class="drawing">
+                    <h2>Seitenansicht</h2>
+                    <svg width="600" height="590" viewBox="0 0 600 590" xmlns="http://www.w3.org/2000/svg">
+  <rect width="600" height="590" fill="#f8f8f8" stroke="#ccc"/>
+  <!-- outer frame -->
+  <rect x="20" y="20" width="560" height="550" fill="#e0e0e0" stroke="#555"/>
+  <!-- drawers left/right -->
+  <rect x="40" y="100" width="80" height="400" fill="#bdbdbd" stroke="#555"/>
+  <rect x="480" y="100" width="80" height="400" fill="#bdbdbd" stroke="#555"/>
+  <!-- Kühlbox (drop) -->
+  <rect x="150.0" y="100" width="300" height="400" fill="#ffe0b2" stroke="#555"/>
+  <text x="300.0" y="295.0" text-anchor="middle" font-size="18" fill="#333">Kühlbox</text>
+  <!-- Euroboxen stacked -->
+  <rect x="40" y="100" width="120" height="100" fill="#bbdefb" stroke="#555"/>
+  <rect x="40" y="220" width="120" height="100" fill="#bbdefb" stroke="#555"/>
+  <rect x="440" y="100" width="120" height="100" fill="#bbdefb" stroke="#555"/>
+  <rect x="440" y="220" width="120" height="100" fill="#bbdefb" stroke="#555"/>
+  <!-- top rail -->
+  <rect x="0" y="0" width="600" height="20" fill="#6d4c41" stroke="#555"/>
+  <!-- dimensions -->
+  <line x1="0" y1="610" x2="600" y2="610" stroke="#555" stroke-width="2"/>
+  <line x1="0" y1="590" x2="0" y2="630" stroke="#555" stroke-width="2"/>
+  <line x1="600" y1="590" x2="600" y2="630" stroke="#555" stroke-width="2"/>
+  <text x="300.0" y="650" text-anchor="middle" font-size="16" fill="#000">600 mm</text>
+  <line x1="-20" y1="0" x2="-20" y2="590" stroke="#555" stroke-width="2"/>
+  <line x1="-40" y1="0" x2="-20" y2="0" stroke="#555" stroke-width="2"/>
+  <line x1="-40" y1="590" x2="-20" y2="590" stroke="#555" stroke-width="2"/>
+  <text x="-60" y="295.0" text-anchor="middle" font-size="16" fill="#000" transform="rotate(-90 -60,295.0)">590 mm</text>
+</svg>
+                </div>
+                <div class="drawing">
+                    <h2>Draufsicht</h2>
+                    <svg width="1200" height="600" viewBox="0 0 1200 600" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="600" fill="#f8f8f8" stroke="#ccc"/>
+  <!-- profiles -->
+  <rect x="0" y="0" width="20" height="600" fill="#bbb" stroke="#555"/>
+  <rect x="310" y="0" width="20" height="600" fill="#bbb" stroke="#555"/>
+  <rect x="810" y="0" width="20" height="600" fill="#bbb" stroke="#555"/>
+  <rect x="1180" y="0" width="20" height="600" fill="#bbb" stroke="#555"/>
+  <!-- modules -->
+  <rect x="20" y="0" width="310" height="600" fill="#e0e0e0" stroke="#555"/>
+  <rect x="330" y="0" width="500" height="600" fill="#d0d0d0" stroke="#555"/>
+  <rect x="830" y="0" width="310" height="600" fill="#e0e0e0" stroke="#555"/>
+  <!-- dimensions -->
+  <line x1="0" y1="620" x2="1200" y2="620" stroke="#555" stroke-width="2"/>
+  <line x1="0" y1="600" x2="0" y2="640" stroke="#555" stroke-width="2"/>
+  <line x1="1200" y1="600" x2="1200" y2="640" stroke="#555" stroke-width="2"/>
+  <text x="600.0" y="660" text-anchor="middle" font-size="16" fill="#000">1200 mm</text>
+  <line x1="-20" y1="0" x2="-20" y2="600" stroke="#555" stroke-width="2"/>
+  <line x1="-40" y1="0" x2="-20" y2="0" stroke="#555" stroke-width="2"/>
+  <line x1="-40" y1="600" x2="-20" y2="600" stroke="#555" stroke-width="2"/>
+  <text x="-60" y="300.0" text-anchor="middle" font-size="16" fill="#000" transform="rotate(-90 -60,300.0)">600 mm</text>
+</svg>
+                </div>
+                <div class="drawing">
+                    <h2>Isometrie</h2>
+                    <svg width="1800" height="1190" viewBox="0 0 1800 1190" xmlns="http://www.w3.org/2000/svg">
+  <!-- top face -->
+  <polygon points="0,590 1200,590 1800,290.0 600,290.0" fill="#e0e0e0" stroke="#555"/>
+  <!-- left face -->
+  <polygon points="0,590 0,1180 600,880.0 600,290.0" fill="#d0d0d0" stroke="#555"/>
+  <!-- right face -->
+  <polygon points="1200,590 1200,1180 1800,880.0 1800,290.0" fill="#c0c0c0" stroke="#555"/>
+  <!-- dimensions -->
+  <!-- width -->
+  <line x1="600.0" y1="610" x2="1200.0" y2="610" stroke="#555" stroke-width="2"/>
+  <line x1="600.0" y1="590" x2="600.0" y2="630" stroke="#555" stroke-width="2"/>
+  <line x1="1200.0" y1="590" x2="1200.0" y2="630" stroke="#555" stroke-width="2"/>
+  <text x="900.0" y="650" text-anchor="middle" font-size="16" fill="#000">1200 mm</text>
+  <!-- depth -->
+  <line x1="1220" y1="300.0" x2="1220" y2="890.0" stroke="#555" stroke-width="2"/>
+  <line x1="1200" y1="300.0" x2="1240" y2="300.0" stroke="#555" stroke-width="2"/>
+  <line x1="1200" y1="890.0" x2="1240" y2="890.0" stroke="#555" stroke-width="2"/>
+  <text x="1260" y="595.0" text-anchor="middle" font-size="16" fill="#000" transform="rotate(90 1260,595.0)">600 mm</text>
+  <!-- height -->
+  <line x1="1820" y1="295.0" x2="1820" y2="885.0" stroke="#555" stroke-width="2"/>
+  <line x1="1800" y1="295.0" x2="1840" y2="295.0" stroke="#555" stroke-width="2"/>
+  <line x1="1800" y1="885.0" x2="1840" y2="885.0" stroke="#555" stroke-width="2"/>
+  <text x="1860" y="590.0" text-anchor="middle" font-size="16" fill="#000" transform="rotate(90 1860,590.0)">590 mm</text>
+</svg>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <h2>3D-Visualisierung (WebGL/OpenGL)</h2>
+            <div class="threejs-container">
+                <div id="threejs-canvas"></div>
+            </div>
+        </div>
+    </div>
+    <script type="module">
+        import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+        import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/controls/OrbitControls.js';
+        // Module stack definitions (simplified for visualization)
+        const MODULES = [
+            // Links
+            {{
+                x: 0, width: 310, depth: 600,
+                layers: [
+                    {{ name: 'Auszug', z: 0, h: 590, color: 0xbdbdbd }},
+                    {{ name: 'U-Profil auf Auszug', z: 20, h: 70, color: 0xe8f5e9 }},
+                    {{ name: 'Bierbank IN U', z: 20, h: 40, color: 0xd7ccc8 }},
+                    {{ name: 'Brett AUF U', z: 90, h: 15, color: 0x8d6e63 }},
+                    {{ name: 'Eurobox 1', z: 105, h: 220, color: 0xbbdefb }},
+                    {{ name: 'Eurobox 2', z: 325, h: 220, color: 0xbbdefb }},
+                    {{ name: 'Deckel 15mm', z: 545, h: 15, color: 0x6d4c41 }}
+                ]
+            }},
+            // Mitte
+            {{
+                x: 310, width: 500, depth: 600,
+                layers: [
+                    {{ name: 'Auszug', z: 0, h: 590, color: 0xbdbdbd }},
+                    {{ name: 'Brett dropped', z: 20, h: 15, color: 0x8d6e63 }},
+                    {{ name: 'Kühlbox', z: 35, h: 490, color: 0xffe0b2 }}
+                ]
+            }},
+            // Rechts
+            {{
+                x: 810, width: 310, depth: 600,
+                layers: [
+                    {{ name: 'Auszug', z: 0, h: 590, color: 0xbdbdbd }},
+                    {{ name: 'U-Profil auf Auszug', z: 20, h: 70, color: 0xe8f5e9 }},
+                    {{ name: 'Bierbank IN U', z: 20, h: 40, color: 0xd7ccc8 }},
+                    {{ name: 'Brett AUF U', z: 90, h: 15, color: 0x8d6e63 }},
+                    {{ name: 'Eurobox 1', z: 105, h: 220, color: 0xbbdefb }},
+                    {{ name: 'Eurobox 2', z: 325, h: 220, color: 0xbbdefb }},
+                    {{ name: 'Deckel 15mm', z: 545, h: 15, color: 0x6d4c41 }}
+                ]
+            }}
+        ];
+        let scene, camera, renderer, controls;
+        let animationId = null;
+        function initThreeJS() {{
+            const container = document.getElementById('threejs-canvas');
+            if (!container) {{ console.warn('Three.js container not found'); return; }}
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0xf5f5f5);
+            const aspect = container.clientWidth / 600;
+            camera = new THREE.PerspectiveCamera(50, aspect, 1, 5000);
+            camera.position.set(600, 800, 1000);
+            renderer = new THREE.WebGLRenderer({{ antialias: true, alpha: true }});
+            renderer.setSize(container.clientWidth, 600);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+            container.appendChild(renderer.domElement);
+            // OrbitControls
+            controls = new OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            controls.screenSpacePanning = false;
+            controls.minDistance = 300;
+            controls.maxDistance = 2500;
+            controls.maxPolarAngle = Math.PI / 2 - 0.01;
+            controls.target.set(600, 300, 300);
+            // Lighting
+            const ambient = new THREE.AmbientLight(0xffffff, 0.6);
+            scene.add(ambient);
+            const dirLight = new THREE.DirectionalLight(0xffffff, 1);
+            dirLight.position.set(500, 1000, 500);
+            dirLight.castShadow = true;
+            dirLight.shadow.mapSize.width = 2048;
+            dirLight.shadow.mapSize.height = 2048;
+            dirLight.shadow.camera.near = 1;
+            dirLight.shadow.camera.far = 2000;
+            dirLight.shadow.camera.left = -800;
+            dirLight.shadow.camera.right = 800;
+            dirLight.shadow.camera.top = 800;
+            dirLight.shadow.camera.bottom = -800;
+            scene.add(dirLight);
+            const fillLight = new THREE.DirectionalLight(0xffffff, 0.3);
+            fillLight.position.set(-500, 300, -500);
+            scene.add(fillLight);
+            // Ground
+            const groundGeo = new THREE.PlaneGeometry(2000, 2000);
+            const groundMat = new THREE.MeshStandardMaterial({{ color: 0xeeeeee, roughness: 0.9, metalness: 0 }});
+            const ground = new THREE.Mesh(groundGeo, groundMat);
+            ground.rotation.x = -Math.PI / 2;
+            ground.position.y = -1;
+            ground.receiveShadow = true;
+            scene.add(ground);
+            // Build modules
+            const profileWidth = 40;
+            const profileDepth = 20;
+            MODULES.forEach(mod => {{
+                const group = new THREE.Group();
+                group.position.x = mod.x + mod.width / 2;
+                group.position.z = mod.depth / 2;
+                scene.add(group);
+                const lngMat = new THREE.MeshStandardMaterial({{ color: 0x333333, roughness: 0.3, metalness: 0.8 }});
+                for (let i = 0; i < 2; i++) {{
+                    const xOffset = i === 0 ? -mod.width / 2 + 10 : mod.width / 2 - 30;
+                    const lngGeo = new THREE.BoxGeometry(profileWidth, 590, profileDepth);
+                    const lng = new THREE.Mesh(lngGeo, lngMat);
+                    lng.position.set(xOffset, 295, -mod.depth / 2 + 10);
+                    lng.castShadow = true;
+                    lng.receiveShadow = true;
+                    group.add(lng);
+                }}
+                for (let i = 0; i < 2; i++) {{
+                    const xOffset = i === 0 ? -mod.width / 2 + 10 : mod.width / 2 - 30;
+                    const lngGeo = new THREE.BoxGeometry(profileWidth, 590, profileDepth);
+                    const lng = new THREE.Mesh(lngGeo, lngMat);
+                    lng.position.set(xOffset, 295, mod.depth / 2 - 10);
+                    lng.castShadow = true;
+                    lng.receiveShadow = true;
+                    group.add(lng);
+                }}
+                const qtrMat = new THREE.MeshStandardMaterial({{ color: 0x222222, roughness: 0.3, metalness: 0.8 }});
+                const qtrGeo = new THREE.BoxGeometry(mod.width - 20, 20, mod.depth - 20);
+                const qtr1 = new THREE.Mesh(qtrGeo, qtrMat);
+                qtr1.position.set(0, 10, 0);
+                qtr1.castShadow = true;
+                qtr1.receiveShadow = true;
+                group.add(qtr1);
+                const qtr2 = new THREE.Mesh(qtrGeo, qtrMat);
+                qtr2.position.set(0, 580, 0);
+                qtr2.castShadow = true;
+                qtr2.receiveShadow = true;
+                group.add(qtr2);
+                if (mod.x === 310 || mod.x === 810) {{
+                    const divGeo = new THREE.PlaneGeometry(2, 590);
+                    const divMat = new THREE.MeshBasicMaterial({{ color: 0x333333, transparent: true, opacity: 0.3, side: THREE.DoubleSide }});
+                    const div = new THREE.Mesh(divGeo, divMat);
+                    div.position.set(-mod.width / 2, 295, 0);
+                    div.rotation.y = Math.PI / 2;
+                    group.add(div);
+                }}
+                const sliderMat = new THREE.MeshStandardMaterial({{ color: 0xbdbdbd, roughness: 0.4, metalness: 0.7 }});
+                const sliderGeo = new THREE.BoxGeometry(19.5, 590, 50);
+                const sliderPositions = [
+                    {{ x: -mod.width / 2 + 10, z: -mod.depth / 2 + 25 }},
+                    {{ x: mod.width / 2 - 29.5, z: -mod.depth / 2 + 25 }},
+                    {{ x: -mod.width / 2 + 10, z: mod.depth / 2 - 25 }},
+                    {{ x: mod.width / 2 - 29.5, z: mod.depth / 2 - 25 }}
+                ];
+                sliderPositions.forEach(pos => {{
+                    const slider = new THREE.Mesh(sliderGeo, sliderMat);
+                    slider.position.set(pos.x, 295, pos.z);
+                    slider.castShadow = true;
+                    slider.receiveShadow = true;
+                    group.add(slider);
+                }});
+                mod.layers.forEach(layer => {{
+                    if (layer.name === 'Auszug') return;
+                    let mesh;
+                    const layerMat = new THREE.MeshStandardMaterial({{
+                        color: layer.color,
+                        emissive: layer.emissive,
+                        emissiveIntensity: 0.05,
+                        roughness: layer.name.includes('Bierbank') ? 0.8 : 0.5,
+                        metalness: layer.name.includes('Auszug') || layer.name.includes('U-Profil') ? 0.6 : 0.1,
+                        transparent: layer.name.includes('Bierbank'),
+                        opacity: layer.name.includes('Bierbank') ? 0.95 : 1
+                    }});
+                    let geom;
+                    if (layer.name.includes('U-Profil')) {{
+                        geom = new THREE.BoxGeometry(mod.width - 40, layer.h, mod.depth - 40);
+                        mesh = new THREE.Mesh(geom, layerMat);
+                        mesh.position.set(0, layer.z + layer.h / 2, 0);
+                    }} else if (layer.name.includes('Bierbank')) {{
+                        geom = new THREE.BoxGeometry(230, layer.h, mod.depth - 80);
+                        mesh = new THREE.Mesh(geom, layerMat);
+                        mesh.position.set(0, layer.z + layer.h / 2, 0);
+                    }} else if (layer.name.includes('Brett')) {{
+                        geom = new THREE.BoxGeometry(mod.width - 20, layer.h, mod.depth - 20);
+                        mesh = new THREE.Mesh(geom, layerMat);
+                        mesh.position.set(0, layer.z + layer.h / 2, 0);
+                    }} else if (layer.name.includes('Eurobox')) {{
+                        geom = new THREE.BoxGeometry(250, layer.h, mod.depth - 60);
+                        mesh = new THREE.Mesh(geom, layerMat);
+                        mesh.position.set(0, layer.z + layer.h / 2, 0);
+                    }} else if (layer.name.includes('Kühlbox')) {{
+                        geom = new THREE.BoxGeometry(mod.width - 60, layer.h, mod.depth - 60);
+                        mesh = new THREE.Mesh(geom, layerMat);
+                        mesh.position.set(0, layer.z + layer.h / 2, 0);
+                    }} else {{
+                        geom = new THREE.BoxGeometry(mod.width - 20, layer.h, mod.depth - 20);
+                        mesh = new THREE.Mesh(geom, layerMat);
+                        mesh.position.set(0, layer.z + layer.h / 2, 0);
+                    }}
+                    if (mesh) {{
+                        mesh.castShadow = true;
+                        mesh.receiveShadow = true;
+                        const edges = new THREE.EdgesGeometry(geom);
+                        const edgeMat = new THREE.LineBasicMaterial({{ color: 0x000000, opacity: 0.15, transparent: true }});
+                        const edgeMesh = new THREE.LineSegments(edges, edgeMat);
+                        edgeMesh.position.copy(mesh.position);
+                        group.add(edgeMesh);
+                        group.add(mesh);
+                    }}
+                }});
+            }});
+            // Axis helper
+            const axes = new THREE.AxesHelper(300);
+            scene.add(axes);
+            // Grid
+            const grid = new THREE.GridHelper(1500, 30, 0xcccccc, 0xeeeeee);
+            grid.position.y = -1;
+            scene.add(grid);
+            // Resize
+            window.addEventListener('resize', onResize);
+            // Animation
+            animate();
+        }}
+        function onResize() {{
+            if (!camera || !renderer) return;
+            const container = document.getElementById('threejs-canvas');
+            if (!container) return;
+            const width = container.clientWidth;
+            const height = 600;
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+            renderer.setSize(width, height);
+        }}
+        function animate() {{
+            animationId = requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
+        }}
+        function cleanup() {{
+            if (animationId) {{ cancelAnimationFrame(animationId); animationId = null; }}
+            window.removeEventListener('resize', onResize);
+            if (renderer) {{
+                renderer.dispose();
+                const container = document.getElementById('threejs-canvas');
+                if (container) {{
+                    // Note: we don't have a variable 'canvas' here; the renderer's domElement is already added.
+                    // To avoid errors, we'll just remove the domElement if it exists.
+                    const domElement = renderer.domElement;
+                    if (domElement && domElement.parentNode) {{
+                        domElement.parentNode.removeChild(domElement);
+                    }}
+                }}
+            }}
+            if (scene) {{
+                scene.traverse(obj => {{
+                    if (obj.geometry) obj.geometry.dispose();
+                    if (obj.material) {{
+                        if (Array.isArray(obj.material)) {{ obj.material.forEach(m => m.dispose()); }}
+                        else {{ obj.material.dispose(); }}
+                    }}
+                }});
+            }}
+        }}
+        if (document.readyState === 'loading') {{
+            document.addEventListener('DOMContentLoaded', initThreeJS);
+        }} else {{
+            initThreeJS();
+        }}
+        window.addEventListener('beforeunload', cleanup);
+    </script>
+</body>
+</html>
