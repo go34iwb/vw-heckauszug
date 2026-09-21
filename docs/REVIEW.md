@@ -17,6 +17,16 @@
 | Profilstärke (4x vertikal à 20mm) | 80 mm | 4 × 20mm | OK |
 | **Gesamt** | **1200 mm** | 1120 + 80 | ✅ **PASS** |
 
+**Dimensionsketten-Tiefe (nach hinten) bzw. Seitenansicht**
+- Vorne: vertikales Bosch Profil (Höhe 550 mm, Breite/Tiefe 40 mm) direkt vor den Euroboxen.
+- Euroboxen: Breite/Tiefe 600 mm, liegen vertikal direkt aufeinander; vorne und hinten jeweils ein vertikales Bosch Profil (gleiche Abmessungen wie vorne).
+- Unter den Euroboxen: Brett (Länge 600 mm) liegt auf einem U‑Profil; das Brett ist vorne und hinten mit den vertikalen Bosch Profilen abgeschlossen.
+- Das U‑Profil enthält in seiner Nut eine eingeklappte Bierbank (Bierbank‑Führung).
+- Befestigung: Das Brett wird auf das U‑Profil geschraubt; die U‑Profile sind direkt an die Auszüge montiert (U‑Profil dient nur als Bierbank‑Führung und Brett‑Montagelösung).
+
+**Zum 12. Punkt (erforderliche Korrekturen): hier ist es die Option E: Brett auf U‑Profil montieren; U‑Profile im Querschnitt sind direkt an die Auszüge montiert (U‑Profil nur als Bierbank‑Führung und Brett‑Montagelösung)**
+
+
 **Bemerkung:** Die 4 vertikalen Profile (2 links, 2 rechts) zu je 20mm Stärke addieren 80mm. 1120 + 80 = 1200mm gesamt. **Konsistent.**
 
 ---
