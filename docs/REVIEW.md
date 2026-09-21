@@ -31,6 +31,14 @@
 
 ---
 
+## 1.5 Dimensionsketten-Tiefe (nach hinten) bzw. Seitenansicht
+
+- Vorne: vertikales Bosch Profil (Höhe 550 mm, Breite/Tiefe 40 mm) direkt vor den Euroboxen.
+- Euroboxen: Breite/Tiefe 600 mm, liegen vertikal direkt aufeinander; vorne und hinten jeweils ein vertikales Bosch Profil (gleiche Abmessungen wie vorne).
+- Unter den Euroboxen: Brett (Länge 600 mm) liegt auf einem U‑Profil; das Brett ist vorne und hinten mit den vertikalen Bosch Profilen abgeschlossen.
+- Das U‑Profil enthält in seiner Nut eine eingeklappte Bierbank (Bierbank‑Führung).
+- Befestigung: Das Brett wird auf das U‑Profil geschraubt; die U‑Profile sind direkt an die Auszüge montiert (U‑Profil dient nur als Bierbank‑Führung und Brett‑Montagelösung).
+
 ## 2. Dimensionsketten-Konsistenz (Vertikal)
 
 ### Modul 1 & 3 (Standard mit U-Profilen)
