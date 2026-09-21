@@ -17,14 +17,14 @@
 | Profilstärke (4x vertikal à 20mm) | 80 mm | 4 × 20mm | OK |
 | **Gesamt** | **1200 mm** | 1120 + 80 | ✅ **PASS** |
 
-**Dimensionsketten-Tiefe (nach hinten) bzw. Seitenansicht**
-- Vorne: vertikales Bosch Profil (Höhe 550 mm, Breite/Tiefe 40 mm) direkt vor den Euroboxen.
-- Euroboxen: Breite/Tiefe 600 mm, liegen vertikal direkt aufeinander; vorne und hinten jeweils ein vertikales Bosch Profil (gleiche Abmessungen wie vorne).
-- Unter den Euroboxen: Brett (Länge 600 mm) liegt auf einem U‑Profil; das Brett ist vorne und hinten mit den vertikalen Bosch Profilen abgeschlossen.
-- Das U‑Profil enthält in seiner Nut eine eingeklappte Bierbank (Bierbank‑Führung).
-- Befestigung: Das Brett wird auf das U‑Profil geschraubt; die U‑Profile sind direkt an die Auszüge montiert (U‑Profil dient nur als Bierbank‑Führung und Brett‑Montagelösung).
+## 1.5 Dimensionsketten-Tiefe (nach hinten) bzw. Seitenansicht
 
-11. Die U-Profile sind direkt an die Auszüge montiert (sie dienen nur als Führung für die eingeklappte Bierbank und als Montagelösung für das Brett).
+- Hier ist einmal ein vertikales Bosch Profil ganz vorne (Richtung frontansicht): Höhe 550mm, Breite 40mm (bzw. Tiefe nach hinten).
+- Dann kommen die euroboxen (liegen vertikal direkt aufeinander): Breite/tiefe 600 mm (von der Seite sind die Bosch Profile; vorne und hinten vor den euroboxen).
+- Hinten dementsprechend noch einmal ein vertikale Bosch Profil genau wie vorne).
+
+- Unter den euroboxen ist in der Seitenansicht ein Brett (hat auch die gesamte Länge von 600mm. Dabei ist es bindig abschließen vorne und hinten mit den vertikalen Bosch Profilen. Das Brett ist auf ein U Profil geschraubt. Dieses uprofil beinhaltet in der nut (im u Profil) eine bierbank (eingeklappt)).
+
 **Zum 12. Punkt (erforderliche Korrekturen): hier ist es die Option E: Brett auf U‑Profil montieren; U‑Profile im Querschnitt sind direkt an die Auszüge montiert (U‑Profil nur als Bierbank‑Führung und Brett‑Montagelösung)**
 ---
 
