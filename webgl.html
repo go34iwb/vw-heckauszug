@@ -87,10 +87,10 @@
   container.style.height = '600px';
   document.body.appendChild(container);
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0xffffff);
+  scene.background = new THREE.Color(0xf0f0f0);
   const aspect = container.clientWidth / 600;
   const camera = new THREE.PerspectiveCamera(50, aspect, 1, 5000);
-  camera.position.z = 400;
+  camera.position.set(600, 800, 1000);
   const renderer = new THREE.WebGLRenderer({antialias:true, alpha:true});
   renderer.setSize(container.clientWidth, 600);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
@@ -101,10 +101,10 @@
   controls.enableDamping = true;
   controls.dampingFactor = 0.05;
   controls.screenSpacePanning = false;
-  controls.minDistance = 100;
-  controls.maxDistance = 2000;
+  controls.minDistance = 300;
+  controls.maxDistance = 2500;
   controls.maxPolarAngle = Math.PI/2 - 0.01;
-  controls.target.set(0,0,0);
+  controls.target.set(600, 300, 300);
   const hemi = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.6);
   scene.add(hemi);
   const dir = new THREE.DirectionalLight(0xffffff, 0.6);
@@ -114,25 +114,96 @@
   dir.shadow.mapSize.height = 2048;
   dir.shadow.camera.near = 0.5;
   dir.shadow.camera.far = 2500;
-  dir.shadow.camera.left = -800;
-  dir.shadow.camera.right = 800;
-  dir.shadow.camera.top = 800;
-  dir.shadow.camera.bottom = -800;
+  dir.shadow.camera.left = -600;
+  dir.shadow.camera.right = 600;
+  dir.shadow.camera.top = 600;
+  dir.shadow.camera.bottom = -600;
   scene.add(dir);
-  // Red cube
-  const size = 150;
-  const geometry = new THREE.BoxGeometry(size, size, size);
-  const material = new THREE.MeshBasicMaterial({color: 0xff0000});
-  const cube = new THREE.Mesh(geometry, material);
-  scene.add(cube);
+  // Ground
   const groundGeo = new THREE.PlaneGeometry(2000, 2000);
-  const groundMat = new THREE.MeshStandardMaterial({color: 0xeeeeee});
+  const groundMat = new THREE.MeshStandardMaterial({color: 0xeeeeee, roughness:0.9, metalness:0});
   const ground = new THREE.Mesh(groundGeo, groundMat);
   ground.rotation.x = -Math.PI/2;
-  ground.position.y = -size/2 - 1;
+  ground.position.y = -1;
+  ground.receiveShadow = true;
   scene.add(ground);
-  const axes = new THREE.AxesHelper(200);
+  // Modules data
+  const modules = [
+    {x:0, w:310, d:600, layers:[
+      {z:0, h:590, color:0xbdbdbd}, // Auszug
+      {z:20, h:70, color:0xe8f5e9}, // U-Profil
+      {z:20, h:40, color:0xd7ccc8}, // Bierbank
+      {z:90, h:15, color:0x8d6e63}, // Brett
+      {z:105, h:220, color:0xbbdefb}, // Eurobox 1
+      {z:325, h:220, color:0xbbdefb}, // Eurobox 2
+      {z:545, h:15, color:0x6d4c41}  // Deckel
+    ]},
+    {x:310, w:500, d:600, layers:[
+      {z:0, h:590, color:0xbdbdbd},
+      {z:20, h:15, color:0x8d6e63}, // Brett dropped
+      {z:35, h:490, color:0xffe0b2}  // Kühlbox
+    ]},
+    {x:810, w:310, d:600, layers:[
+      {z:0, h:590, color:0xbdbdbd},
+      {z:20, h:70, color:0xe8f5e9},
+      {z:20, h:40, color:0xd7ccc8},
+      {z:90, h:15, color:0x8d6e63},
+      {z:105, h:220, color:0xbbdefb},
+      {z:325, h:220, color:0xbbdefb},
+      {z:545, h:15, color:0x6d4c41}
+    ]}
+  ];
+  modules.forEach(m=>{
+    const group = new THREE.Group();
+    group.position.x = m.x + m.w/2;
+    group.position.z = m.d/2;
+    scene.add(group);
+    // Bosch profiles left/right
+    const lngMat = new THREE.MeshStandardMaterial({color:0x333333, roughness:0.3, metalness:0.8});
+    for(let i=0;i<2;i++){
+      const xOffset = i===0 ? -m.w/2+10 : m.w/2-30;
+      const lngGeo = new THREE.BoxGeometry(40, 590, 20);
+      const lng = new THREE.Mesh(lngGeo, lngMat);
+      lng.position.set(xOffset, 295, i===0 ? -m.d/2+10 : m.d/2-10);
+      lng.castShadow = true; lng.receiveShadow = true;
+      group.add(lng);
+    }
+    // Layers
+    m.layers.forEach(l=>{
+      if(l.name==='Auszug') return;
+      let geom, mat;
+      const baseW = m.w-40, baseD = m.d-40;
+      const color = new THREE.Color(l.color);
+      if(l.name.includes('U-Profil')){
+        geom = new THREE.BoxGeometry(baseW, l.h, baseD);
+        mat = new THREE.MeshStandardMaterial({color});
+      }else if(l.name.includes('Bierbank')){
+        geom = new THREE.BoxGeometry(230, l.h, baseD-40);
+        mat = new THREE.MeshStandardMaterial({color});
+      }else if(l.name.includes('Brett')){
+        geom = new THREE.BoxGeometry(baseW, l.h, baseD);
+        mat = new THREE.MeshStandardMaterial({color});
+      }else if(l.name.includes('Eurobox')){
+        geom = new THREE.BoxGeometry(250, l.h, baseD-60);
+        mat = new THREE.MeshStandardMaterial({color});
+      }else if(l.name.includes('Kühlbox')){
+        geom = new THREE.BoxGeometry(m.w-60, l.h, m.d-60);
+        mat = new THREE.MeshStandardMaterial({color});
+      }else{
+        geom = new THREE.BoxGeometry(baseW, l.h, baseD);
+        mat = new THREE.MeshStandardMaterial({color});
+      }
+      const mesh = new THREE.Mesh(geom, mat);
+      mesh.position.set(0, l.z + l.h/2, 0);
+      mesh.castShadow = true; mesh.receiveShadow = true;
+      group.add(mesh);
+    });
+  });
+  const axes = new THREE.AxesHelper(300);
   scene.add(axes);
+  const grid = new THREE.GridHelper(1500, 30, 0xcccccc, 0xeeeeee);
+  grid.position.y = -1;
+  scene.add(grid);
   function resize(){
     const dpr = Math.min(window.devicePixelRatio||1,2);
     renderer.setSize(container.clientWidth*dpr, 600*dpr);
@@ -149,7 +220,7 @@
     const curr=Array.from(e.touches);
     if(curr.length===1&&touches.length===1){
       const dx=curr[0].clientX-lastX; dy=curr[0].clientY-lastY;
-      // rotate via controls? we just update camera? We'll let controls handle.
+      // let controls handle
     }else if(curr.length>=2&&touches.length>=2){
       const dist=Math.hypot(curr[0].clientX-curr[1].clientX,
         curr[0].clientY-curr[1].clientY);
@@ -178,7 +249,7 @@
   document.getElementById('toggle-wireframe').onclick=function(){
     // placeholder
   };
-  document.getElementById('reset-view').onclick=()=>{controls.target.set(0,0,0); camera.position.set(0,0,400); controls.update();};
+  document.getElementById('reset-view').onclick=()=>{controls.target.set(600,300,300); camera.position.set(600,800,1000); controls.update();};
   function animate(){
     requestAnimationFrame(animate);
     controls.update();
