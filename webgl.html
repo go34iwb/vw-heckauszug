@@ -119,90 +119,27 @@
   dir.shadow.camera.top = 600;
   dir.shadow.camera.bottom = -600;
   scene.add(dir);
+  // Simple three cubes
+  const size = 100;
+  const geometry = new THREE.BoxGeometry(size, size, size);
+  const material = new THREE.MeshStandardMaterial({color: 0x00ff00});
+  const cube1 = new THREE.Mesh(geometry, material);
+  cube1.position.set(-size*1.5, 0, 0);
+  scene.add(cube1);
+  const cube2 = new THREE.Mesh(geometry, material.clone());
+  cube2.position.set(0, 0, 0);
+  scene.add(cube2);
+  const cube3 = new THREE.Mesh(geometry, material.clone());
+  cube3.position.set(size*1.5, 0, 0);
+  scene.add(cube3);
   const groundGeo = new THREE.PlaneGeometry(2000, 2000);
-  const groundMat = new THREE.MeshStandardMaterial({color: 0xeeeeee, roughness:0.9, metalness:0});
+  const groundMat = new THREE.MeshStandardMaterial({color: 0xeeeeee});
   const ground = new THREE.Mesh(groundGeo, groundMat);
   ground.rotation.x = -Math.PI/2;
-  ground.position.y = -1;
-  ground.receiveShadow = true;
+  ground.position.y = -size/2;
   scene.add(ground);
-  // Modules
-  const modules = [
-    {x:0, w:310, d:600, layers:[
-      {z:0, h:590, color:0xbdbdbd},
-      {z:20, h:70, color:0xe8f5e9},
-      {z:20, h:40, color:0xd7ccc8},
-      {z:90, h:15, color:0x8d6e63},
-      {z:105, h:220, color:0xbbdefb},
-      {z:325, h:220, color:0xbbdefb},
-      {z:545, h:15, color:0x6d4c41}
-    ]},
-    {x:310, w:500, d:600, layers:[
-      {z:0, h:590, color:0xbdbdbd},
-      {z:20, h:15, color:0x8d6e63},
-      {z:35, h:490, color:0xffe0b2}
-    ]},
-    {x:810, w:310, d:600, layers:[
-      {z:0, h:590, color:0xbdbdbd},
-      {z:20, h:70, color:0xe8f5e9},
-      {z:20, h:40, color:0xd7ccc8},
-      {z:90, h:15, color:0x8d6e63},
-      {z:105, h:220, color:0xbbdefb},
-      {z:325, h:220, color:0xbbdefb},
-      {z:545, h:15, color:0x6d4c41}
-    ]}
-  ];
-  modules.forEach(m=>{
-    const group = new THREE.Group();
-    group.position.x = m.x + m.w/2;
-    group.position.z = m.d/2;
-    scene.add(group);
-    // Bosch profiles (left/right)
-    const lngMat = new THREE.MeshStandardMaterial({color:0x333333, roughness:0.3, metalness:0.8});
-    for(let i=0;i<2;i++){
-      const xOffset = i===0 ? -m.w/2+10 : m.w/2-30;
-      const lngGeo = new THREE.BoxGeometry(40, 590, 20);
-      const lng = new THREE.Mesh(lngGeo, lngMat);
-      lng.position.set(xOffset, 295, i===0 ? -m.d/2+10 : m.d/2-10);
-      lng.castShadow = true; lng.receiveShadow = true;
-      group.add(lng);
-    }
-    // Layers
-    m.layers.forEach(l=>{
-      if(l.name==='Auszug') return;
-      let geom, mat;
-      const baseW = m.w-40, baseD = m.d-40;
-      const color = new THREE.Color(l.color);
-      if(l.name.includes('U-Profil')){
-        geom = new THREE.BoxGeometry(baseW, l.h, baseD);
-        mat = new THREE.MeshStandardMaterial({color});
-      }else if(l.name.includes('Bierbank')){
-        geom = new THREE.BoxGeometry(230, l.h, baseD-40);
-        mat = new THREE.MeshStandardMaterial({color});
-      }else if(l.name.includes('Brett')){
-        geom = new THREE.BoxGeometry(baseW, l.h, baseD);
-        mat = new THREE.MeshStandardMaterial({color});
-      }else if(l.name.includes('Eurobox')){
-        geom = new THREE.BoxGeometry(250, l.h, baseD-60);
-        mat = new THREE.MeshStandardMaterial({color});
-      }else if(l.name.includes('Kühlbox')){
-        geom = new THREE.BoxGeometry(m.w-60, l.h, m.d-60);
-        mat = new THREE.MeshStandardMaterial({color});
-      }else{
-        geom = new THREE.BoxGeometry(baseW, l.h, baseD);
-        mat = new THREE.MeshStandardMaterial({color});
-      }
-      const mesh = new THREE.Mesh(geom, mat);
-      mesh.position.set(0, l.z + l.h/2, 0);
-      mesh.castShadow = true; mesh.receiveShadow = true;
-      group.add(mesh);
-    });
-  });
-  const axes = new THREE.AxesHelper(300);
+  const axes = new THREE.AxesHelper(200);
   scene.add(axes);
-  const grid = new THREE.GridHelper(1500, 30, 0xcccccc, 0xeeeeee);
-  grid.position.y = -1;
-  scene.add(grid);
   function resize(){
     const dpr = Math.min(window.devicePixelRatio||1,2);
     renderer.setSize(container.clientWidth*dpr, 600*dpr);
@@ -244,7 +181,7 @@
   },{passive:false});
   document.addEventListener('keydown',e=>{
     if(e.key==='w'||e.key==='W'){
-      // wireframe toggle not implemented for simplicity
+      // wireframe toggle not implemented
     }
   });
   document.getElementById('toggle-measure').onclick=()=>{};
