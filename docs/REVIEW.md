@@ -24,11 +24,8 @@
 - Das U‑Profil enthält in seiner Nut eine eingeklappte Bierbank (Bierbank‑Führung).
 - Befestigung: Das Brett wird auf das U‑Profil geschraubt; die U‑Profile sind direkt an die Auszüge montiert (U‑Profil dient nur als Bierbank‑Führung und Brett‑Montagelösung).
 
+11. Die U-Profile sind direkt an die Auszüge montiert (sie dienen nur als Führung für die eingeklappte Bierbank und als Montagelösung für das Brett).
 **Zum 12. Punkt (erforderliche Korrekturen): hier ist es die Option E: Brett auf U‑Profil montieren; U‑Profile im Querschnitt sind direkt an die Auszüge montiert (U‑Profil nur als Bierbank‑Führung und Brett‑Montagelösung)**
-
-
-**Bemerkung:** Die 4 vertikalen Profile (2 links, 2 rechts) zu je 20mm Stärke addieren 80mm. 1120 + 80 = 1200mm gesamt. **Konsistent.**
-
 ---
 
 ## 1.5 Dimensionsketten-Tiefe (nach hinten) bzw. Seitenansicht
