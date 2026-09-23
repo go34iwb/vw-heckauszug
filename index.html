@@ -72,5 +72,79 @@
     frameModule(20,310,true); frameModule(350,500,false); frameModule(870,310,true); scene.add(new THREE.ArrowHelper(new THREE.Vector3(0,0,-1),new THREE.Vector3(600,6,18),150,0xb7472a,30,18));
     function resize(){const {width,height}=host.getBoundingClientRect(); camera.aspect=width/height; camera.fov=width<height?70:42; camera.updateProjectionMatrix(); renderer.setSize(width,height,false);} new ResizeObserver(resize).observe(host); resize(); const views={iso:new THREE.Vector3(1900,1350,1800),front:new THREE.Vector3(600,430,-2200),side:new THREE.Vector3(2300,500,300),top:new THREE.Vector3(600,2200,300)}; function setView(name){camera.position.copy(views[name]);controls.target.set(600,245,300);controls.update();document.querySelectorAll('[data-view]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.view===name)));} document.querySelectorAll('[data-view]').forEach(button=>button.addEventListener('click',()=>setView(button.dataset.view))); document.getElementById('cargo-toggle').addEventListener('change',event=>{cargo.visible=event.target.checked;}); setView('iso'); function render(){requestAnimationFrame(render);controls.update();renderer.render(scene,camera);} render();
   </script>
+  <script>
+    const isometricDrawing = Array.from(document.querySelectorAll('.drawing')).find((drawing) => drawing.querySelector('h3')?.textContent === 'Isometrie');
+    const isometricFallback = isometricDrawing.querySelector('svg');
+    isometricFallback.style.display = 'none';
+
+    const isometricHost = document.createElement('div');
+    isometricHost.setAttribute('role', 'img');
+    isometricHost.setAttribute('aria-label', 'Isometrisches 3D-Modell des Heckauszugs mit voller Tiefe');
+    isometricHost.style.cssText = 'height:360px;background:#dfe4df;border:1px solid #ddd8cb';
+    isometricDrawing.appendChild(isometricHost);
+
+    const isoScene = new THREE.Scene();
+    isoScene.background = new THREE.Color(0xdfe4df);
+    const isoCamera = new THREE.PerspectiveCamera(42, 1, 1, 5000);
+    isoCamera.position.set(2250, 1550, 2050);
+    isoCamera.lookAt(600, 240, 300);
+    const isoRenderer = new THREE.WebGLRenderer({ antialias: true });
+    isoRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    isoRenderer.outputEncoding = THREE.sRGBEncoding;
+    isometricHost.appendChild(isoRenderer.domElement);
+    isoScene.add(new THREE.HemisphereLight(0xffffff, 0x697b76, 2.2));
+    const isoLight = new THREE.DirectionalLight(0xfff4d6, 2.7);
+    isoLight.position.set(-500, 1200, 800);
+    isoScene.add(isoLight);
+    const isoFloor = new THREE.Mesh(new THREE.PlaneGeometry(2800, 2200), new THREE.MeshStandardMaterial({ color: 0xc9d1cb, roughness: 1 }));
+    isoFloor.rotation.x = -Math.PI / 2;
+    isoScene.add(isoFloor);
+    const isoMaterial = {
+      aluminum: new THREE.MeshStandardMaterial({ color: 0x829296, metalness: .7, roughness: .33 }),
+      slide: new THREE.MeshStandardMaterial({ color: 0x4b5657, metalness: .72, roughness: .32 }),
+      wood: new THREE.MeshStandardMaterial({ color: 0xa96f3e, roughness: .68 }),
+      box: new THREE.MeshStandardMaterial({ color: 0x3c7881, roughness: .55 }),
+      cooler: new THREE.MeshStandardMaterial({ color: 0xd6a746, roughness: .62 })
+    };
+    function isoPart(width, height, depth, x, y, z, material) {
+      const part = new THREE.Mesh(new THREE.BoxGeometry(width, height, depth), material);
+      part.position.set(x, y + height / 2, z);
+      isoScene.add(part);
+      return part;
+    }
+    function isoModule(left, clearWidth, sideModule) {
+      const right = left + clearWidth;
+      [left - 10, right + 10].forEach((x) => [20, 580].forEach((z) => isoPart(20, 550, 40, x, 20, z, isoMaterial.aluminum)));
+      [20, 580].forEach((z) => {
+        isoPart(clearWidth + 20, 20, 40, left + clearWidth / 2, 0, z, isoMaterial.aluminum);
+        isoPart(clearWidth + 20, 20, 40, left + clearWidth / 2, 570, z, isoMaterial.aluminum);
+      });
+      [left + 10, right - 10].forEach((x) => isoPart(19.5, 53, 600, x, 20, 300, isoMaterial.slide));
+      if (sideModule) {
+        [left + 36, right - 36].forEach((x) => {
+          isoPart(40, 8, 600, x, 20, 300, isoMaterial.aluminum);
+          isoPart(4, 80, 600, x - 18, 20, 300, isoMaterial.aluminum);
+          isoPart(4, 80, 600, x + 18, 20, 300, isoMaterial.aluminum);
+        });
+        isoPart(clearWidth - 44, 15, 600, left + clearWidth / 2, 100, 300, isoMaterial.wood);
+        [115, 335].forEach((y) => isoPart(250, 220, 540, left + clearWidth / 2, y, 300, isoMaterial.box));
+      } else {
+        isoPart(clearWidth - 20, 15, 600, left + clearWidth / 2, 20, 300, isoMaterial.wood);
+        isoPart(369, 490, 540, left + clearWidth / 2, 35, 300, isoMaterial.cooler);
+      }
+    }
+    isoModule(20, 310, true);
+    isoModule(350, 500, false);
+    isoModule(870, 310, true);
+    function renderIsometric() {
+      const { width, height } = isometricHost.getBoundingClientRect();
+      isoCamera.aspect = width / height;
+      isoCamera.updateProjectionMatrix();
+      isoRenderer.setSize(width, height, false);
+      isoRenderer.render(isoScene, isoCamera);
+    }
+    new ResizeObserver(renderIsometric).observe(isometricHost);
+    renderIsometric();
+  </script>
 </body>
 </html>
