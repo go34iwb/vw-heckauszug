@@ -4,10 +4,14 @@
 Entwurf eines modularen Heckauszugsystems für VW T6 mit drei Modulen (zwei Eurobox-Module links/rechts, ein Kühlbox-Modul in der Mitte).
 
 ## Kurzbeschreibung
-Das Projekt enthält die HTML-Vorlage `heckauszug.html` mit technischen Zeichnungen (Frontansicht, Draufsicht, Seitenansicht, Isometrie) für die Fertigung des Heckauszugs aus Aluminiumprofilen 20x40 mm und Holzkomponenten.
+Die einzige veroeffentlichte Seite ist `index.html`. Sie verbindet eine kurze
+Gebrauchsbeschreibung, vier konsistente technische Zeichnungen (Front, Draufsicht,
+Seite, Isometrie) und ein interaktives Three.js-Modell. Die Vorderseite aller
+Ansichten liegt an der Heckklappe; alle drei Module ziehen nach hinten aus dem
+Fahrzeug.
 
 ## Wichtigste Funktionen
-- Bereitstellung der technischen Zeichnungen im HTML-Format
+- Eine GitHub-Pages-kompatible HTML-Seite (`index.html`)
 - Vier Ansichten: Front, Draufsicht, Seite, Isometrie
 - Maßketten und Bemaßung nach technischem Zeichnungsstandard
 - Dokumentation der zwei Varianten (Standard mit U-Profilen vs. Kühlbox-Drop)
@@ -17,7 +21,6 @@ Das Projekt enthält die HTML-Vorlage `heckauszug.html` mit technischen Zeichnun
 - CSS für Styling und Druck-Layout
 - SVG für technische Zeichnungen
 - Three.js (WebGL/OpenGL) für 3D-Visualisierung
-- Three.js (WebGL/OpenGL) für 3D-Visualisierung
 
 ## Voraussetzungen
 - Browser zur Vorschau
@@ -25,7 +28,7 @@ Das Projekt enthält die HTML-Vorlage `heckauszug.html` mit technischen Zeichnun
 - Zugang zu Fertigungsausrüstung (Aluprofile, Holz, Schwerlastauszüge)
 
 ## Installation / Nutzung
-1. Die Datei `heckauszug.html` im Projekt öffnen.
+1. Die Datei `index.html` im Projekt oeffnen.
 2. Im Browser öffnen zur Sichtkontrolle.
 3. Bei Bedarf im Editor anpassen (Maße, Profile, Auszüge).
 4. Angepasste Datei für die Fertigung exportieren.
@@ -43,7 +46,7 @@ Die fertige Datei wird auf GitHub Pages veröffentlicht.
 - GitHub Repository: https://github.com/go34iwb/vw-heckauszug
 
 ## GitHub Repository
-Geplant: `go34iwb/vw-heckauszug`
+`go34iwb/vw-heckauszug` (GitHub, nicht GitLab)
 
 ## Veröffentlichte Webseite
 Geplant: https://go34iwb.github.io/vw-heckauszug/

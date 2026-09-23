@@ -2,16 +2,16 @@
 
 **Project:** VW T6 Heckauszug (Rear Pull-Out)
 **Date:** 2024-09-13
-**Status:** Procurement Ready
+**Status:** Entwurf - nicht zur Bestellung freigegeben
 **Currency:** EUR (prices indicative, excl. VAT unless noted)
 
 ---
 
-## 1. Heavy-Duty Telescopic Drawer Slides (Module 1 & 2)
+## 1. Heavy-Duty Telescopic Drawer Slides (all three modules)
 
 | Item | Specification | Qty | Unit Price | Total | Supplier | Link |
 |------|---------------|-----|------------|-------|----------|------|
-| **GTV H53 600mm Full-Extension Slide** | 600mm travel, 53.9mm high, 19.5mm thick, 100kg/pair, galvanized steel, 2mm wall, full extension, unfastenable | 2 pairs (4 pcs) | €24.95–€35.95 | €50–72 | Kitchen Fittings Direct (UK/IE) | [Product Page](https://www.kitchenfittingsdirect.com/gb/telescopic-drawer-slides/heavy-duty-100kg-telescopic-drawer-slide.html) |
+| **GTV H53 600mm Full-Extension Slide** | 600mm travel, 53.9mm high, 19.5mm thick, 100kg/pair, galvanized steel, 2mm wall, full extension, unfastenable | 3 pairs (6 pcs) | €24.95–€35.95 | €75–108 | Kitchen Fittings Direct (UK/IE) | [Product Page](https://www.kitchenfittingsdirect.com/gb/telescopic-drawer-slides/heavy-duty-100kg-telescopic-drawer-slide.html) |
 | | | | | | GTV Poland (Manufacturer) | [PK-0-H53-600](https://gtv.com.pl/en/produkt/PK-0-H53-600/) |
 | | | | | | Buller Ltd (UK) | [H53 600mm](https://www.bullerltd.co.uk/heavy-duty-drawer-slides-h53-100kg-en.html) |
 | | | | | | Solmer (UK) | [H53 600mm](https://www.solmer.co.uk/sale/heavy-duty-h-53-ball-bearing-slide-load-capacity-100kg-side-mounting.html) |
@@ -38,7 +38,7 @@
 
 ---
 
-## 3. U-Profile Aluminum 70mm High (Module 2 Side Rails)
+## 3. U-Profile Aluminum 80mm High (Modules 1 and 3 side guides)
 
 | Item | Specification | Qty | Length | Unit Price | Total | Supplier | Link |
 |------|---------------|-----|--------|------------|-------|----------|------|
@@ -47,7 +47,7 @@
 | | | | | | | AluParts | [40x80x40mm](https://www.aluparts.de/product/aluminium-u-profil-40x80x40mm) |
 | | | | | | | Metaalcenter | [40x80x40x4](https://www.metaalcenter.nl/shop/aluminium/aluminium-u-profiel/aluminium-u-profiel-40-x-80-x-40-x-4-mm) |
 
-**Note:** "70mm high U-profile" → use **40×80×40mm U-profile** (internal height = 80mm - 2×4mm wall ≈ 72mm clear). Closest standard extrusion. 4 pcs × 600mm = 2.4m total.
+**Selected concept:** **40x80x40 mm U-profile**, 4 pcs x 600 mm. The U-profiles are the side guides for Modules 1 and 3. They start on the 20 mm base frame and support the 15 mm board at 115 mm. Drawer slides are mounted beside the guides, not underneath them in the vertical stack.
 
 ---
 
@@ -59,7 +59,7 @@
 | **Fastening Set (per bracket)** | 4× Hammer Nut B-Type Slot 6 M4 + 4× M4×8 DIN 7984 | 16–24 sets | €0.50–0.70 | €8–17 | Motedis | Included in bracket config |
 | **Alt: Dold Angle 20×40 B-Type** | Black powder-coated, 3.19€/pc (100+ pcs) | 16–24 | €2.67–3.19 | €43–77 | Dold | [Angle 20x40](https://www.dold-mechatronik.de/Angle-20x40-B-type-slot-6-black-powder-coated) |
 
-**Mounting concept:** Brackets connect vertical 20×40 posts to horizontal 20×40 rails, creating a shelf frame between the two slide pairs. Board (15mm multiplex) sits on top, "dropped" into the frame.
+**Mounting concept:** Four aluminium angle brackets connect the vertical 20x40 posts to the dropped 15 mm board. The final bracket type, hole pattern, fasteners and adjustment range remain open; do not order this item until that detail drawing is approved.
 
 ---
 
@@ -109,7 +109,7 @@
 
 | Category | Estimated Cost (EUR) |
 |----------|---------------------|
-| Heavy-duty slides (2 pairs GTV H53 600mm) | €60–75 |
+| Heavy-duty slides (3 pairs GTV H53 600mm) | €75–108 |
 | Aluminum profiles 20×40 B-type (17.8m + cutting) | €150–220 |
 | U-profiles 40×80×40 (2.4m + cutting) | €15–25 |
 | Angle brackets 20×40 + fastening sets (20 pcs) | €40–80 |
@@ -123,7 +123,7 @@
 
 ## 9. Procurement Checklist
 
-- [ ] Order GTV H53 PK-0-H53-600 slides (2 pairs) — confirm 19mm mounting gap
+- [ ] Order GTV H53 PK-0-H53-600 slides (3 pairs, one pair per module) — confirm 19mm mounting gap
 - [ ] Order Motedis 20×40 B-Type Slot 6 cut list: 12×550, 12×600, 8×270, 4×460mm
 - [ ] Order 40×80×40×3mm U-profile: 4×600mm cut
 - [ ] Order 20× angle brackets S6BBR2040 + fastening sets (M4 hammer nuts + M4×8 screws)

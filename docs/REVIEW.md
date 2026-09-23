@@ -2,7 +2,29 @@
 
 **Datum:** 13. September 2026
 **Basis:** CONTEXT.md, DECISIONS.md, TODO.md
-**Status:** Review der Planung (HTML-Zeichnung noch nicht erstellt)
+**Status:** Planung geprueft; Zeichnungen und 3D-Konzept in `index.html` umgesetzt
+
+---
+
+## Update 23. September 2026 - verbindliche Modellannahmen
+
+Die folgenden Entscheidungen ersetzen die frueheren, widerspruechlichen Annahmen
+in dieser Review:
+
+- Die Heckklappe ist die Vorderseite aller Zeichnungen; alle drei Module ziehen
+   nach hinten aus dem Fahrzeug aus.
+- Die seitlichen Module verwenden U-Profile mit 80 mm Hoehe. Der Aufbau besteht
+   aus 20 mm Basisrahmen, seitlichen U-Profilen, 15 mm Brett und einem Oberrahmen
+   von 570 bis 590 mm. Daraus entstehen 455 mm nutzbare Hoehe fuer zwei 220-mm-
+   Euroboxen.
+- Die 53-mm-Schwerlastauszuege liegen seitlich parallel zu den U-Profilen. Sie
+   sind keine zusaetzliche vertikale Lage unter dem Brett; der in Abschnitt 3
+   beschriebene Hoehenkonflikt ist damit nicht mehr anwendbar.
+- Das abgesenkte Brett des mittleren Moduls wird an vier Winkeln an den
+   Rahmenpfosten abgestuetzt. Material, Lochbild und Schrauben bleiben vor der
+   Beschaffung zu spezifizieren.
+- Fuer drei unabhaengige Module sind drei Paar Auszuege erforderlich. Die BOM
+   wurde entsprechend von zwei auf drei Paare korrigiert.
 
 ---
 

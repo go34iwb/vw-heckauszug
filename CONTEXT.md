@@ -2,7 +2,7 @@
 
 ## Projekt-Status
 - **Erstellt**: 13. September 2026
-- **Status**: Initiale Planung, HTML-Zeichnung in Arbeit
+- **Status**: Konzeptmodell und Zeichnungen in `index.html` konsolidiert
 - **Varianten**: Zwei Varianten dokumentiert (Standard mit U-Profilen / Kühlbox-Drop)
 
 ## Wichtige Maße (Variante 1 - Detaillierte CAD-Spezifikation)
@@ -23,11 +23,12 @@
 
 **Modul 1 & 3 (Standard mit U-Profilen):**
 - Basis-Profil: 20 mm
-- U-Profil: 70 mm
+- U-Profil: 80 mm (seitliche Fuehrung; beginnt auf dem Basisrahmen)
 - Brettstärke: 15 mm
-- Oberkante Brett: 105 mm
-- Unterkante Oberrahmen: 550 mm
-- Lichte Nutzhöhe: 445 mm (für 2x 220mm Euroboxen = 440mm)
+- Oberkante Brett: 115 mm
+- Unterkante Oberrahmen: 570 mm
+- Lichte Nutzhöhe: 455 mm (fuer 2x 220 mm Euroboxen = 440 mm)
+- Schwerlastauszuege: seitlich und parallel zu den U-Profilen, nicht als vertikale Schicht unter dem U-Profil rechnen
 
 **Modul 2 (Kühlbox-Drop):**
 - Basis-Profil: 20 mm
@@ -44,7 +45,7 @@
 
 ### Auszüge & Holz
 - 6x Schwerlastauszüge (53mm hoch, 20mm dick): 600 mm
-- 4x Alu U-Profile (70mm): 600 mm (nur Modul 1&3)
+- 4x Alu U-Profile (80mm): 600 mm (nur Modul 1&3)
 - 2x Brett schmal: 310 x 600 mm
 - 1x Brett breit: 420 x 600 mm (tiefergelegt)
 - 2x Bierbank: 250 x 600 mm
@@ -54,7 +55,7 @@
 2. **Asymmetrische Modulbreiten** - 310 / 500 / 310 = 1120mm + Profile = 1200mm
 3. **Kühlbox-Drop nur in Modul 2** - Keine U-Profile, Brett direkt zwischen Schienen
 4. **Querträger flachgelegt** - Spart 20mm Bauhöhe vs. hochkant
-4. **Bierbänke als lose Einschübe** - 40mm stark, laufen in U-Profil-Schacht (55mm lichte Höhe)
+4. **Bierbaenke als lose Einschuebe** - 40 mm stark, laufen in seitlichen U-Profil-Fuehrungen
 
 ## Nächste Schritte
 - [ ] HTML mit 4 SVG-Zeichnungen erstellen (Front, Top, Side, Iso)

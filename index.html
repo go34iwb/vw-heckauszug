@@ -1,146 +1,76 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<title>VW T6 Heckauszug – Beschreibung & Zeichnungen</title>
-<style>
-  body{font-family:Arial,Helvetica,sans-serif;margin:0;padding:20px;background:#fafafa}
-  h1,h2{color:#2c3e50}
-  .container{max-width:1200px;margin:auto}
-  .section{background:#fff;padding:20px;margin-bottom:20px;border-radius:8px;box-shadow:0 2px 5px rgba(0,0,0,.1)}
-  .description{background:#fff8e1;padding:15px;margin:20px 0;border-left:4px solid #ffb300;border-radius:4px}
-  .drawings{display:flex;flex-direction:column;gap:20px;align-items:center;margin-bottom:30px}
-  .drawing{background:#f8f8f8;padding:15px;border-radius:6px;box-shadow:0 1px 3px rgba(0,0,0,.1);width:260px;text-align:center}
-  .drawing h2{margin-top:0;color:#2c3e50}
-  .drawing svg{width:100%;height:auto;display:block;margin:10px 0;border:1px solid #ccc}
-  .nav{text-align:center;margin-top:30px}
-  .nav a{display:inline-block;padding:10px 20px;background:#2c3e50;color:#fff;text-decoration:none;border-radius:4px}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Technische Dokumentation und 3D-Modell eines modularen Heckauszugs fuer den VW T6.">
+  <title>VW T6 Heckauszug</title>
+  <style>
+    :root { --ink:#172126; --muted:#5a696d; --paper:#f3f1ea; --panel:#fffdf8; --line:#c8c5ba; --aluminum:#829296; --wood:#a96f3e; --cargo:#3c7881; --cooler:#d6a746; --accent:#b7472a; }
+    * { box-sizing:border-box; } html { scroll-behavior:smooth; }
+    body { margin:0; color:var(--ink); background:var(--paper); font-family:Georgia,"Times New Roman",serif; line-height:1.5; }
+    button,input { font:inherit; } .shell { width:min(1180px,calc(100% - 32px)); margin:0 auto; }
+    .masthead { border-bottom:1px solid var(--line); background:var(--panel); } .masthead .shell { padding:42px 0 28px; }
+    .eyebrow,.drawing-kicker,.model-meta { margin:0 0 8px; color:var(--accent); font:700 .76rem/1.2 Arial,sans-serif; letter-spacing:.08em; text-transform:uppercase; }
+    h1,h2,h3 { line-height:1.1; font-weight:400; } h1 { max-width:760px; margin:0; font-size:clamp(2.25rem,6vw,4.6rem); } h2 { margin:0; font-size:clamp(1.65rem,3vw,2.45rem); } h3 { margin:0; font-size:1.25rem; }
+    .intro { display:grid; grid-template-columns:minmax(0,2fr) minmax(220px,1fr); gap:28px; padding:28px 0; border-bottom:1px solid var(--line); } .intro p { margin:0; font-size:1.12rem; }
+    .facts { margin:0; padding:0; list-style:none; font-family:Arial,sans-serif; } .facts li { padding:7px 0; border-top:1px solid var(--line); } .facts strong { display:inline-block; min-width:95px; }
+    main { padding:48px 0 0; } .section-heading { margin-bottom:20px; } .section-heading p { max-width:720px; margin:10px 0 0; color:var(--muted); }
+    .drawings { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; } .drawing { min-width:0; padding:18px; background:var(--panel); border:1px solid var(--line); border-radius:6px; }
+    .drawing header { display:flex; justify-content:space-between; gap:12px; align-items:baseline; margin-bottom:12px; } .drawing header p { margin:0; color:var(--muted); font:.78rem Arial,sans-serif; }
+    svg { display:block; width:100%; height:auto; background:#f8f6ef; border:1px solid #ddd8cb; }
+    .model-section { margin-top:48px; padding:36px 0 0; border-top:1px solid var(--line); } .model-header { display:flex; justify-content:space-between; gap:24px; align-items:end; margin-bottom:16px; } .model-header p { max-width:600px; margin:8px 0 0; color:var(--muted); }
+    .model-wrap { position:relative; height:640px; overflow:hidden; background:#dfe4df; border:1px solid #aeb9b6; border-radius:6px; } #model { width:100%; height:100%; } #model canvas { display:block; width:100%; height:100%; }
+    .model-controls { position:absolute; top:16px; left:16px; display:grid; gap:8px; padding:11px; color:var(--ink); background:rgba(255,253,248,.9); border:1px solid rgba(95,110,108,.55); border-radius:4px; font:.82rem Arial,sans-serif; }
+    .view-buttons { display:flex; flex-wrap:wrap; gap:5px; } .view-buttons button,.toggle-line { min-height:34px; border:1px solid #687a7b; border-radius:3px; color:#172126; background:#fffdf8; cursor:pointer; } .view-buttons button { padding:6px 8px; } .view-buttons button[aria-pressed="true"] { color:#fff; background:#274e55; }
+    .toggle-line { display:flex; align-items:center; gap:7px; padding:0 8px; } .toggle-line input { width:15px; height:15px; accent-color:#274e55; } .model-note { position:absolute; right:16px; bottom:12px; margin:0; color:#354245; font:.75rem Arial,sans-serif; }
+    .legend { display:flex; flex-wrap:wrap; gap:18px; margin:14px 0 48px; font:.82rem Arial,sans-serif; } .legend span { display:inline-flex; align-items:center; gap:6px; } .swatch { width:14px; height:14px; border:1px solid rgba(0,0,0,.25); }
+    .footer { padding:22px 0; background:#172126; color:#e8e6df; font:.78rem Arial,sans-serif; } .footer p { margin:0; }
+    @media (max-width:760px) { .masthead .shell { padding-top:30px; } .intro,.drawings { grid-template-columns:1fr; } .model-header { display:block; } .model-wrap { height:510px; } .model-controls { right:12px; left:12px; } .model-note { display:none; } }
+  </style>
 </head>
 <body>
-<div class="container">
-  <h1>VW T6 Heckauszug – Beschreibung & Zeichnungen</h1>
-
-  <div class="section">
-    <h2>Beschreibung des Heckauszugs</h2>
-    <p class="description">
-      Der Heckauszug besteht aus drei Modulen: zwei Eurobox-Module links und rechts sowie ein Kühlbox-Modul in der Mitte. 
-      Die Konstruktion nutzt Aluminiumprofile 20x40 mm und Holzkomponenten für die Böden und Seitenwände.
-    </p>
+  <header class="masthead"><div class="shell"><p class="eyebrow">VW T6 / technische Planung</p><h1>Modularer Heckauszug</h1></div></header>
+  <div class="shell intro">
+    <p>Der Heckauszug besteht aus drei getrennt entnehmbaren Modulen: zwei gleich breite Eurobox-Module links und rechts sowie ein abgesenktes Kuehlbox-Modul in der Mitte. Die hier dargestellte Vorderseite liegt an der Heckklappe; alle drei Auszuege fahren nach hinten, aus dem Fahrzeug heraus.</p>
+    <ul class="facts" aria-label="Kernmasse"><li><strong>Breite</strong>1.200 mm</li><li><strong>Tiefe</strong>600 mm</li><li><strong>Hoehe</strong>590 mm</li><li><strong>Profile</strong>20 x 40 mm</li></ul>
   </div>
-
-  <div class="section">
-    <h2>Technische Zeichnungen</h2>
-    <div class="drawings">
-      <!-- Frontansicht -->
-      <div class="drawing">
-        <h2>Frontansicht</h2>
-        <svg width="1200" height="590" viewBox="0 0 1200 590" xmlns="http://www.w3.org/2000/svg">
-          <rect width="1200" height="590" fill="#f8f8f8" stroke="#ccc"/>
-          <!-- Bosch profiles -->
-          <rect x="0"   y="0" width="20" height="590" fill="#bbb" stroke="#555"/>
-          <rect x="310" y="0" width="20" height="590" fill="#bbb" stroke="#555"/>
-          <rect x="810" y="0" width="20" height="590" fill="#bbb" stroke="#555"/>
-          <rect x="1180" y="0" width="20" height="590" fill="#bbb" stroke="#555"/>
-          <!-- Modules -->
-          <rect x="20"  y="0" width="310" height="590" fill="#e0e0e0" stroke="#555"/>
-          <rect x="330" y="0" width="500" height="590" fill="#d0d0d0" stroke="#555"/>
-          <rect x="830" y="0" width="310" height="590" fill="#e0e0e0" stroke="#555"/>
-          <!-- Layers (bottom → top) -->
-          <rect x="20" y="500" width="310" height="20" fill="#aaa" stroke="#555"/>   <!-- Unteres Profil -->
-          <rect x="20" y="430" width="310" height="70" fill="#999" stroke="#555"/>    <!-- U-Profil -->
-          <rect x="20" y="355" width="310" height="15" fill="#8d6e63" stroke="#555"/> <!-- Brett -->
-          <rect x="20" y="255" width="310" height="100" fill="#bbdefb" stroke="#555"/> <!-- Eurobox 1 -->
-          <rect x="20" y="155" width="310" height="100" fill="#bbdefb" stroke="#555"/> <!-- Eurobox 2 -->
-          <rect x="20" y="40"  width="310" height="15" fill="#6d4c41" stroke="#555"/>   <!-- Deckel -->
-          <!-- Maßlinien -->
-          <line x1="0"   y1="610" x2="1220" y2="610" stroke="#555" stroke-width="2"/>
-          <line x1="0"   y1="590" x2="0"   y2="630" stroke="#555" stroke-width="2"/>
-          <line x1="1220"y1="590" x2="1220"y2="630" stroke="#555" stroke-width="2"/>
-          <text x="610" y="650" text-anchor="middle" font-size="16" fill="#000">1200 mm</text>
-          <line x1="-20" y1="0"  x2="-20" y2="590" stroke="#555" stroke-width="2"/>
-          <line x1="-40" y1="0"  x2="-20" y2="0"  stroke="#555" stroke-width="2"/>
-          <line x1="-40" y1="590"x2="-20" y2="590"stroke="#555" stroke-width="2"/>
-          <text x="-60" y="295" text-anchor="middle" font-size="16" fill="#000" transform="rotate(-90 -60,295)">590 mm</text>
-        </svg>
+  <main class="shell">
+    <section aria-labelledby="drawings-title">
+      <div class="section-heading"><p class="drawing-kicker">Massstablich schematisch</p><h2 id="drawings-title">Vier Ansichten</h2><p>Die Ansichten verwenden dieselbe Bezugskante und denselben Aufbau: unterer Rahmen 20 mm, seitliche 80-mm-U-Profile mit aufliegendem 15-mm-Brett und oberer Rahmen bei 570 bis 590 mm. Die Auszugsschienen laufen seitlich und parallel zu den U-Profilen.</p></div>
+      <div class="drawings">
+        <article class="drawing"><header><h3>Frontansicht</h3><p>Ansicht von der Heckklappe</p></header>
+          <svg viewBox="0 0 680 430" role="img" aria-label="Frontansicht mit drei Modulen und Massketten"><defs><marker id="arrow-a" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M6 0 0 3 6 6z" fill="#3d4b4c"/></marker></defs><rect x="55" y="35" width="570" height="300" fill="#f7f5ee" stroke="#495657" stroke-width="2"/><g fill="#829296" stroke="#344244" stroke-width="1.2"><rect x="55" y="325" width="570" height="10"/><rect x="55" y="35" width="10" height="300"/><rect x="215" y="35" width="10" height="300"/><rect x="455" y="35" width="10" height="300"/><rect x="615" y="35" width="10" height="300"/><rect x="55" y="35" width="570" height="10"/></g><g fill="#8e9b9b" stroke="#344244"><rect x="65" y="285" width="150" height="40"/><rect x="465" y="285" width="150" height="40"/></g><g fill="#a96f3e" stroke="#71421f"><rect x="65" y="277" width="150" height="8"/><rect x="465" y="277" width="150" height="8"/><rect x="225" y="317" width="230" height="8"/></g><g fill="#3c7881" stroke="#24515a"><rect x="78" y="167" width="124" height="110"/><rect x="78" y="57" width="124" height="110"/><rect x="478" y="167" width="124" height="110"/><rect x="478" y="57" width="124" height="110"/></g><rect x="254" y="72" width="172" height="245" rx="3" fill="#d6a746" stroke="#8e681d" stroke-width="2"/><g fill="#172126" font-family="Arial,sans-serif" font-size="12" text-anchor="middle"><text x="140" y="130">2 x Eurobox</text><text x="340" y="200">Kuehlbox</text><text x="540" y="130">2 x Eurobox</text></g><g stroke="#3d4b4c" fill="none" stroke-width="1" marker-start="url(#arrow-a)" marker-end="url(#arrow-a)"><line x1="55" y1="375" x2="625" y2="375"/><line x1="55" y1="350" x2="55" y2="390"/><line x1="625" y1="350" x2="625" y2="390"/><line x1="32" y1="35" x2="32" y2="335"/></g><g fill="#172126" font-family="Arial,sans-serif" font-size="12"><text x="340" y="392" text-anchor="middle">1.200 mm</text><text x="17" y="190" text-anchor="middle" transform="rotate(-90 17 190)">590 mm</text><text x="140" y="362" text-anchor="middle">310</text><text x="340" y="362" text-anchor="middle">500</text><text x="540" y="362" text-anchor="middle">310</text><text x="638" y="295">80 U</text><text x="638" y="326">20 Basis</text></g></svg>
+        </article>
+        <article class="drawing"><header><h3>Draufsicht</h3><p>Heck unten, Fahrzeuginnenraum oben</p></header>
+          <svg viewBox="0 0 680 430" role="img" aria-label="Draufsicht mit Auszugsrichtung nach hinten"><defs><marker id="arrow-b" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M8 0 0 4 8 8z" fill="#b7472a"/></marker></defs><rect x="55" y="50" width="570" height="285" fill="#f7f5ee" stroke="#495657" stroke-width="2"/><g fill="#829296"><rect x="55" y="50" width="10" height="285"/><rect x="215" y="50" width="10" height="285"/><rect x="455" y="50" width="10" height="285"/><rect x="615" y="50" width="10" height="285"/></g><g fill="#b9c2c0" stroke="#526163"><rect x="72" y="58" width="8" height="269"/><rect x="200" y="58" width="8" height="269"/><rect x="232" y="58" width="8" height="269"/><rect x="440" y="58" width="8" height="269"/><rect x="472" y="58" width="8" height="269"/><rect x="600" y="58" width="8" height="269"/></g><g fill="#3c7881" stroke="#24515a"><rect x="88" y="75" width="105" height="235"/><rect x="487" y="75" width="105" height="235"/></g><rect x="255" y="75" width="170" height="235" fill="#d6a746" stroke="#8e681d" stroke-width="2"/><g font-family="Arial,sans-serif" font-size="12" fill="#172126" text-anchor="middle"><text x="140" y="195">Eurobox</text><text x="340" y="195">Kuehlbox</text><text x="540" y="195">Eurobox</text></g><g stroke="#b7472a" stroke-width="3" marker-end="url(#arrow-b)"><line x1="140" y1="43" x2="140" y2="14"/><line x1="340" y1="43" x2="340" y2="14"/><line x1="540" y1="43" x2="540" y2="14"/></g><g fill="#b7472a" font-family="Arial,sans-serif" font-size="11" text-anchor="middle"><text x="340" y="14">Auszug Richtung Heck</text></g><g stroke="#3d4b4c" stroke-width="1"><line x1="55" y1="365" x2="625" y2="365"/><line x1="642" y1="50" x2="642" y2="335"/></g><g fill="#172126" font-family="Arial,sans-serif" font-size="12"><text x="340" y="385" text-anchor="middle">1.200 mm</text><text x="658" y="195" text-anchor="middle" transform="rotate(-90 658 195)">600 mm</text><text x="340" y="348" text-anchor="middle">Heck / Vorderseite</text></g></svg>
+        </article>
+        <article class="drawing"><header><h3>Seitenansicht</h3><p>Aufbau eines Eurobox-Moduls</p></header>
+          <svg viewBox="0 0 680 430" role="img" aria-label="Seitenansicht eines Seitenmoduls mit vertikalem Aufbau"><defs><marker id="arrow-c" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M6 0 0 3 6 6z" fill="#3d4b4c"/></marker></defs><rect x="75" y="35" width="390" height="300" fill="#f7f5ee" stroke="#495657" stroke-width="2"/><g fill="#829296" stroke="#344244"><rect x="75" y="325" width="390" height="10"/><rect x="75" y="35" width="12" height="300"/><rect x="453" y="35" width="12" height="300"/><rect x="75" y="35" width="390" height="10"/></g><rect x="92" y="285" width="356" height="40" fill="#8e9b9b" stroke="#344244"/><rect x="92" y="277" width="356" height="8" fill="#a96f3e" stroke="#71421f"/><g fill="#3c7881" stroke="#24515a"><rect x="145" y="167" width="250" height="110"/><rect x="145" y="57" width="250" height="110"/></g><rect x="103" y="299" width="334" height="26" fill="#bfc5c4" stroke="#526163"/><g fill="#172126" font-family="Arial,sans-serif" font-size="12"><text x="476" y="322">20 mm Basisrahmen</text><text x="476" y="299">80 mm U-Profil</text><text x="476" y="280">15 mm Brett</text><text x="476" y="160">2 x 220 mm Eurobox</text><text x="476" y="48">20 mm Oberrahmen</text><text x="270" y="316" text-anchor="middle">Schiene seitlich, parallel</text></g><g stroke="#3d4b4c" fill="none" marker-start="url(#arrow-c)" marker-end="url(#arrow-c)"><line x1="42" y1="35" x2="42" y2="335"/><line x1="75" y1="375" x2="465" y2="375"/></g><g fill="#172126" font-family="Arial,sans-serif" font-size="12"><text x="27" y="190" text-anchor="middle" transform="rotate(-90 27 190)">590 mm</text><text x="270" y="395" text-anchor="middle">600 mm Tiefe</text></g></svg>
+        </article>
+        <article class="drawing"><header><h3>Isometrie</h3><p>Vereinfachte Rahmenansicht</p></header>
+          <svg viewBox="0 0 680 430" role="img" aria-label="Isometrische Ansicht der drei Module"><g stroke="#344244" stroke-width="1.2"><polygon points="115,315 470,315 595,225 240,225" fill="#e7e8e3"/><polygon points="115,315 240,225 240,75 115,165" fill="#c6d0cf"/><polygon points="470,315 595,225 595,75 470,165" fill="#b4c0bf"/></g><g stroke="#344244" stroke-width="2" fill="none"><path d="M115 315V165L240 75H595V225L470 315Z"/><path d="M213 315V165L338 75V225L213 315Z"/><path d="M372 315V165L497 75V225L372 315Z"/><path d="M115 165H470L595 75"/></g><g stroke="#71421f" stroke-width="7" fill="none"><path d="M128 283H230L355 193H253Z"/><path d="M385 283H457L582 193H510Z"/></g><g fill="#3c7881" stroke="#24515a"><polygon points="140,270 204,270 204,200 140,200"/><polygon points="140,197 204,197 204,127 140,127"/><polygon points="403,270 450,270 450,200 403,200"/><polygon points="403,197 450,197 450,127 403,127"/></g><polygon points="276,266 359,266 359,117 276,117" fill="#d6a746" stroke="#8e681d" stroke-width="2"/><g fill="#172126" font-family="Arial,sans-serif" font-size="12"><text x="170" y="345" text-anchor="middle">Modul 1</text><text x="340" y="345" text-anchor="middle">Modul 2</text><text x="510" y="345" text-anchor="middle">Modul 3</text><text x="340" y="375" text-anchor="middle">1.200 x 600 x 590 mm</text></g></svg>
+        </article>
       </div>
-
-      <!-- Seitenansicht -->
-      <div class="drawing">
-        <h2>Seitenansicht</h2>
-        <svg width="600" height="590" viewBox="0 0 600 590" xmlns="http://www.w3.org/2000/svg">
-          <rect width="600" height="590" fill="#f8f8f8" stroke="#ccc"/>
-          <rect x="20" y="20" width="560" height="550" fill="#e0e0e0" stroke="#555"/>
-          <rect x="40" y="100" width="80" height="400" fill="#bdbdbd" stroke="#555"/>
-          <rect x="520" y="100" width="80" height="400" fill="#bdbdbd" stroke="#555"/>
-          <rect x="150" y="100" width="300" height="400" fill="#ffe0b2" stroke="#555"/>
-          <text x="300" y="300" text-anchor="middle" font-size="18" fill="#333">Kühlbox</text>
-          <rect x="40" y="100" width="120" height="100" fill="#bbdefb" stroke="#555"/>
-          <rect x="40" y="220" width="120" height="100" fill="#bbdefb" stroke="#555"/>
-          <rect x="520" y="100" width="120" height="100" fill="#bbdefb" stroke="#555"/>
-          <rect x="520" y="220" width="120" height="100" fill="#bbdefb" stroke="#555"/>
-          <rect x="0" y="0" width="600" height="20" fill="#6d4c41" stroke="#555"/>
-          <line x1="0"   y1="610" x2="600" y2="610" stroke="#555" stroke-width="2"/>
-          <line x1=0   y1=590 x2=0   y2=630 stroke="#555" stroke-width="2"/>
-          <line x1=600 y1=590 x2=600 y2=630 stroke="#555" stroke-width="2"/>
-          <text x="300" y="650" text-anchor="middle" font-size="16" fill="#000">600 mm</text>
-          <line x1="-20" y1="0"  x2="-20" y2="590" stroke="#555" stroke-width="2"/>
-          <line x1="-40" y1="0"  x2="-20" y2="0"  stroke="#555" stroke-width="2"/>
-          <line x1="-40" y1="590"x2="-20" y2="590"stroke="#555" stroke-width="2"/>
-          <text x="-60" y="295" text-anchor="middle" font-size="16" fill="#000" transform="rotate(-90 -60,295)">590 mm</text>
-        </svg>
-      </div>
-
-      <!-- Draufsicht -->
-      <div class="drawing">
-        <h2>Draufsicht</h2>
-        <svg width="1200" height="600" viewBox="0 0 1200 600" xmlns="http://www.w3.org/2000/svg">
-          <rect width="1200" height="600" fill="#f8f8f8" stroke="#ccc"/>
-          <rect x="0"   y="0" width="20" height="600" fill="#bbb" stroke="#555"/>
-          <rect x="310" y="0" width="20" height="600" fill="#bbb" stroke="#555"/>
-          <rect x="810" y="0" width="20" height="600" fill="#bbb" stroke="#555"/>
-          <rect x="1180"y="0" width="20" height="600" fill="#bbb" stroke="#555"/>
-          <rect x="20"  y="0" width="310" height="600" fill="#e0e0e0" stroke="#555"/>
-          <rect x="330" y="0" width="500" height="600" fill="#d0d0d0" stroke="#555"/>
-          <rect x="830" y="0" width="310" height="600" fill="#e0e0e0" stroke="#555"/>
-          <line x1=0   y1=620 x2=1200 y2=620 stroke="#555" stroke-width="2"/>
-          <line x1=0   y1=600 x2=0   y2=620 stroke="#555" stroke-width="2"/>
-          <line x1=1200y1=600 x2=1200y2=620 stroke="#555" stroke-width="2"/>
-          <text x="600" y="660" text-anchor="middle" font-size="16" fill="#000">1200 mm</text>
-          <line x1=-20 y1=0   x2=-20 y2=600 stroke="#555" stroke-width="2"/>
-          <line x1=-40 y1=0   x2=-20 y2=0   stroke="#555" stroke-width="2"/>
-          <line x1=-40 y1=600 x2=-20 y2=600 stroke="#555" stroke-width="2"/>
-          <text x="-60" y="300" text-anchor="middle" font-size="16" fill="#000" transform="rotate(-90 -60,300)">600 mm</text>
-        </svg>
-      </div>
-
-      <!-- Isometrie -->
-      <div class="drawing">
-        <h2>Isometrie</h2>
-        <svg width="1800" height="1190" viewBox="0 0 1800 1190" xmlns="http://www.w3.org/2000/svg">
-          <polygon points="0,590 1200,590 1800,290 600,290" fill="#e0e0e0" stroke="#555"/>
-          <polygon points="0,590 0,1180 600,880 600,290" fill="#d0d0d0" stroke="#555"/>
-          <polygon points="1200,590 1200,1180 1800,880 1800,290" fill="#c0c0c0" stroke="#555"/>
-          <line x1="600" y1="610" x2="1200" y2="610" stroke="#555" stroke-width="2"/>
-          <line x1="600" y1="590" x2="600" y2="630" stroke="#555" stroke-width="2"/>
-          <line x1=1200 y1=590 x2=1200 y2=630 stroke="#555" stroke-width="2"/>
-          <text x="900" y="650" text-anchor="middle" font-size="16" fill="#000">1200 mm</text>
-          <line x1="1220"y1="300" x2="1220"y2="890" stroke="#555" stroke-width="2"/>
-          <line x1=1200 y1=300 x2=1240 y2=300 stroke="#555" stroke-width="2"/>
-          <line x1=1200 y1=890 x2=1240 y2=890 stroke="#555" stroke-width="2"/>
-          <text x="1260" y="595" text-anchor="middle" font-size="16" fill="#000" transform="rotate(90 1260,595)">600 mm</text>
-          <line x1="1820"y1="295" x2="1820"y2="885" stroke="#555" stroke-width="2"/>
-          <line x1=1800 y1=295 x2=1840 y2=295 stroke="#555" stroke-width="2"/>
-          <line x1=1800 y1=885 x2=1840 y2=885 stroke="#555" stroke-width="2"/>
-          <text x="1860" y="590" text-anchor="middle" font-size="16" fill="#000" transform="rotate(90 1860,590)">590 mm</text>
-        </svg>
-      </div>
-    </div>
-  </div>
-
-  <div class="nav">
-    <a href="webgl.html">Zur WebGL‑3D‑Ansicht wechseln</a>
-  </div>
-</div>
+    </section>
+    <section class="model-section" aria-labelledby="model-title">
+      <div class="model-header"><div><p class="model-meta">Interaktive 3D-Ansicht</p><h2 id="model-title">Der Aufbau im Raum</h2><p>Mit der Maus oder per Touch drehen, verschieben und zoomen. Die Ladeinhalte lassen sich ausblenden, um den Rahmen, die Schienen und die U-Profil-Fuehrungen zu pruefen.</p></div></div>
+      <div class="model-wrap"><div id="model" aria-label="Interaktives 3D Modell des Heckauszugs"></div><div class="model-controls" aria-label="3D Ansicht steuern"><div class="view-buttons"><button type="button" data-view="iso" aria-pressed="true">Isometrie</button><button type="button" data-view="front" aria-pressed="false">Heck</button><button type="button" data-view="side" aria-pressed="false">Seite</button><button type="button" data-view="top" aria-pressed="false">Oben</button></div><label class="toggle-line"><input id="cargo-toggle" type="checkbox" checked>Ladeinhalte zeigen</label></div><p class="model-note">Heck / Auszugsrichtung: vorn</p></div>
+      <div class="legend" aria-label="Legende"><span><i class="swatch" style="background:#829296"></i>Aluminiumprofil</span><span><i class="swatch" style="background:#a96f3e"></i>Multiplex</span><span><i class="swatch" style="background:#3c7881"></i>Eurobox</span><span><i class="swatch" style="background:#d6a746"></i>Kuehlbox</span></div>
+    </section>
+  </main>
+  <footer class="footer"><div class="shell"><p>Planungsstand: Konzeptmodell. Vor Beschaffung sind Befestigung am Fahrzeug, genaue Lochbilder und Tragfaehigkeit der Auszuege zu pruefen.</p></div></footer>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <script>
+    const host=document.getElementById('model'); const scene=new THREE.Scene(); scene.background=new THREE.Color(0xdfe4df); const camera=new THREE.PerspectiveCamera(42,1,1,5000); const renderer=new THREE.WebGLRenderer({antialias:true}); renderer.setPixelRatio(Math.min(window.devicePixelRatio,2)); renderer.shadowMap.enabled=true; renderer.shadowMap.type=THREE.PCFSoftShadowMap; renderer.outputEncoding=THREE.sRGBEncoding; host.appendChild(renderer.domElement);
+    const controls=new THREE.OrbitControls(camera,renderer.domElement); controls.enableDamping=true; controls.dampingFactor=.08; controls.target.set(600,245,300); controls.maxPolarAngle=Math.PI/2-.02; controls.minDistance=650; controls.maxDistance=2400;
+    scene.add(new THREE.HemisphereLight(0xffffff,0x697b76,2.2)); const keyLight=new THREE.DirectionalLight(0xfff4d6,2.7); keyLight.position.set(-500,1200,800); keyLight.castShadow=true; keyLight.shadow.mapSize.set(2048,2048); keyLight.shadow.camera.left=-800; keyLight.shadow.camera.right=800; keyLight.shadow.camera.top=800; keyLight.shadow.camera.bottom=-800; scene.add(keyLight); const floor=new THREE.Mesh(new THREE.PlaneGeometry(2800,2200),new THREE.MeshStandardMaterial({color:0xc9d1cb,roughness:1})); floor.rotation.x=-Math.PI/2; floor.receiveShadow=true; scene.add(floor);
+    const material={aluminum:new THREE.MeshStandardMaterial({color:0x829296,metalness:.7,roughness:.33}),darkMetal:new THREE.MeshStandardMaterial({color:0x4b5657,metalness:.72,roughness:.32}),wood:new THREE.MeshStandardMaterial({color:0xa96f3e,roughness:.68}),box:new THREE.MeshStandardMaterial({color:0x3c7881,roughness:.55}),cooler:new THREE.MeshStandardMaterial({color:0xd6a746,roughness:.62}),bench:new THREE.MeshStandardMaterial({color:0x87562e,roughness:.72})}; const cargo=new THREE.Group(); scene.add(cargo);
+    function box(width,height,depth,x,y,z,surface,parent=scene){const mesh=new THREE.Mesh(new THREE.BoxGeometry(width,height,depth),surface); mesh.position.set(x,y+height/2,z); mesh.castShadow=true; mesh.receiveShadow=true; parent.add(mesh); return mesh;} function outlinedBox(width,height,depth,x,y,z,surface,parent=scene){const mesh=box(width,height,depth,x,y,z,surface,parent); const edges=new THREE.LineSegments(new THREE.EdgesGeometry(mesh.geometry),new THREE.LineBasicMaterial({color:0x263536,transparent:true,opacity:.42})); edges.position.copy(mesh.position); parent.add(edges); return mesh;}
+    function frameModule(left,clearWidth,hasGuides){const right=left+clearWidth; [left-10,right+10].forEach(x=>[20,580].forEach(z=>box(20,550,40,x,20,z,material.aluminum))); [20,580].forEach(z=>{box(clearWidth+20,20,40,left+clearWidth/2,0,z,material.aluminum);box(clearWidth+20,20,40,left+clearWidth/2,570,z,material.aluminum);}); [left+10,right-10].forEach(x=>box(19.5,53,600,x,20,300,material.darkMetal)); if(hasGuides){[left+36,right-36].forEach(x=>{box(40,8,600,x,20,300,material.aluminum);box(4,80,600,x-18,20,300,material.aluminum);box(4,80,600,x+18,20,300,material.aluminum);}); box(clearWidth-44,15,600,left+clearWidth/2,100,300,material.wood);box(250,40,560,left+clearWidth/2,40,300,material.bench);[115,335].forEach(y=>outlinedBox(250,220,540,left+clearWidth/2,y,300,material.box,cargo));}else{box(clearWidth-20,15,600,left+clearWidth/2,20,300,material.wood);[[left+32,35],[right-32,35]].forEach(([x,y])=>box(40,8,50,x,y,35,material.aluminum));[[left+32,35],[right-32,35]].forEach(([x,y])=>box(40,8,50,x,y,565,material.aluminum));outlinedBox(369,490,540,left+clearWidth/2,35,300,material.cooler,cargo);}}
+    frameModule(20,310,true); frameModule(350,500,false); frameModule(870,310,true); scene.add(new THREE.ArrowHelper(new THREE.Vector3(0,0,-1),new THREE.Vector3(600,6,18),150,0xb7472a,30,18));
+    function resize(){const {width,height}=host.getBoundingClientRect(); camera.aspect=width/height; camera.fov=width<height?70:42; camera.updateProjectionMatrix(); renderer.setSize(width,height,false);} new ResizeObserver(resize).observe(host); resize(); const views={iso:new THREE.Vector3(1900,1350,1800),front:new THREE.Vector3(600,430,-2200),side:new THREE.Vector3(2300,500,300),top:new THREE.Vector3(600,2200,300)}; function setView(name){camera.position.copy(views[name]);controls.target.set(600,245,300);controls.update();document.querySelectorAll('[data-view]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.view===name)));} document.querySelectorAll('[data-view]').forEach(button=>button.addEventListener('click',()=>setView(button.dataset.view))); document.getElementById('cargo-toggle').addEventListener('change',event=>{cargo.visible=event.target.checked;}); setView('iso'); function render(){requestAnimationFrame(render);controls.update();renderer.render(scene,camera);} render();
+  </script>
 </body>
 </html>
