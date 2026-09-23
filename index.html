@@ -49,7 +49,81 @@
           <svg viewBox="0 0 680 430" role="img" aria-label="Seitenansicht eines Seitenmoduls mit vertikalem Aufbau"><defs><marker id="arrow-c" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M6 0 0 3 6 6z" fill="#3d4b4c"/></marker></defs><rect x="75" y="35" width="390" height="300" fill="#f7f5ee" stroke="#495657" stroke-width="2"/><g fill="#829296" stroke="#344244"><rect x="75" y="325" width="390" height="10"/><rect x="75" y="35" width="12" height="300"/><rect x="453" y="35" width="12" height="300"/><rect x="75" y="35" width="390" height="10"/></g><rect x="92" y="285" width="356" height="40" fill="#8e9b9b" stroke="#344244"/><rect x="92" y="277" width="356" height="8" fill="#a96f3e" stroke="#71421f"/><g fill="#3c7881" stroke="#24515a"><rect x="145" y="167" width="250" height="110"/><rect x="145" y="57" width="250" height="110"/></g><rect x="103" y="299" width="334" height="26" fill="#bfc5c4" stroke="#526163"/><g fill="#172126" font-family="Arial,sans-serif" font-size="12"><text x="476" y="322">20 mm Basisrahmen</text><text x="476" y="299">80 mm U-Profil</text><text x="476" y="280">15 mm Brett</text><text x="476" y="160">2 x 220 mm Eurobox</text><text x="476" y="48">20 mm Oberrahmen</text><text x="270" y="316" text-anchor="middle">Schiene seitlich, parallel</text></g><g stroke="#3d4b4c" fill="none" marker-start="url(#arrow-c)" marker-end="url(#arrow-c)"><line x1="42" y1="35" x2="42" y2="335"/><line x1="75" y1="375" x2="465" y2="375"/></g><g fill="#172126" font-family="Arial,sans-serif" font-size="12"><text x="27" y="190" text-anchor="middle" transform="rotate(-90 27 190)">590 mm</text><text x="270" y="395" text-anchor="middle">600 mm Tiefe</text></g></svg>
         </article>
         <article class="drawing"><header><h3>Isometrie</h3><p>Vereinfachte Rahmenansicht</p></header>
-          <svg viewBox="0 0 680 430" role="img" aria-label="Isometrische Ansicht der drei Module mit vollstaendiger Tiefe"><rect x="65" y="35" width="550" height="320" fill="#f7f5ee"/><g stroke="#344244" stroke-width="1.5"><polygon points="115,315 470,315 595,225 240,225" fill="#d8dfda"/><path d="M115 315V165L240 75H595V225L470 315Z" fill="none" stroke-width="3"/><path d="M213 315V165L338 75V225L213 315M372 315V165L497 75V225L372 315" fill="none" stroke-width="3"/></g><g fill="#a96f3e" stroke="#71421f"><polygon points="125,303 203,303 313,228 235,228"/><polygon points="224,303 361,303 471,228 334,228"/><polygon points="382,303 460,303 570,228 492,228"/></g><g stroke="#829296" stroke-width="5"><path d="M135 296 245 221M195 296 305 221M393 296 503 221M450 296 560 221"/></g><g stroke="#24515a"><polygon points="135,295 195,295 305,220 245,220" fill="#2e626b"/><polygon points="135,230 195,230 305,155 245,155" fill="#2e626b"/><polygon points="135,230 245,155 245,220 135,295" fill="#3c7881"/><polygon points="195,230 305,155 305,220 195,295" fill="#54929a"/><polygon points="135,228 195,228 305,153 245,153" fill="#2e626b"/><polygon points="135,163 195,163 305,88 245,88" fill="#2e626b"/><polygon points="135,163 245,88 245,153 135,228" fill="#3c7881"/><polygon points="195,163 305,88 305,153 195,228" fill="#54929a"/><polygon points="393,295 450,295 560,220 503,220" fill="#2e626b"/><polygon points="393,230 450,230 560,155 503,155" fill="#2e626b"/><polygon points="393,230 503,155 503,220 393,295" fill="#3c7881"/><polygon points="450,230 560,155 560,220 450,295" fill="#54929a"/><polygon points="393,228 450,228 560,153 503,153" fill="#2e626b"/><polygon points="393,163 450,163 560,88 503,88" fill="#2e626b"/><polygon points="393,163 503,88 503,153 393,228" fill="#3c7881"/><polygon points="450,163 560,88 560,153 450,228" fill="#54929a"/></g><g stroke="#8e681d"><polygon points="245,295 340,295 450,220 355,220" fill="#bd8d36"/><polygon points="245,130 340,130 450,55 355,55" fill="#efd277"/><polygon points="245,130 355,55 355,220 245,295" fill="#d6a746"/><polygon points="340,130 450,55 450,220 340,295" fill="#e9bd59"/></g><g fill="#172126" font-family="Arial,sans-serif" font-size="12"><text x="164" y="342" text-anchor="middle">Modul 1</text><text x="292" y="342" text-anchor="middle">Modul 2</text><text x="420" y="342" text-anchor="middle">Modul 3</text><text x="340" y="378" text-anchor="middle">1.200 x 600 x 590 mm</text><text x="505" y="278">600 mm Tiefe</text></g></svg>
+          <svg viewBox="0 0 680 430" role="img" aria-label="Isometrische Ansicht der drei Module mit vollstaendiger Tiefe">
+  <defs>
+    <marker id="arrow" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L6,3 z" fill="#344244"/>
+    </marker>
+    <style>
+      .dim { font: 10px sans-serif; fill: #344244; }
+      .line { stroke: #344244; stroke-width: 0.25; fill: none; }
+      .line-thick { stroke: #344244; stroke-width: 0.5; fill: none; }
+      .fill-light { fill: #f7f5ee; }
+      .fill-medium { fill: #e9ecef; }
+      .fill-dark { fill: #dee2e6; }
+      .text-center { text-anchor: middle; dominant-baseline: central; }
+    </style>
+  </defs>
+  <!-- Grundkörper (ausgezogen) -->
+  <rect x="70" y="30" width="540" height="260" rx="5" ry="5" class="fill-light"/>
+  <!-- Module links -->
+  <rect x="80" y="40" width="150" height="240" rx="3" ry="3" class="fill-medium"/>
+  <!-- U-Profil links -->
+  <rect x="85" y="45" width="140" height="60" rx="2" ry="2" class="fill-light" stroke="#344244" stroke-width="0.25"/>
+  <!-- Bierbank in U -->
+  <rect x="90" y="50" width="130" height="30" rx="1" ry="1" class="fill-dark"/>
+  <!-- Brett -->
+  <rect x="85" y="115" width="140" height="15" class="fill-dark"/>
+  <!-- Eurobox 1 -->
+  <rect x="85" y="140" width="140" height="100" class="fill-light"/>
+  <!-- Eurobox 2 -->
+  <rect x="85" y="250" width="140" height="100" class="fill-light"/>
+  <!-- Deckel -->
+  <rect x="85" y="360" width="140" height="15" class="fill-dark"/>
+  <!-- Bosch Profile links (außen) -->
+  <rect x="70" y="40" width="10" height="240" class="fill-dark"/>
+  <rect x="230" y="40" width="10" height="240" class="fill-dark"/>
+  <!-- Modul mitte -->
+  <rect x="250" y="40" width="180" height="240" rx="3" ry="3" class="fill-medium"/>
+  <!-- Brett mittig (abgesenkt) -->
+  <rect x="255" y="55" width="170" height="15" class="fill-dark"/>
+  <!-- Kühlbox -->
+  <rect x="255" y="80" width="170" height="150" class="fill-light"/>
+  <!-- Bosch Profile mitte -->
+  <rect x="240" y="40" width="10" height="240" class="fill-dark"/>
+  <rect x="440" y="40" width="10" height="240" class="fill-dark"/>
+  <!-- Modul rechts -->
+  <rect x="460" y="40" width="150" height="240" rx="3" ry="3" class="fill-medium"/>
+  <!-- U-Profil rechts -->
+  <rect x="465" y="45" width="140" height="60" rx="2" ry="2" class="fill-light" stroke="#344244" stroke-width="0.25"/>
+  <!-- Bierbank rechts -->
+  <rect x="470" y="50" width="130" height="30" rx="1" ry="1" class="fill-dark"/>
+  <!-- Brett rechts -->
+  <rect x="465" y="115" width="140" height="15" class="fill-dark"/>
+  <!-- Eurobox 1 rechts -->
+  <rect x="465" y="140" width="140" height="100" class="fill-light"/>
+  <!-- Eurobox 2 rechts -->
+  <rect x="465" y="250" width="140" height="100" class="fill-light"/>
+  <!-- Deckel rechts -->
+  <rect x="465" y="360" width="140" height="15" class="fill-dark"/>
+  <!-- Bosch Profile rechts -->
+  <rect x="450" y="40" width="10" height="240" class="fill-dark"/>
+  <rect x="610" y="40" width="10" height="240" class="fill-dark"/>
+  <!-- Maße -->
+  <!-- Gesamttiefe -->
+  <line x1="60" y1="30" x2="60" y2="290" class="line" marker-end="url(#arrow)"/>
+  <line x1="620" y1="30" x2="620" y2="290" class="line" marker-end="url(#arrow)"/>
+  <text x="30" y="160" class="dim text-center" transform="rotate(-90 30,160)">600 mm</text>
+  <!-- Gesamtbreite -->
+  <line x1="60" y1="300" x2="620" y2="300" class="line" marker-end="url(#arrow)"/>
+  <text x="340" y="315" class="dim text-center">1200 mm</text>
+  <!-- Gesamthöhe -->
+  <line x1="660" y1="20" x2="660" y2="280" class="line" marker-end="url(#arrow)"/>
+  <text x="675" y="150" class="dim">590 mm</text>
+  <!-- Innenmaße Beispiel -->
+  <line x1="90" y1="45" x2="225" y2="45" class="line" marker-end="url(#arrow)"/>
+  <text x="155" y="35" class="dim">135 mm</text>
+</svg>
         </article>
       </div>
     </section>
