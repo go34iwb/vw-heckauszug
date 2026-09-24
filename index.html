@@ -49,151 +49,139 @@
           <svg viewBox="0 0 680 430" role="img" aria-label="Seitenansicht eines Seitenmoduls mit vertikalem Aufbau"><defs><marker id="arrow-c" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M6 0 0 3 6 6z" fill="#3d4b4c"/></marker></defs><rect x="75" y="35" width="390" height="300" fill="#f7f5ee" stroke="#495657" stroke-width="2"/><g fill="#829296" stroke="#344244"><rect x="75" y="325" width="390" height="10"/><rect x="75" y="35" width="12" height="300"/><rect x="453" y="35" width="12" height="300"/><rect x="75" y="35" width="390" height="10"/></g><rect x="92" y="285" width="356" height="40" fill="#8e9b9b" stroke="#344244"/><rect x="92" y="277" width="356" height="8" fill="#a96f3e" stroke="#71421f"/><g fill="#3c7881" stroke="#24515a"><rect x="145" y="167" width="250" height="110"/><rect x="145" y="57" width="250" height="110"/></g><rect x="103" y="299" width="334" height="26" fill="#bfc5c4" stroke="#526163"/><g fill="#172126" font-family="Arial,sans-serif" font-size="12"><text x="476" y="322">20 mm Basisrahmen</text><text x="476" y="299">80 mm U-Profil</text><text x="476" y="280">15 mm Brett</text><text x="476" y="160">2 x 220 mm Eurobox</text><text x="476" y="48">20 mm Oberrahmen</text><text x="270" y="316" text-anchor="middle">Schiene seitlich, parallel</text></g><g stroke="#3d4b4c" fill="none" marker-start="url(#arrow-c)" marker-end="url(#arrow-c)"><line x1="42" y1="35" x2="42" y2="335"/><line x1="75" y1="375" x2="465" y2="375"/></g><g fill="#172126" font-family="Arial,sans-serif" font-size="12"><text x="27" y="190" text-anchor="middle" transform="rotate(-90 27 190)">590 mm</text><text x="270" y="395" text-anchor="middle">600 mm Tiefe</text></g></svg>
         </article>
         <article class="drawing"><header><h3>Isometrie</h3><p>Korrekter Aufbau mit U-Profilen, Drop-Modul, Auszügen & Beladung</p></header>
-          <svg viewBox="0 0 700 450" role="img" aria-label="Isometrische Ansicht der drei Module mit U-Profilen, Kühlbox-Drop, Auszügen und Euroboxen">
-  <defs>
-    <marker id="arrow" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
-      <path d="M0,0 L0,6 L6,3 z" fill="#344244"/>
-    </marker>
-    <style>
-      .dim { font: 10px sans-serif; fill: #344244; }
-      .line { stroke: #344244; stroke-width: 0.5; fill: none; }
-      .fill-bg { fill: #f7f5ee; }
-      .fill-panel { fill: #e8ebe5; }
-      .aluminum { fill: #829296; }
-      .aluminum-dark { fill: #4b5657; }
-      .wood { fill: #a96f3e; }
-      .box { fill: #3c7881; }
-      .cooler { fill: #d6a746; }
-      .bench { fill: #87562e; }
-    </style>
-  </defs>
-  <!-- Hintergrund -->
-  <rect x="20" y="10" width="660" height="420" rx="5" class="fill-bg" stroke="#c8c5ba" stroke-width="1"/>
+                  <svg viewBox="0 0 680 430" role="img" aria-label="Isometrische Ansicht der drei Module mit U-Profilen, Kühlbox-Drop, Auszügen und Euroboxen">
+          <defs>
+            <marker id="arrow-iso" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+              <path d="M6 0 0 3 6 6z" fill="#3d4b4c"/>
+            </marker>
+          </defs>
+          <!-- Hintergrund -->
+          <rect x="30" y="20" width="620" height="390" fill="#f7f5ee" stroke="#495657" stroke-width="2"/>
   
-  <!-- Isometrische Projektion: x→rechts, y→oben, z→tiefe (nach hinten/rechts-oben) -->
-  <!-- Modul 1 (Links): x=40..350, Breite 310 -->
-  <!-- Modul 2 (Mitte): x=370..870, Breite 500 -->
-  <!-- Modul 3 (Rechts): x=890..1200, Breite 310 -->
-  <!-- Tiefe (z): 0..600 (nach hinten) -->
-  <!-- Höhe (y): 0..590 -->
+          <!-- Isometrische Basisprojektion (vereinfacht, passend zu den anderen Zeichnungen) -->
+          <!-- Modul 1 (Links): x≈45..180, Breite ~135 -->
+          <!-- Modul 2 (Mitte): x≈200..420, Breite ~220 -->
+          <!-- Modul 3 (Rechts): x≈440..575, Breite ~135 -->
+          <!-- Höhe y: 40..340 (590mm → 300px) -->
+          <!-- Tiefe (z-Offset): nach rechts-oben versetzt -->
   
-  <!-- Helper-Funktionen für isometrische Projektion werden im JS unten berechnet, hier statische SVG-Näherung -->
+          <!-- HILFSLINIEN (sehr dezent) -->
+          <g stroke="#c8c5ba" stroke-width="0.5" fill="none">
+            <line x1="45" y1="340" x2="45" y2="40"/>
+            <line x1="180" y1="340" x2="180" y2="40"/>
+            <line x1="200" y1="340" x2="200" y2="40"/>
+            <line x1="420" y1="340" x2="420" y2="40"/>
+            <line x1="440" y1="340" x2="440" y2="40"/>
+            <line x1="575" y1="340" x2="575" y2="40"/>
+          </g>
   
-  <!-- MODUL 1 (LINKS) - Eurobox-Modul mit U-Profilen -->
-  <!-- Basisrahmen (unten) -->
-  <path d="M80,400 L120,370 L430,370 L390,400 Z" class="aluminum" stroke="#344244" stroke-width="1"/>
-  <path d="M80,400 L40,430 L350,430 L390,400 Z" class="aluminum-dark" stroke="#344244" stroke-width="1"/>
-  <path d="M40,430 L0,460 L310,460 L350,430 Z" class="aluminum" stroke="#344244" stroke-width="1"/>
-  <!-- Vertikale Profile vorne links/rechts -->
-  <path d="M80,400 L60,220 L100,190 L120,370 Z" class="aluminum" stroke="#344244" stroke-width="1"/>
-  <path d="M390,400 L370,220 L410,190 L430,370 Z" class="aluminum" stroke="#344244" stroke-width="1"/>
-  <!-- U-Profile links/rechts (seitlich, laufen in Tiefe) -->
-  <path d="M120,370 L100,190 L360,190 L380,370 Z" class="aluminum" stroke="#344244" stroke-width="1"/>
-  <path d="M100,190 L80,110 L340,110 L360,190 Z" class="aluminum-dark" stroke="#344244" stroke-width="1"/>
-  <!-- U-Profil Nut (Bierbank-Führung) -->
-  <path d="M110,360 L90,180 L100,170 L120,350 Z" class="wood" stroke="#71421f" stroke-width="0.5"/>
-  <path d="M350,360 L330,180 L340,170 L360,350 Z" class="wood" stroke="#71421f" stroke-width="0.5"/>
-  <!-- Brett oben auf U-Profil -->
-  <path d="M100,180 L80,100 L340,100 L360,180 Z" class="wood" stroke="#71421f" stroke-width="1"/>
-  <!-- Oberrahmen -->
-  <path d="M80,100 L60,20 L400,20 L420,100 Z" class="aluminum" stroke="#344244" stroke-width="1"/>
-  <path d="M60,20 L20,50 L360,50 L400,20 Z" class="aluminum-dark" stroke="#344244" stroke-width="1"/>
-  <!-- Euroboxen (2x gestapelt) -->
-  <path d="M105,170 L85,90 L315,90 L335,170 Z" class="box" stroke="#24515a" stroke-width="0.5"/>
-  <path d="M85,90 L65,10 L315,10 L335,90 Z" class="box" stroke="#24515a" stroke-width="0.5"/>
-  <path d="M105,170 L85,90 L275,90 L295,170 Z" class="box" stroke="#24515a" stroke-width="0.5"/>
-  <path d="M85,90 L65,10 L255,10 L275,90 Z" class="box" stroke="#24515a" stroke-width="0.5"/>
-  <!-- Bierbänke in U-Profil-Nut -->
-  <path d="M110,350 L90,170 L295,170 L315,350 Z" class="bench" stroke="#5a3d1e" stroke-width="0.5"/>
-  <path d="M90,170 L70,-10 L275,-10 L295,170 Z" class="bench" stroke="#5a3d1e" stroke-width="0.5"/>
-  <!-- Auszüge (seitlich, parallel zu U-Profilen) -->
-  <path d="M80,400 L60,220 L60,200 L80,380 Z" class="aluminum-dark" stroke="#344244" stroke-width="1"/>
-  <path d="M390,400 L370,220 L370,200 L390,380 Z" class="aluminum-dark" stroke="#344244" stroke-width="1"/>
+          <!-- MODUL 1 (LINKS) - Eurobox-Modul mit U-Profilen -->
+          <!-- Basisrahmen unten -->
+          <rect x="45" y="325" width="135" height="15" fill="#829296" stroke="#344244" stroke-width="1.2"/>
+          <!-- U-Profile links/rechts (seitlich, in Tiefe laufend) -->
+          <path d="M45,325 L30,295 L165,295 L180,325 Z" fill="#829296" stroke="#344244" stroke-width="1.2"/>
+          <path d="M30,295 L15,265 L150,265 L165,295 Z" fill="#4b5657" stroke="#344244" stroke-width="1.2"/>
+          <!-- Vertikale Profile vorne -->
+          <path d="M45,325 L30,295 L45,85 L60,115 Z" fill="#829296" stroke="#344244" stroke-width="1.2"/>
+          <path d="M180,325 L165,295 L180,85 L195,115 Z" fill="#829296" stroke="#344244" stroke-width="1.2"/>
+          <!-- U-Profil oben (Nut für Bierbank) -->
+          <path d="M55,115 L40,85 L170,85 L185,115 Z" fill="#a96f3e" stroke="#71421f" stroke-width="0.5"/>
+          <!-- Brett auf U-Profil -->
+          <path d="M40,85 L25,55 L155,55 L170,85 Z" fill="#a96f3e" stroke="#71421f" stroke-width="1"/>
+          <!-- Oberrahmen -->
+          <path d="M25,55 L10,25 L140,25 L155,55 Z" fill="#829296" stroke="#344244" stroke-width="1.2"/>
+          <path d="M10,25 L-5,-5 L125,-5 L140,25 Z" fill="#4b5657" stroke="#344244" stroke-width="1.2"/>
+          <!-- Euroboxen (2x gestapelt) -->
+          <rect x="50" y="160" width="115" height="100" fill="#3c7881" stroke="#24515a" stroke-width="0.5"/>
+          <rect x="50" y="60" width="115" height="100" fill="#3c7881" stroke="#24515a" stroke-width="0.5"/>
+          <!-- Bierbänke in U-Profil-Nut (2 Stück) -->
+          <path d="M55,290 L40,260 L170,260 L185,290 Z" fill="#87562e" stroke="#5a3d1e" stroke-width="0.5"/>
+          <path d="M55,260 L40,230 L170,230 L185,260 Z" fill="#87562e" stroke="#5a3d1e" stroke-width="0.5"/>
+          <!-- Auszüge (seitlich, dünn) -->
+          <path d="M45,325 L30,295 L30,70 L45,100 Z" fill="#4b5657" stroke="#344244" stroke-width="1"/>
+          <path d="M180,325 L165,295 L165,70 L180,100 Z" fill="#4b5657" stroke="#344244" stroke-width="1"/>
   
-  <!-- MODUL 2 (MITTE) - Kühlbox-Drop (keine U-Profile, Brett tiefer) -->
-  <!-- Basisrahmen -->
-  <path d="M410,400 L450,370 L930,370 L890,400 Z" class="aluminum" stroke="#344244" stroke-width="1"/>
-  <path d="M410,400 L370,430 L850,430 L890,400 Z" class="aluminum-dark" stroke="#344244" stroke-width="1"/>
-  <path d="M370,430 L330,460 L810,460 L850,430 Z" class="aluminum" stroke="#344244" stroke-width="1"/>
-  <!-- Vertikale Profile -->
-  <path d="M410,400 L390,220 L430,190 L450,370 Z" class="aluminum" stroke="#344244" stroke-width="1"/>
-  <path d="M890,400 L870,220 L910,190 L930,370 Z" class="aluminum" stroke="#344244" stroke-width="1"/>
-  <!-- Brett TIEFERGELEGT (bei 35mm = Basis 20 + Brett 15) -->
-  <path d="M430,370 L410,190 L870,190 L890,370 Z" class="wood" stroke="#71421f" stroke-width="1"/>
-  <path d="M410,190 L390,110 L850,110 L870,190 Z" class="wood" stroke="#71421f" stroke-width="1"/>
-  <!-- Winkel zur Brett-Montage (4 Winkel) -->
-  <path d="M410,190 L390,210 L390,230 L410,210 Z" class="aluminum-dark" stroke="#344244" stroke-width="1"/>
-  <path d="M430,190 L450,210 L450,230 L430,210 Z" class="aluminum-dark" stroke="#344244" stroke-width="1"/>
-  <path d="M870,190 L850,210 L850,230 L870,210 Z" class="aluminum-dark" stroke="#344244" stroke-width="1"/>
-  <path d="M890,190 L910,210 L910,230 L890,210 Z" class="aluminum-dark" stroke="#344244" stroke-width="1"/>
-  <!-- Oberrahmen -->
-  <path d="M390,110 L370,30 L910,30 L930,110 Z" class="aluminum" stroke="#344244" stroke-width="1"/>
-  <path d="M370,30 L330,60 L870,60 L910,30 Z" class="aluminum-dark" stroke="#344244" stroke-width="1"/>
-  <!-- Kühlbox (369mm breit, 490mm hoch, 540mm tief) -->
-  <path d="M540,360 L520,180 L760,180 L780,360 Z" class="cooler" stroke="#8e681d" stroke-width="1"/>
-  <path d="M520,180 L500,100 L740,100 L760,180 Z" class="cooler" stroke="#8e681d" stroke-width="1"/>
-  <path d="M540,360 L520,180 L500,100 L520,280 Z" class="cooler" stroke="#8e681d" stroke-width="1"/>
-  <path d="M740,100 L760,180 L780,360 L760,280 Z" class="cooler" stroke="#8e681d" stroke-width="1"/>
-  <!-- Auszüge -->
-  <path d="M410,400 L390,220 L390,200 L410,380 Z" class="aluminum-dark" stroke="#344244" stroke-width="1"/>
-  <path d="M890,400 L870,220 L870,200 L890,380 Z" class="aluminum-dark" stroke="#344244" stroke-width="1"/>
+          <!-- MODUL 2 (MITTE) - Kühlbox-Drop (keine U-Profile, Brett tiefer) -->
+          <!-- Basisrahmen -->
+          <rect x="200" y="325" width="220" height="15" fill="#829296" stroke="#344244" stroke-width="1.2"/>
+          <!-- Vertikale Profile -->
+          <path d="M200,325 L185,295 L200,85 L215,115 Z" fill="#829296" stroke="#344244" stroke-width="1.2"/>
+          <path d="M420,325 L405,295 L420,85 L435,115 Z" fill="#829296" stroke="#344244" stroke-width="1.2"/>
+          <!-- Brett TIEFERGELEGT (bei ~100px = 35mm über Basis) -->
+          <path d="M215,115 L200,85 L405,85 L420,115 Z" fill="#a96f3e" stroke="#71421f" stroke-width="1"/>
+          <path d="M200,85 L185,55 L390,55 L405,85 Z" fill="#a96f3e" stroke="#71421f" stroke-width="1"/>
+          <!-- 4 Montagewinkel -->
+          <path d="M185,115 L170,135 L170,155 L185,135 Z" fill="#4b5657" stroke="#344244" stroke-width="1"/>
+          <path d="M215,115 L230,135 L230,155 L215,135 Z" fill="#4b5657" stroke="#344244" stroke-width="1"/>
+          <path d="M405,115 L390,135 L390,155 L405,135 Z" fill="#4b5657" stroke="#344244" stroke-width="1"/>
+          <path d="M435,115 L450,135 L450,155 L435,135 Z" fill="#4b5657" stroke="#344244" stroke-width="1"/>
+          <!-- Oberrahmen -->
+          <path d="M185,55 L170,25 L410,25 L425,55 Z" fill="#829296" stroke="#344244" stroke-width="1.2"/>
+          <path d="M170,25 L155,-5 L395,-5 L410,25 Z" fill="#4b5657" stroke="#344244" stroke-width="1.2"/>
+          <!-- Kühlbox (zentriert, 490mm hoch → ~250px) -->
+          <rect x="265" y="70" width="150" height="255" fill="#d6a746" stroke="#8e681d" stroke-width="1.5"/>
+          <!-- Kühlbox Tiefe (isometrisch) -->
+          <path d="M265,70 L250,40 L400,40 L415,70 Z" fill="#c8963a" stroke="#8e681d" stroke-width="1.5"/>
+          <path d="M415,70 L400,40 L400,295 L415,325 Z" fill="#c8963a" stroke="#8e681d" stroke-width="1.5"/>
+          <!-- Auszüge -->
+          <path d="M200,325 L185,295 L185,70 L200,100 Z" fill="#4b5657" stroke="#344244" stroke-width="1"/>
+          <path d="M420,325 L405,295 L405,70 L420,100 Z" fill="#4b5657" stroke="#344244" stroke-width="1"/>
   
-  <!-- MODUL 3 (RECHTS) - Eurobox-Modul mit U-Profilen (spiegelbildlich zu Modul 1) -->
-  <!-- Basisrahmen -->
-  <path d="M950,400 L990,370 L1300,370 L1260,400 Z" class="aluminum" stroke="#344244" stroke-width="1"/>
-  <path d="M950,400 L910,430 L1220,430 L1260,400 Z" class="aluminum-dark" stroke="#344244" stroke-width="1"/>
-  <path d="M910,430 L870,460 L1180,460 L1220,430 Z" class="aluminum" stroke="#344244" stroke-width="1"/>
-  <!-- Vertikale Profile -->
-  <path d="M950,400 L930,220 L970,190 L990,370 Z" class="aluminum" stroke="#344244" stroke-width="1"/>
-  <path d="M1260,400 L1240,220 L1280,190 L1300,370 Z" class="aluminum" stroke="#344244" stroke-width="1"/>
-  <!-- U-Profile -->
-  <path d="M990,370 L970,190 L1230,190 L1250,370 Z" class="aluminum" stroke="#344244" stroke-width="1"/>
-  <path d="M970,190 L950,110 L1210,110 L1230,190 Z" class="aluminum-dark" stroke="#344244" stroke-width="1"/>
-  <!-- U-Profil Nut -->
-  <path d="M980,360 L960,180 L970,170 L990,350 Z" class="wood" stroke="#71421f" stroke-width="0.5"/>
-  <path d="M1220,360 L1200,180 L1210,170 L1230,350 Z" class="wood" stroke="#71421f" stroke-width="0.5"/>
-  <!-- Brett -->
-  <path d="M970,180 L950,100 L1210,100 L1230,180 Z" class="wood" stroke="#71421f" stroke-width="1"/>
-  <!-- Oberrahmen -->
-  <path d="M950,100 L930,20 L1270,20 L1290,100 Z" class="aluminum" stroke="#344244" stroke-width="1"/>
-  <path d="M930,20 L890,50 L1230,50 L1270,20 Z" class="aluminum-dark" stroke="#344244" stroke-width="1"/>
-  <!-- Euroboxen -->
-  <path d="M975,170 L955,90 L1185,90 L1205,170 Z" class="box" stroke="#24515a" stroke-width="0.5"/>
-  <path d="M955,90 L935,10 L1185,10 L1205,90 Z" class="box" stroke="#24515a" stroke-width="0.5"/>
-  <path d="M975,170 L955,90 L1145,90 L1165,170 Z" class="box" stroke="#24515a" stroke-width="0.5"/>
-  <path d="M955,90 L935,10 L1125,10 L1145,90 Z" class="box" stroke="#24515a" stroke-width="0.5"/>
-  <!-- Bierbänke -->
-  <path d="M980,350 L960,170 L1165,170 L1185,350 Z" class="bench" stroke="#5a3d1e" stroke-width="0.5"/>
-  <path d="M960,170 L940,-10 L1145,-10 L1165,170 Z" class="bench" stroke="#5a3d1e" stroke-width="0.5"/>
-  <!-- Auszüge -->
-  <path d="M950,400 L930,220 L930,200 L950,380 Z" class="aluminum-dark" stroke="#344244" stroke-width="1"/>
-  <path d="M1260,400 L1240,220 L1240,200 L1260,380 Z" class="aluminum-dark" stroke="#344244" stroke-width="1"/>
+          <!-- MODUL 3 (RECHTS) - Eurobox-Modul (spiegelbildlich zu Modul 1) -->
+          <!-- Basisrahmen -->
+          <rect x="440" y="325" width="135" height="15" fill="#829296" stroke="#344244" stroke-width="1.2"/>
+          <!-- U-Profile -->
+          <path d="M440,325 L425,295 L560,295 L575,325 Z" fill="#829296" stroke="#344244" stroke-width="1.2"/>
+          <path d="M425,295 L410,265 L545,265 L560,295 Z" fill="#4b5657" stroke="#344244" stroke-width="1.2"/>
+          <!-- Vertikale Profile -->
+          <path d="M440,325 L425,295 L440,85 L455,115 Z" fill="#829296" stroke="#344244" stroke-width="1.2"/>
+          <path d="M575,325 L560,295 L575,85 L590,115 Z" fill="#829296" stroke="#344244" stroke-width="1.2"/>
+          <!-- U-Profil Nut -->
+          <path d="M450,115 L435,85 L565,85 L580,115 Z" fill="#a96f3e" stroke="#71421f" stroke-width="0.5"/>
+          <!-- Brett -->
+          <path d="M435,85 L420,55 L550,55 L565,85 Z" fill="#a96f3e" stroke="#71421f" stroke-width="1"/>
+          <!-- Oberrahmen -->
+          <path d="M420,55 L405,25 L535,25 L550,55 Z" fill="#829296" stroke="#344244" stroke-width="1.2"/>
+          <path d="M405,25 L390,-5 L520,-5 L535,25 Z" fill="#4b5657" stroke="#344244" stroke-width="1.2"/>
+          <!-- Euroboxen -->
+          <rect x="445" y="160" width="115" height="100" fill="#3c7881" stroke="#24515a" stroke-width="0.5"/>
+          <rect x="445" y="60" width="115" height="100" fill="#3c7881" stroke="#24515a" stroke-width="0.5"/>
+          <!-- Bierbänke -->
+          <path d="M450,290 L435,260 L565,260 L580,290 Z" fill="#87562e" stroke="#5a3d1e" stroke-width="0.5"/>
+          <path d="M450,260 L435,230 L565,230 L580,260 Z" fill="#87562e" stroke="#5a3d1e" stroke-width="0.5"/>
+          <!-- Auszüge -->
+          <path d="M440,325 L425,295 L425,70 L440,100 Z" fill="#4b5657" stroke="#344244" stroke-width="1"/>
+          <path d="M575,325 L560,295 L560,70 L575,100 Z" fill="#4b5657" stroke="#344244" stroke-width="1"/>
   
-  <!-- Maße -->
-  <line x1="40" y1="430" x2="40" y2="10" class="line" marker-end="url(#arrow)"/>
-  <text x="10" y="220" class="dim" transform="rotate(-90 10,220)">590 mm Höhe</text>
-  <line x1="40" y1="430" x2="300" y2="430" class="line" marker-end="url(#arrow)"/>
-  <text x="170" y="445" class="dim">1200 mm Breite</text>
-  <line x1="300" y1="430" x2="300" y2="460" class="line" marker-end="url(#arrow)"/>
-  <text x="315" y="445" class="dim">600 mm Tiefe</text>
+          <!-- Maße (wie bei Frontansicht) -->
+          <g stroke="#3d4b4c" fill="none" stroke-width="1" marker-start="url(#arrow-iso)" marker-end="url(#arrow-iso)">
+            <line x1="20" y1="340" x2="20" y2="40"/>
+            <line x1="45" y1="355" x2="575" y2="355"/>
+            <line x1="595" y1="340" x2="595" y2="40"/>
+          </g>
+          <g fill="#172126" font-family="Arial,sans-serif" font-size="12">
+            <text x="5" y="190" text-anchor="middle" transform="rotate(-90 5 190)">590 mm</text>
+            <text x="310" y="375" text-anchor="middle">1.200 mm</text>
+            <text x="610" y="190" text-anchor="middle" transform="rotate(-90 610 190)">600 mm Tiefe</text>
+          </g>
   
-  <!-- Legende in der Zeichnung -->
-  <g font-family="Arial,sans-serif" font-size="9" fill="#344244">
-    <rect x="20" y="20" width="12" height="12" class="aluminum" stroke="#344244"/>
-    <text x="38" y="30">Alu-Profil</text>
-    <rect x="20" y="35" width="12" height="12" class="aluminum-dark" stroke="#344244"/>
-    <text x="38" y="45">Auszug/Dunkel</text>
-    <rect x="20" y="50" width="12" height="12" class="wood" stroke="#71421f"/>
-    <text x="38" y="60">Multiplex-Brett</text>
-    <rect x="20" y="65" width="12" height="12" class="box" stroke="#24515a"/>
-    <text x="38" y="75">Eurobox</text>
-    <rect x="20" y="80" width="12" height="12" class="cooler" stroke="#8e681d"/>
-    <text x="38" y="90">Kühlbox</text>
-    <rect x="20" y="95" width="12" height="12" class="bench" stroke="#5a3d1e"/>
-    <text x="38" y="105">Bierbank</text>
-  </g>
-</svg>
-        </article>
+          <!-- Legende (rechts unten, kompakt) -->
+          <g font-family="Arial,sans-serif" font-size="9" fill="#172126">
+            <rect x="470" y="20" width="10" height="10" fill="#829296" stroke="#344244"/>
+            <text x="485" y="28">Alu-Profil</text>
+            <rect x="470" y="32" width="10" height="10" fill="#4b5657" stroke="#344244"/>
+            <text x="485" y="40">Auszug</text>
+            <rect x="470" y="44" width="10" height="10" fill="#a96f3e" stroke="#71421f"/>
+            <text x="485" y="52">Brett</text>
+            <rect x="470" y="56" width="10" height="10" fill="#3c7881" stroke="#24515a"/>
+            <text x="485" y="64">Eurobox</text>
+            <rect x="470" y="68" width="10" height="10" fill="#d6a746" stroke="#8e681d"/>
+            <text x="485" y="76">Kühlbox</text>
+            <rect x="470" y="80" width="10" height="10" fill="#87562e" stroke="#5a3d1e"/>
+            <text x="485" y="88">Bierbank</text>
+          </g>
+        </svg>
+                </article>
       </div>
     </section>
     <section class="model-section" aria-labelledby="model-title">
